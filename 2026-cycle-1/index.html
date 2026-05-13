@@ -1,0 +1,3452 @@
+<!doctype html>
+<html lang="en" data-brand="tradify" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cycle 1 — 2026 · Engineering Wrap</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&family=Inter:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* =====================================================================
+       * Tradify cycle-wrap deck — design tokens lifted from
+       * packages/ui-config/src/brand/tradify/{colors,tokens,typography}.css
+       * Access toggle mirrors packages/ui-config/src/brand/access/*.css
+       * ===================================================================== */
+
+      :root {
+        /* shared neutrals */
+        --color-white: oklch(1 0 0);
+        --color-black: oklch(0 0 0);
+
+        --color-gray-50: oklch(0.9702 0 89.88);
+        --color-gray-100: oklch(0.9401 0 89.88);
+        --color-gray-200: oklch(0.8975 0 89.88);
+        --color-gray-300: oklch(0.839 0 89.88);
+        --color-gray-400: oklch(0.7699 0 89.88);
+        --color-gray-500: oklch(0.6895 0 89.88);
+        --color-gray-600: oklch(0.5999 0 89.88);
+        --color-gray-700: oklch(0.5313 0 89.88);
+        --color-gray-800: oklch(0.4604 0 89.88);
+        --color-gray-900: oklch(0.3904 0 89.88);
+        --color-gray-950: oklch(0.1149 0 0);
+
+        --color-navy-50: oklch(0.9698 0.0083 236.56);
+        --color-navy-100: oklch(0.9386 0.0085 225.09);
+        --color-navy-200: oklch(0.8964 0.0094 232.38);
+        --color-navy-300: oklch(0.8402 0.0104 228.92);
+        --color-navy-400: oklch(0.7683 0.0115 234.87);
+        --color-navy-500: oklch(0.6903 0.0127 231.74);
+        --color-navy-600: oklch(0.6063 0.0159 231.38);
+        --color-navy-700: oklch(0.4594 0.0179 229.32);
+        --color-navy-800: oklch(0.3087 0.0195 229.78);
+        --color-navy-900: oklch(0.2781 0.0146 226.61);
+        --color-navy-950: oklch(0.231 0.0755 268.94);
+
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+          monospace;
+
+        --radius: 0.5rem;
+      }
+
+      /* ---------------- Tradify brand ---------------- */
+      [data-brand="tradify"] {
+        --color-tradify-blue-50: oklch(0.97 0.0196 224.73);
+        --color-tradify-blue-100: oklch(0.939 0.0393 224.73);
+        --color-tradify-blue-200: oklch(0.897 0.0667 224.73);
+        --color-tradify-blue-300: oklch(0.84 0.1052 224.73);
+        --color-tradify-blue-400: oklch(0.769 0.1181 224.73);
+        --color-tradify-blue-500: oklch(0.691 0.1223 224.73);
+        --color-tradify-blue-600: #5fa7ed;
+        --color-tradify-blue-700: oklch(0.53 0.0973 224.73);
+        --color-tradify-blue-800: oklch(0.46 0.0845 224.73);
+        --color-tradify-blue-900: oklch(0.39 0.0717 224.73);
+
+        --color-purple-200: oklch(0.897 0.0559 296.68);
+        --color-purple-300: oklch(0.84 0.0884 296.68);
+        --color-purple-400: oklch(0.769 0.1312 296.68);
+        --color-purple-500: #9269e1;
+        --color-purple-600: oklch(0.618 0.1761 296.68);
+
+        --color-teal-400: oklch(0.7687 0.1062 206.07);
+        --color-teal-500: #51c7d5;
+        --color-pink-400: oklch(0.7714 0.1444 358.12);
+        --color-pink-500: oklch(0.691 0.1418 358.12);
+        --color-orange-400: #f4a74b;
+        --color-orange-500: oklch(0.691 0.1359 67.86);
+        --color-green-500: #33a99e;
+
+        --primary: var(--color-tradify-blue-500);
+        --primary-soft: var(--color-tradify-blue-100);
+        --primary-strong: var(--color-tradify-blue-700);
+        --secondary: var(--color-purple-500);
+        --accent: var(--color-teal-500);
+        --warm: var(--color-orange-400);
+        --warm-strong: var(--color-orange-500);
+
+        /* Semantic tokens — used on Brand Parity slide */
+        --error: oklch(0.6908 0.1991 21.6);
+        --success: oklch(0.7818 0.1324 161.52);
+        --warning: var(--color-orange-400);
+        --gray: var(--color-gray-600);
+
+        --font-sans: "Roboto", "Arial", ui-sans-serif, system-ui, sans-serif;
+
+        --brand-label: "Tradify";
+        --brand-glyph: "T";
+      }
+
+      /* ---------------- Access brand ----------------- */
+      [data-brand="access"] {
+        --color-tradify-blue-100: oklch(0.9519 0.0278 196.69);
+        --color-tradify-blue-200: oklch(0.9028 0.0431 195.16);
+        --color-tradify-blue-300: oklch(0.7995 0.0588 194.73);
+        --color-tradify-blue-400: oklch(0.6974 0.0743 195.58);
+        --color-tradify-blue-500: oklch(0.5101 0.0871 194.77);
+        --color-tradify-blue-600: oklch(0.4126 0.0704 194.77);
+        --color-tradify-blue-700: oklch(0.3581 0.061 196.71);
+        --color-tradify-blue-800: oklch(0.3236 0.0551 196.66);
+        --color-tradify-blue-900: oklch(0.265 0.0451 200.25);
+
+        --color-purple-200: oklch(0.8966 0.0553 296.72);
+        --color-purple-300: oklch(0.8401 0.0885 296.83);
+        --color-purple-400: oklch(0.7677 0.1314 296.69);
+        --color-purple-500: oklch(0.6906 0.1745 296.84);
+        --color-purple-600: oklch(0.618 0.1761 296.68);
+
+        --color-teal-400: oklch(0.6974 0.0743 195.58);
+        --color-teal-500: oklch(0.5101 0.0871 194.77);
+        --color-pink-400: oklch(0.7714 0.1444 358.12);
+        --color-pink-500: oklch(0.691 0.1418 358.12);
+        --color-orange-400: oklch(0.787 0.1395 67.86);
+        --color-orange-500: oklch(0.691 0.1359 67.86);
+        --color-green-500: oklch(0.668 0.1034 185.97);
+
+        --primary: var(--color-tradify-blue-500);
+        --primary-soft: var(--color-tradify-blue-100);
+        --primary-strong: var(--color-tradify-blue-700);
+        --secondary: var(--color-purple-500);
+        --accent: var(--color-tradify-blue-400);
+        --warm: var(--color-purple-400);
+        --warm-strong: var(--color-purple-500);
+
+        /* Semantic tokens — used on Brand Parity slide */
+        --error: oklch(0.6996 0.1819 23.76);
+        --success: oklch(0.668 0.1034 185.97);
+        --warning: oklch(0.787 0.1395 67.86);
+        --gray: var(--color-gray-600);
+
+        --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+        --brand-label: "Access · Evo";
+        --brand-glyph: "A";
+      }
+
+      /* ---------------- Light surfaces ---------------- */
+      [data-theme="light"] {
+        --background: var(--color-white);
+        --foreground: var(--color-navy-900);
+        --surface: var(--color-white);
+        --surface-raised: var(--color-gray-50);
+        --surface-sunken: var(--color-gray-100);
+        --muted: var(--color-gray-100);
+        --muted-foreground: var(--color-gray-700);
+        --hairline: var(--color-gray-200);
+        --rule: var(--color-gray-300);
+        --grid-line: oklch(0 0 0 / 0.04);
+        --grid-line-strong: oklch(0 0 0 / 0.08);
+        --paper-noise: 0.025;
+      }
+      [data-theme="dark"] {
+        --background: var(--color-navy-950);
+        --foreground: var(--color-gray-50);
+        --surface: var(--color-navy-900);
+        --surface-raised: var(--color-navy-800);
+        --surface-sunken: oklch(0.18 0.04 240);
+        --muted: oklch(0.32 0.02 230);
+        --muted-foreground: var(--color-gray-300);
+        --hairline: oklch(0.4 0.02 230 / 0.55);
+        --rule: oklch(0.5 0.02 230 / 0.6);
+        --grid-line: oklch(1 0 0 / 0.04);
+        --grid-line-strong: oklch(1 0 0 / 0.09);
+        --paper-noise: 0.04;
+      }
+
+      /* ---------------- Reset / shell ---------------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      body {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        color: var(--foreground);
+        background: var(--background);
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        transition: background 360ms ease, color 360ms ease;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        min-height: 100vh;
+      }
+
+      /* paper / grid atmosphere */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(
+            to right,
+            var(--grid-line) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        background-size: 56px 56px;
+        z-index: 0;
+        opacity: 0.85;
+        transition: opacity 360ms ease;
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+            circle at 18% 10%,
+            color-mix(in oklch, var(--primary) 18%, transparent) 0%,
+            transparent 38%
+          ),
+          radial-gradient(
+            circle at 90% 88%,
+            color-mix(in oklch, var(--secondary) 16%, transparent) 0%,
+            transparent 42%
+          );
+        z-index: 0;
+        opacity: 0.55;
+        transition: opacity 360ms ease, background 360ms ease;
+      }
+
+      /* ---------------- Top chrome ---------------- */
+      .chrome {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 28px 14px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        background: linear-gradient(
+          to bottom,
+          color-mix(in oklch, var(--background) 92%, transparent) 60%,
+          transparent
+        );
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      .chrome .masthead {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .chrome .glyph {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-weight: 500;
+        font-size: 18px;
+        background: var(--primary);
+        color: var(--color-white);
+        letter-spacing: -0.04em;
+      }
+      .chrome .glyph::before {
+        content: var(--brand-glyph);
+      }
+      .chrome .id {
+        color: var(--foreground);
+        letter-spacing: 0.16em;
+      }
+      .chrome .id b {
+        font-weight: 500;
+      }
+      .chrome .controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border: 1px solid var(--hairline);
+        border-radius: 999px;
+        background: var(--surface);
+        color: var(--foreground);
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        transition: border-color 200ms, background 200ms, color 200ms;
+      }
+      .chip:hover {
+        border-color: var(--primary);
+        color: var(--primary-strong);
+      }
+      .chip[aria-pressed="true"] {
+        background: var(--primary);
+        color: var(--color-white);
+        border-color: var(--primary);
+      }
+      .chip .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 30%, transparent);
+      }
+
+      /* ---------------- Slide stage ---------------- */
+      .stage {
+        position: relative;
+        width: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .deck {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: 72px 72px 72px;
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(28px) scale(0.992);
+        transition: opacity 480ms cubic-bezier(0.2, 0.8, 0.2, 1),
+          transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .slide.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+        z-index: 2;
+      }
+      .slide-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+      .kicker {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .kicker::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: var(--primary);
+        display: inline-block;
+      }
+      .slide-num {
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        letter-spacing: 0.04em;
+      }
+      h1.title,
+      h2.title {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        color: var(--foreground);
+        margin: 0 0 14px;
+        line-height: 0.98;
+      }
+      h1.title {
+        font-size: clamp(54px, 8.4vw, 124px);
+      }
+      h1.title em {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--primary-strong);
+      }
+      h2.title {
+        font-size: clamp(36px, 5.2vw, 68px);
+      }
+      h2.title em {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--primary-strong);
+      }
+      .lede {
+        font-family: var(--font-sans);
+        font-size: 19px;
+        line-height: 1.55;
+        max-width: 64ch;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+
+      /* ---------------- Slide 1 — masthead (BTTF) ---------------- */
+      .masthead-slide {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 56px;
+        align-items: center;
+        isolation: isolate;
+      }
+      .masthead-slide::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-demo.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.32;
+        pointer-events: none;
+        z-index: -1;
+        filter: saturate(1.1) contrast(1.05);
+      }
+      [data-theme="dark"] .masthead-slide::before {
+        opacity: 0.48;
+        filter: saturate(1.15) brightness(1.05) contrast(1.05);
+      }
+      .masthead-slide > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 2 — DeLorean backdrop, faded behind copy column */
+      .slide[data-slide="2"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="2"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-delorean.jpg");
+        background-size: cover;
+        background-position: 30% center;
+        opacity: 0.42;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+            to right,
+            black 0%,
+            black 38%,
+            transparent 78%
+          ),
+          linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 18%,
+            black 30%,
+            black 100%
+          );
+        mask-image: linear-gradient(
+            to right,
+            black 0%,
+            black 38%,
+            transparent 78%
+          ),
+          linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 18%,
+            black 30%,
+            black 100%
+          );
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+        filter: saturate(0.95) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="2"]::before {
+        opacity: 0.50;
+        filter: saturate(1) brightness(1.1) contrast(1.05);
+      }
+      .slide[data-slide="2"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 4 — scene backdrop, faded edges */
+      .slide[data-slide="4"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="4"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-scene4.jpg");
+        background-size: cover;
+        background-position: 70% center;
+        opacity: 0.40;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 35%,
+          transparent 75%
+        );
+        mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 35%,
+          transparent 75%
+        );
+        filter: saturate(0.95) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="4"]::before {
+        opacity: 0.50;
+        filter: saturate(1) brightness(1.1) contrast(1.05);
+      }
+      .slide[data-slide="4"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 3 — Einstein-in-DeLorean backdrop */
+      .slide[data-slide="3"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="3"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-einstein.jpg");
+        background-size: cover;
+        background-position: center 40%;
+        opacity: 0.42;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+            to right,
+            black 0%,
+            black 38%,
+            transparent 78%
+          ),
+          linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 18%,
+            black 30%,
+            black 100%
+          );
+        mask-image: linear-gradient(
+            to right,
+            black 0%,
+            black 38%,
+            transparent 78%
+          ),
+          linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 18%,
+            black 30%,
+            black 100%
+          );
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+        filter: saturate(0.95) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="3"]::before {
+        opacity: 0.50;
+        filter: saturate(1) brightness(1.05) contrast(1.05);
+      }
+      .slide[data-slide="3"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 6 — Doc Brown backdrop */
+      .slide[data-slide="6"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="6"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/doc-brown-1.jpg");
+        background-size: cover;
+        background-position: 75% 30%;
+        opacity: 0.45;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 30%,
+          transparent 70%
+        );
+        mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 30%,
+          transparent 70%
+        );
+        filter: saturate(1) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="6"]::before {
+        opacity: 0.55;
+        filter: saturate(1.05) brightness(1.05) contrast(1.05);
+      }
+      .slide[data-slide="6"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 7 — Hoverboard backdrop */
+      .slide[data-slide="7"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="7"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-hoverboard.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.22;
+        pointer-events: none;
+        z-index: -1;
+        filter: saturate(1.05) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="7"]::before {
+        opacity: 0.32;
+        filter: saturate(1.1) brightness(1.05) contrast(1.05);
+      }
+      .slide[data-slide="7"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 8 — Demo backdrop */
+      .slide[data-slide="8"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="8"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-demo-new.jpg");
+        background-size: cover;
+        background-position: center 30%;
+        opacity: 0.55;
+        pointer-events: none;
+        z-index: -1;
+        filter: saturate(1.05) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="8"]::before {
+        opacity: 0.65;
+        filter: saturate(1.1) brightness(1.05) contrast(1.05);
+      }
+      .slide[data-slide="8"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 9 — finale backdrop, faded edges */
+      .slide[data-slide="9"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="9"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-finale.jpg");
+        background-size: cover;
+        background-position: 70% 45%;
+        opacity: 0.38;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 25%,
+          transparent 70%
+        );
+        mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 25%,
+          transparent 70%
+        );
+        filter: saturate(1) contrast(1.05);
+      }
+      [data-theme="dark"] .slide[data-slide="9"]::before {
+        opacity: 0.50;
+        filter: saturate(1.05) brightness(1.05) contrast(1.05);
+      }
+      .slide[data-slide="9"] > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Slide 5 — Flux capacitor backdrop, faded edges */
+      .slide[data-slide="5"] {
+        position: absolute;
+        isolation: isolate;
+      }
+      .slide[data-slide="5"]::before {
+        content: "";
+        position: absolute;
+        inset: -72px;
+        background-image: url("./assets/bttf-flux.jpg");
+        background-size: cover;
+        background-position: 70% 40%;
+        opacity: 0.42;
+        pointer-events: none;
+        z-index: -1;
+        -webkit-mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 28%,
+          transparent 72%
+        );
+        mask-image: linear-gradient(
+          to left,
+          black 0%,
+          black 28%,
+          transparent 72%
+        );
+        filter: saturate(1.05) contrast(1.08);
+      }
+      [data-theme="dark"] .slide[data-slide="5"]::before {
+        opacity: 0.55;
+        filter: saturate(1.1) brightness(1.05) contrast(1.08);
+      }
+      .slide[data-slide="5"] > * {
+        position: relative;
+        z-index: 1;
+      }
+      .masthead-slide .left {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .masthead-slide .left .preheader {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .masthead-slide .left .preheader b {
+        color: var(--warm-strong);
+        font-weight: 500;
+      }
+      .bolt-glyph {
+        color: var(--warm-strong);
+        font-size: 14px;
+        animation: flicker 2.4s ease-in-out infinite;
+      }
+      @keyframes flicker {
+        0%, 96%, 100% {
+          opacity: 1;
+          filter: drop-shadow(0 0 4px var(--warm-strong));
+        }
+        97% { opacity: 0.4; filter: none; }
+        98% { opacity: 1; filter: drop-shadow(0 0 8px var(--warm-strong)); }
+        99% { opacity: 0.6; }
+      }
+      .masthead-slide h1 {
+        font-size: clamp(42px, 5.2vw, 78px);
+        margin-bottom: 0;
+        line-height: 1.02;
+      }
+      .masthead-slide .bttf-lede {
+        margin: 0;
+      }
+
+      /* 2014 ▶▶▶ 2026 time-jump banner */
+      .time-jump {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 22px;
+        align-items: center;
+        padding: 14px 22px;
+        margin: 4px 0 2px;
+        border: 1px solid var(--hairline);
+        border-radius: 10px;
+        background: linear-gradient(
+          90deg,
+          color-mix(in oklch, var(--secondary) 8%, transparent) 0%,
+          color-mix(in oklch, var(--warm-strong) 6%, transparent) 50%,
+          color-mix(in oklch, var(--primary) 10%, transparent) 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+      .time-jump::before {
+        content: "TIME JUMP · 12 YEARS";
+        position: absolute;
+        top: 6px;
+        left: 24px;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.3em;
+        color: var(--muted-foreground);
+      }
+      .tj-year {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: clamp(34px, 3.6vw, 54px);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        font-variant-numeric: tabular-nums;
+      }
+      .tj-past {
+        color: var(--muted-foreground);
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
+      .tj-future {
+        color: var(--primary-strong);
+        font-style: italic;
+        font-weight: 400;
+      }
+      .tj-flux {
+        height: 56px;
+        display: block;
+      }
+      .tj-arrows path {
+        animation: tj-pulse 1.4s ease-in-out infinite;
+      }
+      .tj-arrows path:nth-child(2) { animation-delay: 0.18s; }
+      .tj-arrows path:nth-child(3) { animation-delay: 0.36s; }
+      @keyframes tj-pulse {
+        0%, 100% { opacity: 0.55; transform: translateX(0); }
+        50% { opacity: 1; transform: translateX(4px); }
+      }
+
+      .sig-mph {
+        font-family: var(--font-mono);
+        font-style: normal;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        color: var(--warm-strong);
+        margin-left: 8px;
+      }
+
+      /* Time circuits panel (right side) */
+      .masthead-slide .right {
+        display: grid;
+        gap: 8px;
+        padding: 24px 22px 20px;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        box-shadow: 0 24px 60px -32px color-mix(in oklch, var(--primary) 40%, transparent);
+        border-radius: var(--radius);
+        position: relative;
+      }
+      .time-circuits::before {
+        content: "TIME CIRCUITS · ON";
+        position: absolute;
+        top: -8px;
+        left: 22px;
+        background: var(--background);
+        padding: 0 10px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.24em;
+        color: var(--warm-strong);
+      }
+      .time-circuits::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        right: 22px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--warm-strong);
+        box-shadow: 0 0 6px var(--warm-strong);
+        animation: flicker 2.4s ease-in-out infinite;
+      }
+      .tc-row {
+        display: grid;
+        grid-template-columns: 78px 1fr;
+        gap: 14px;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 6px;
+        border-left: 3px solid var(--rule);
+        background: var(--surface-sunken);
+        font-family: var(--font-mono);
+      }
+      .tc-row .tc-label {
+        font-size: 9.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        line-height: 1.25;
+      }
+      .tc-readout {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .tc-readout-line {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        font-variant-numeric: tabular-nums;
+      }
+      .tc-readout-sub {
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-size: 11px;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+      .tc-destination {
+        border-left-color: var(--warm-strong);
+      }
+      .tc-destination .tc-readout-line { color: var(--warm-strong); }
+      .tc-present {
+        border-left-color: var(--primary);
+      }
+      .tc-present .tc-readout-line { color: var(--primary-strong); }
+      .tc-departed {
+        border-left-color: var(--secondary);
+      }
+      .tc-departed .tc-readout-line { color: var(--secondary); }
+
+      /* Foundation / Challenges / Enhancements cards */
+      .act-card {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 14px;
+        align-items: start;
+        padding: 12px 12px 14px;
+        border-radius: 6px;
+        border-left: 3px solid var(--rule);
+        background: var(--surface-sunken);
+        margin-top: 4px;
+      }
+      .act-foundation {
+        border-left-color: var(--primary);
+      }
+      .act-foundation .act-icon { color: var(--primary-strong); }
+      .act-challenges {
+        border-left-color: var(--warm-strong);
+      }
+      .act-challenges .act-icon { color: var(--warm-strong); }
+      .act-enhancements {
+        border-left-color: var(--accent);
+      }
+      .act-enhancements .act-icon { color: var(--accent); }
+      .act-icon {
+        width: 56px;
+        height: 36px;
+        align-self: start;
+      }
+      .act-content {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .act-tag {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .act-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 4px;
+        font-family: var(--font-sans);
+        font-size: 11.5px;
+        line-height: 1.5;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+      .act-list li {
+        position: relative;
+        padding-left: 10px;
+      }
+      .act-list li::before {
+        content: "·";
+        position: absolute;
+        left: 0;
+        color: var(--rule);
+      }
+      .act-list b {
+        color: var(--foreground);
+        font-weight: 500;
+        font-family: var(--font-sans);
+      }
+      .act-list code {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--primary-strong);
+      }
+      .act-list em {
+        font-style: italic;
+        color: var(--muted-foreground);
+        opacity: 0.85;
+      }
+      .power-row {
+        margin-top: 4px;
+        border-top: 1px dashed var(--hairline);
+        padding-top: 10px;
+      }
+
+      /* ---------------- Slide 6 — agentic workflow ---------------- */
+      .agentic {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 24px;
+      }
+      .agent-col {
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 18px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .agent-col:nth-child(1) { border-top: 3px solid var(--primary); }
+      .agent-col:nth-child(2) { border-top: 3px solid var(--secondary); }
+      .agent-col:nth-child(3) { border-top: 3px solid var(--accent); }
+      .ac-head {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .ac-tag {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .ac-count {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        color: var(--muted-foreground);
+      }
+      .ac-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 8px;
+        font-family: var(--font-sans);
+        font-size: 12.5px;
+        line-height: 1.4;
+      }
+      .ac-list li {
+        display: grid;
+        grid-template-columns: minmax(140px, auto) 1fr;
+        gap: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed var(--hairline);
+      }
+      .ac-list li:last-child { border-bottom: none; padding-bottom: 0; }
+      .ac-list b {
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 11.5px;
+        color: var(--foreground);
+      }
+      .ac-list span {
+        color: var(--muted-foreground);
+        font-style: italic;
+        font-weight: 300;
+      }
+
+      /* ---------------- Slide 7 — DevX ---------------- */
+      .dx-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+        margin-top: 24px;
+        align-items: stretch;
+      }
+      .dx-card {
+        border: 1px solid var(--hairline);
+        background: color-mix(in srgb, var(--surface) 92%, transparent);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border-radius: var(--radius);
+        padding: 18px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        position: relative;
+        box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.18),
+          0 2px 6px -2px rgba(0, 0, 0, 0.08);
+      }
+      .dx-gen { border-left: 3px solid var(--primary); }
+      .dx-targets { border-left: 3px solid var(--secondary); }
+      .dx-validate { border-left: 3px solid var(--accent); }
+      .dx-views { border-left: 3px solid var(--warm-strong); }
+      .dx-tag {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .dx-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 7px;
+        font-family: var(--font-sans);
+        font-size: 12.5px;
+        line-height: 1.45;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+      .dx-list li {
+        position: relative;
+        padding-left: 14px;
+      }
+      .dx-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 6px;
+        height: 1px;
+        background: var(--rule);
+      }
+      .dx-list code {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--primary-strong);
+        background: var(--surface-sunken);
+        padding: 1px 6px;
+        border-radius: 3px;
+        margin-right: 6px;
+      }
+
+      /* ---------------- Slide 8 — Demo ---------------- */
+      .demo-slide .demo-stage {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        text-align: center;
+        position: relative;
+      }
+      .demo-marquee {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .demo-rec {
+        background: var(--warm-strong);
+        color: var(--color-white);
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 500;
+        font-size: 10.5px;
+        animation: flicker 2.4s ease-in-out infinite;
+      }
+      .demo-bolt {
+        color: var(--warm-strong);
+        font-size: 16px;
+      }
+      .demo-track {
+        flex: 0 1 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 50vw;
+        opacity: 0.6;
+      }
+      .demo-title {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-weight: 200;
+        font-size: clamp(80px, 12vw, 192px);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+      }
+      .demo-title em {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--primary-strong);
+      }
+      .demo-lede {
+        margin: 0;
+        max-width: 64ch;
+        font-family: var(--font-sans);
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: 300;
+        color: var(--muted-foreground);
+      }
+      .demo-hud {
+        margin-top: 12px;
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        gap: 14px;
+      }
+      .hud-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 12px 18px;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        border-radius: 8px;
+        text-align: left;
+      }
+      .hud-k {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .hud-v {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--primary-strong);
+      }
+
+      /* ---------------- Slide 9 — Receipts ---------------- */
+      .receipts {
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: 18px;
+        margin-top: 14px;
+        height: calc(100% - 76px);
+      }
+      .receipts-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .receipts-stats .num-card,
+      .receipts-stats .num-card.md,
+      .receipts-stats .num-card.sm,
+      .receipts-stats .num-card.lg,
+      .receipts-stats .num-card.wide {
+        padding: 18px 22px 20px;
+        min-height: 0;
+        grid-column: auto;
+        grid-row: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .receipts-stats .num-card .figure {
+        font-size: clamp(48px, 5.4vw, 76px);
+        margin-top: 8px;
+        line-height: 1;
+      }
+      .receipts-stats .num-card .label {
+        font-size: 12px;
+      }
+      .receipts-stats .num-card .corner {
+        position: static;
+        font-size: 10.5px;
+        margin-bottom: 6px;
+        display: block;
+      }
+      .receipts-stats .num-card .sublabel {
+        margin-top: 8px;
+        font-size: 12.5px;
+      }
+      .figure-sub {
+        font-size: 0.45em;
+        color: var(--muted-foreground);
+        font-style: normal;
+        margin-left: 4px;
+        letter-spacing: 0;
+      }
+      .receipts-diff {
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+      }
+      .diff-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .diff-tag {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .diff-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        flex: 1;
+        min-height: 0;
+      }
+      .diff-pane {
+        margin: 0;
+        padding: 10px 12px;
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        word-break: normal;
+        overflow-wrap: anywhere;
+        overflow: hidden;
+        background: var(--surface-sunken);
+        border-top: 2px solid var(--rule);
+      }
+      .diff-old {
+        border-top-color: var(--secondary);
+        opacity: 0.95;
+      }
+      .diff-new {
+        border-top-color: var(--primary);
+      }
+      .diff-pane .dh {
+        color: var(--muted-foreground);
+        font-style: italic;
+      }
+      .diff-pane .dt { color: var(--secondary); }
+      .diff-new .dt { color: var(--primary); }
+      .diff-pane .da { color: var(--accent); }
+      .diff-pane .ds { color: var(--warm-strong); }
+      .diff-pane .dc {
+        color: var(--muted-foreground);
+        font-style: italic;
+      }
+      .diff-foot {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.06em;
+        color: var(--muted-foreground);
+        padding-top: 4px;
+        border-top: 1px dashed var(--hairline);
+      }
+      .diff-foot b {
+        color: var(--primary-strong);
+        font-weight: 500;
+      }
+      .manifest-row {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 14px;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--hairline);
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+      }
+      .manifest-row:last-child {
+        border-bottom: none;
+      }
+      .manifest-row .k {
+        color: var(--muted-foreground);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-size: 10.5px;
+        align-self: center;
+      }
+      .manifest-row .v {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: var(--primary-soft);
+        color: var(--primary-strong);
+        font-size: 11px;
+        font-family: var(--font-mono);
+        letter-spacing: 0.06em;
+      }
+
+      /* ---------------- Slide 2 — at-a-glance ---------------- */
+      .glance {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-auto-rows: minmax(0, 1fr);
+        gap: 16px;
+      }
+      .num-card {
+        position: relative;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        padding: 16px 18px 18px;
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .num-card.lg {
+        grid-column: span 5;
+        grid-row: span 2;
+      }
+      .num-card.md {
+        grid-column: span 4;
+      }
+      .num-card.sm {
+        grid-column: span 3;
+      }
+      .num-card.wide {
+        grid-column: span 7;
+      }
+      .num-card .label {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .num-card .figure {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        margin-top: 16px;
+        color: var(--foreground);
+      }
+      .num-card.lg .figure {
+        font-size: clamp(64px, 9vw, 132px);
+      }
+      .num-card.md .figure {
+        font-size: clamp(38px, 5vw, 68px);
+      }
+      .num-card.sm .figure {
+        font-size: clamp(32px, 3.6vw, 50px);
+      }
+      .num-card .figure em {
+        font-style: italic;
+        color: var(--primary-strong);
+      }
+      .num-card .sublabel {
+        margin-top: 14px;
+        font-family: var(--font-sans);
+        font-style: italic;
+        color: var(--muted-foreground);
+        font-size: 16px;
+      }
+      .num-card .corner {
+        position: absolute;
+        top: 14px;
+        right: 18px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--muted-foreground);
+        letter-spacing: 0.16em;
+      }
+      .spark {
+        height: 56px;
+        margin-top: 12px;
+        width: 100%;
+        display: block;
+      }
+
+      /* ---------------- Slide 3 — pillars ---------------- */
+      .pillars {
+        display: grid;
+        grid-template-columns: 1.15fr 1.25fr;
+        gap: 48px;
+        align-items: center;
+      }
+      .pillars .copy,
+      .angular .copy {
+        background: color-mix(in srgb, var(--background) 86%, transparent);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.18),
+          0 2px 6px -2px rgba(0, 0, 0, 0.08);
+      }
+      [data-theme="dark"] .pillars .copy,
+      [data-theme="dark"] .angular .copy {
+        background: color-mix(in srgb, var(--background) 80%, transparent);
+        box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.55),
+          0 2px 6px -2px rgba(0, 0, 0, 0.35);
+      }
+      .pillars .copy h2 {
+        font-size: clamp(28px, 3.4vw, 44px);
+      }
+      .pillars .legend {
+        margin-top: 28px;
+        display: grid;
+        gap: 14px;
+      }
+      .legend-row {
+        display: grid;
+        grid-template-columns: 18px 1fr;
+        gap: 12px;
+        font-family: var(--font-sans);
+        font-size: 14.5px;
+        line-height: 1.45;
+        align-items: start;
+        color: var(--muted-foreground);
+      }
+      .legend-row b {
+        color: var(--foreground);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+      }
+      .legend-row .swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        margin-top: 3px;
+      }
+      .pillars-diagram {
+        position: relative;
+        aspect-ratio: 1.2 / 1;
+        width: 100%;
+      }
+
+      /* ---------------- Slide 4 — performance ---------------- */
+      .perf {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .perf .left h2 {
+        font-size: clamp(38px, 4.4vw, 60px);
+      }
+      .perf .stat-line {
+        margin-top: 28px;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        font-family: var(--font-sans);
+      }
+      .perf .before-num,
+      .perf .after-num {
+        font-size: clamp(54px, 6.4vw, 96px);
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .perf .before-num {
+        color: var(--muted-foreground);
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
+      .perf .after-num {
+        color: var(--primary-strong);
+        font-style: italic;
+      }
+      .perf .arrow {
+        font-family: var(--font-mono);
+        color: var(--accent);
+        font-size: 22px;
+        align-self: center;
+      }
+      .perf .commits {
+        margin-top: 28px;
+        display: grid;
+        gap: 8px;
+      }
+      .commit-row {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+        display: grid;
+        grid-template-columns: 88px 1fr;
+        gap: 14px;
+        padding: 6px 0;
+        border-bottom: 1px dashed var(--hairline);
+      }
+      .commit-row b {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .commit-row em {
+        color: var(--primary-strong);
+        font-style: italic;
+        font-family: var(--font-sans);
+      }
+
+      /* ---------------- Slide 4 — unexpected challenges ---------------- */
+      .challenges {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+        margin-top: 28px;
+        align-items: start;
+      }
+      .challenge {
+        position: relative;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        padding: 18px 22px 20px;
+        border-radius: var(--radius);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.18),
+          0 2px 6px -2px rgba(0, 0, 0, 0.08);
+      }
+      .challenge:nth-child(2) {
+        margin-top: 32px;
+      }
+      .challenge::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--primary);
+        border-radius: var(--radius) 0 0 var(--radius);
+      }
+      .challenge:nth-child(2)::before {
+        background: var(--warm-strong);
+      }
+      .ch-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .ch-marker {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--color-white);
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .ch-tag {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .ch-title {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: clamp(22px, 2.2vw, 30px);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        margin: 0;
+        color: var(--foreground);
+      }
+      .ch-title em {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--primary-strong);
+      }
+      .challenge:nth-child(2) .ch-title em {
+        color: var(--warm-strong);
+      }
+      .ch-stat {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        font-family: var(--font-sans);
+      }
+      .ch-before {
+        font-size: clamp(34px, 3.6vw, 48px);
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        color: var(--muted-foreground);
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
+      .ch-after {
+        font-size: clamp(34px, 3.6vw, 48px);
+        font-weight: 300;
+        letter-spacing: -0.04em;
+        font-style: italic;
+        color: var(--primary-strong);
+      }
+      .ch-arrow {
+        font-family: var(--font-mono);
+        color: var(--accent);
+        font-size: 20px;
+      }
+      .ch-body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+      .ch-commits {
+        display: grid;
+        gap: 3px;
+      }
+      .ch-commits .commit-row {
+        font-size: 11px;
+        padding: 3px 0;
+      }
+      .ch-code {
+        margin: 0;
+        padding: 10px 14px;
+        background: var(--surface-sunken);
+        border: 1px solid var(--hairline);
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        line-height: 1.45;
+        color: var(--foreground);
+        white-space: pre;
+        overflow-x: auto;
+      }
+      .ch-code .tk-c {
+        color: var(--secondary);
+      }
+      .ch-code .tk-a {
+        color: var(--primary-strong);
+      }
+      .ch-code .tk-s {
+        color: var(--warm-strong);
+      }
+      .ch-code .tk-b {
+        color: var(--accent);
+      }
+      .ch-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 8px;
+        font-family: var(--font-sans);
+        font-size: 11.5px;
+        line-height: 1.42;
+        color: var(--muted-foreground);
+      }
+      .ch-list li {
+        padding-left: 14px;
+        border-left: 1px solid var(--hairline);
+      }
+      .ch-list b {
+        color: var(--foreground);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 12px;
+      }
+      .ch-state {
+        display: inline-block;
+        padding: 1px 7px;
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .ch-state.ok {
+        background: color-mix(in oklch, var(--accent) 22%, transparent);
+        color: var(--primary-strong);
+      }
+      .ch-state.no {
+        background: color-mix(in oklch, var(--warm-strong) 22%, transparent);
+        color: var(--warm-strong);
+      }
+      .ch-state.load {
+        background: var(--muted);
+        color: var(--muted-foreground);
+      }
+
+      /* ---------------- Slide 5 — angular shell ---------------- */
+      .angular {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .angular .copy {
+        margin-top: 200px;
+      }
+      .angular .copy h2 {
+        font-size: clamp(36px, 4.4vw, 58px);
+      }
+      .angular .msg-list {
+        margin-top: 22px;
+        display: grid;
+        gap: 12px;
+      }
+      .msg-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 14px;
+        align-items: center;
+        padding: 12px 16px;
+        border: 1px solid var(--hairline);
+        border-left: 3px solid var(--primary);
+        background: var(--surface-raised);
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--foreground);
+      }
+      .msg-row .from {
+        color: var(--secondary);
+        font-weight: 500;
+      }
+      .msg-row .label {
+        color: var(--muted-foreground);
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-size: 13.5px;
+      }
+      .msg-row .ticket {
+        color: var(--muted-foreground);
+        font-size: 11px;
+      }
+
+      /* ---------------- Slide 6 — Evo / Access ---------------- */
+      .evo {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .swatch-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .comp-row {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .comp-block {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .comp-tag {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      /* Storybook-parity tab tokens — brand-conditional */
+      [data-brand="tradify"] {
+        --rt-list-bg: transparent;
+        --rt-list-radius: 0;
+        --rt-list-padding: 0;
+        --rt-list-gap: 0;
+        --rt-tab-bg: var(--color-gray-100);
+        --rt-tab-active-bg: var(--background);
+        --rt-tab-radius: 0;
+        --rt-tab-shadow: none;
+        --rt-tab-text: var(--muted-foreground);
+        --rt-tab-active-text: var(--foreground);
+
+        --rt-btn-radius: 0.25rem;
+        --rt-btn-weight: 300;
+        --rt-btn-padding: 16px 8px;
+      }
+      [data-brand="access"] {
+        --rt-list-bg: var(--color-gray-100);
+        --rt-list-radius: 10px;
+        --rt-list-padding: 4px;
+        --rt-list-gap: 4px;
+        --rt-tab-bg: transparent;
+        --rt-tab-active-bg: var(--background);
+        --rt-tab-radius: 7px;
+        --rt-tab-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+        --rt-tab-text: var(--muted-foreground);
+        --rt-tab-active-text: var(--foreground);
+
+        --rt-btn-radius: 6px;
+        --rt-btn-weight: 500;
+        --rt-btn-padding: 8px 16px;
+      }
+
+      .rt-tablist {
+        display: inline-flex;
+        align-items: stretch;
+        gap: var(--rt-list-gap);
+        background: var(--rt-list-bg);
+        border-radius: var(--rt-list-radius);
+        padding: var(--rt-list-padding);
+      }
+      .rt-tab {
+        appearance: none;
+        border: none;
+        background: var(--rt-tab-bg);
+        color: var(--rt-tab-text);
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: 14px;
+        padding: 10px 18px;
+        border-radius: var(--rt-tab-radius);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 200ms, color 200ms;
+      }
+      .rt-tab.active {
+        background: var(--rt-tab-active-bg);
+        color: var(--rt-tab-active-text);
+        box-shadow: var(--rt-tab-shadow);
+      }
+      .rt-tab-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 7px;
+        border-radius: 999px;
+        background: var(--foreground);
+        color: var(--background);
+        font-family: var(--font-sans);
+        font-size: 11.5px;
+        font-weight: 500;
+      }
+      .rt-tab-panel {
+        margin-top: 12px;
+        padding: 14px 16px;
+        border: 1px solid var(--hairline);
+        border-radius: 6px;
+        font-family: var(--font-sans);
+        font-size: 13px;
+        color: var(--muted-foreground);
+        font-weight: 300;
+      }
+      /* Skeleton (tab panel) */
+      .skel {
+        background: linear-gradient(
+          90deg,
+          var(--color-gray-100) 0%,
+          var(--color-gray-200) 50%,
+          var(--color-gray-100) 100%
+        );
+        background-size: 200% 100%;
+        animation: skel-shimmer 1.6s linear infinite;
+        border-radius: 4px;
+      }
+      .skel-bar {
+        height: 10px;
+      }
+      .skel + .skel {
+        margin-top: 8px;
+      }
+      @keyframes skel-shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      /* Storybook-parity buttons — Tradify ↔ Access */
+      .rt-btn-grid {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        gap: 8px;
+        justify-content: start;
+        align-items: start;
+      }
+      .rt-btn {
+        appearance: none;
+        font-family: var(--font-sans);
+        font-weight: var(--rt-btn-weight, 500);
+        font-size: 13px;
+        padding: var(--rt-btn-padding, 8px 16px);
+        border-radius: var(--rt-btn-radius, 8px);
+        cursor: pointer;
+        border: 1px solid transparent;
+        letter-spacing: 0.01em;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+      .rt-btn-primary {
+        background: var(--primary);
+        color: var(--color-white);
+        border-color: var(--primary);
+      }
+      .rt-btn-secondary {
+        background: var(--secondary);
+        color: var(--color-white);
+        border-color: var(--secondary);
+      }
+      .rt-btn-accent {
+        background: var(--accent);
+        color: var(--color-white);
+        border-color: var(--accent);
+      }
+      .rt-btn-destructive {
+        background: var(--error);
+        color: var(--color-white);
+        border-color: var(--error);
+      }
+      .rt-btn-success {
+        background: var(--success);
+        color: var(--color-white);
+        border-color: var(--success);
+      }
+      .rt-btn-warning {
+        background: var(--warning);
+        color: var(--color-white);
+        border-color: var(--warning);
+      }
+      .rt-btn-info {
+        background: color-mix(in oklch, var(--accent) 18%, var(--color-white));
+        color: var(--primary-strong);
+        border-color: color-mix(in oklch, var(--accent) 18%, var(--color-white));
+      }
+      .rt-btn-neutral {
+        background: var(--color-gray-700);
+        color: var(--color-white);
+        border-color: var(--color-gray-700);
+      }
+      .rt-btn-outline {
+        background: transparent;
+        color: var(--foreground);
+        border-color: var(--rule);
+      }
+      .rt-btn-ghost {
+        background: transparent;
+        color: var(--foreground);
+        border-color: transparent;
+      }
+      .rt-btn-link {
+        background: transparent;
+        color: var(--primary-strong);
+        border-color: transparent;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+      .swatch-tile {
+        aspect-ratio: 1;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 0 0 1px var(--hairline);
+      }
+      .swatch-tile span {
+        position: absolute;
+        bottom: 6px;
+        left: 8px;
+        right: 8px;
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        color: var(--color-white);
+        letter-spacing: 0.05em;
+        text-shadow: 0 1px 2px rgb(0 0 0 / 0.55);
+      }
+      .evo .panel {
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        padding: 28px;
+        border-radius: var(--radius);
+        position: relative;
+      }
+      .evo .panel::before {
+        content: "PARITY · TRA-23228";
+        position: absolute;
+        top: -8px;
+        left: 22px;
+        background: var(--background);
+        padding: 0 10px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.18em;
+        color: var(--muted-foreground);
+      }
+      .evo .panel h3 {
+        margin: 0 0 8px;
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: 28px;
+      }
+
+      /* ---------------- Slide 7 — phases timeline ---------------- */
+      .phases {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 36px;
+      }
+      .phases-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 14px;
+        position: relative;
+      }
+      .phase-card {
+        position: relative;
+        padding: 16px 16px 20px;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        border-radius: 8px;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        transition: transform 240ms ease, box-shadow 240ms ease;
+      }
+      .phase-card:nth-child(odd) {
+        transform: translateY(24px);
+      }
+      .phase-card .ph-num {
+        font-family: var(--font-sans);
+        font-style: italic;
+        font-size: 56px;
+        color: var(--primary);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+      }
+      .phase-card .ph-title {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .phase-card .ph-body {
+        font-family: var(--font-sans);
+        font-size: 14px;
+        color: var(--foreground);
+        line-height: 1.4;
+      }
+      .phase-card .ph-tag {
+        margin-top: auto;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+      }
+
+      /* ---------------- Slide 8 — outlook ---------------- */
+      .outlook {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 56px;
+        align-items: center;
+      }
+      .outlook h2 {
+        font-size: clamp(38px, 4.6vw, 60px);
+      }
+      .outlook .hill-wrap {
+        position: relative;
+      }
+      .outlook .next-list {
+        margin-top: 28px;
+        display: grid;
+        gap: 16px;
+      }
+      .next-item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+        padding: 14px 16px;
+        border: 1px solid var(--hairline);
+        background: var(--surface-raised);
+        border-radius: 8px;
+      }
+      .next-item .marker {
+        width: 22px;
+        height: 22px;
+        border-radius: 6px;
+        background: var(--primary);
+        color: var(--color-white);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+      }
+      .next-item .marker.alt {
+        background: var(--secondary);
+      }
+      .next-item .marker.warm {
+        background: var(--warm);
+      }
+      .next-item h4 {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-weight: 400;
+        font-size: 17px;
+      }
+      .next-item p {
+        margin: 4px 0 0;
+        font-family: var(--font-sans);
+        font-size: 13.5px;
+        color: var(--muted-foreground);
+      }
+
+      /* ---------------- Footer / nav ---------------- */
+      .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 28px 16px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        gap: 24px;
+        flex-wrap: wrap;
+        color: var(--muted-foreground);
+      }
+      .progress {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      .progress button {
+        appearance: none;
+        background: transparent;
+        border: none;
+        padding: 6px 4px;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--muted-foreground);
+        letter-spacing: 0.16em;
+      }
+      .progress .tick {
+        width: 22px;
+        height: 2px;
+        background: var(--hairline);
+        border-radius: 2px;
+        transition: background 220ms, width 220ms;
+      }
+      .progress .tick.active {
+        background: var(--primary);
+        width: 38px;
+      }
+      .nav-arrows {
+        display: flex;
+        gap: 10px;
+      }
+      .arrow-btn {
+        appearance: none;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        color: var(--foreground);
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        transition: all 200ms;
+      }
+      .arrow-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary-strong);
+      }
+
+      /* ---------------- Animations ---------------- */
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .slide.active > * {
+        animation: rise 720ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      }
+      .slide.active > *:nth-child(1) {
+        animation-delay: 60ms;
+      }
+      .slide.active > *:nth-child(2) {
+        animation-delay: 160ms;
+      }
+      .slide.active > *:nth-child(3) {
+        animation-delay: 240ms;
+      }
+      .slide.active > *:nth-child(4) {
+        animation-delay: 320ms;
+      }
+      .slide.active .num-card {
+        animation: rise 800ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      }
+      .slide.active .num-card:nth-child(1) {
+        animation-delay: 80ms;
+      }
+      .slide.active .num-card:nth-child(2) {
+        animation-delay: 180ms;
+      }
+      .slide.active .num-card:nth-child(3) {
+        animation-delay: 260ms;
+      }
+      .slide.active .num-card:nth-child(4) {
+        animation-delay: 340ms;
+      }
+      .slide.active .num-card:nth-child(5) {
+        animation-delay: 420ms;
+      }
+      .slide.active .num-card:nth-child(6) {
+        animation-delay: 500ms;
+      }
+      .slide.active .phase-card {
+        animation: rise 700ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      }
+      .slide.active .phase-card:nth-child(1) {
+        animation-delay: 80ms;
+      }
+      .slide.active .phase-card:nth-child(2) {
+        animation-delay: 160ms;
+      }
+      .slide.active .phase-card:nth-child(3) {
+        animation-delay: 240ms;
+      }
+      .slide.active .phase-card:nth-child(4) {
+        animation-delay: 320ms;
+      }
+      .slide.active .phase-card:nth-child(5) {
+        animation-delay: 400ms;
+      }
+      .slide.active .phase-card:nth-child(6) {
+        animation-delay: 480ms;
+      }
+      .slide.active .phase-card:nth-child(7) {
+        animation-delay: 560ms;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .slide.active > *,
+        .slide.active .num-card,
+        .slide.active .phase-card {
+          animation: none !important;
+          transition: opacity 200ms;
+        }
+      }
+
+      /* SVG diagram tokens */
+      .diagram text {
+        font-family: var(--font-mono);
+        fill: var(--foreground);
+      }
+      .diagram .label-serif {
+        font-family: var(--font-sans);
+        font-style: italic;
+        fill: var(--foreground);
+      }
+      .diagram .muted {
+        fill: var(--muted-foreground);
+      }
+      .diagram .stroke-primary {
+        stroke: var(--primary);
+      }
+      .diagram .stroke-secondary {
+        stroke: var(--secondary);
+      }
+      .diagram .stroke-accent {
+        stroke: var(--accent);
+      }
+      .diagram .fill-soft {
+        fill: var(--primary-soft);
+      }
+
+      /* ---------------- Print mode ---------------- */
+      @media print {
+        @page {
+          size: 1600px 900px;
+          margin: 0;
+        }
+        html,
+        body {
+          width: 1600px;
+          height: auto;
+          background: #ffffff !important;
+          overflow: visible !important;
+          display: block !important;
+          color: #111 !important;
+        }
+        body::before,
+        body::after {
+          display: none !important;
+        }
+        .chrome,
+        .footer {
+          display: none !important;
+        }
+        .stage {
+          width: 1600px;
+          height: auto;
+          overflow: visible !important;
+          flex: none !important;
+        }
+        .deck {
+          width: 1600px;
+          height: auto;
+          display: block !important;
+        }
+        .slide {
+          position: relative !important;
+          inset: auto !important;
+          width: 1600px !important;
+          height: 900px !important;
+          opacity: 1 !important;
+          transform: none !important;
+          page-break-after: always;
+          break-after: page;
+          pointer-events: auto !important;
+          overflow: hidden !important;
+          background: #ffffff !important;
+          padding: 64px !important;
+        }
+        .slide:last-child {
+          page-break-after: auto;
+          break-after: auto;
+        }
+        .slide::before,
+        .masthead-slide::before {
+          display: none !important;
+          background-image: none !important;
+        }
+        .pillars .copy,
+        .angular .copy,
+        .dx-card,
+        .num-card,
+        .challenge,
+        .receipts-diff {
+          background: #ffffff !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          box-shadow: none !important;
+        }
+        .angular .copy {
+          margin-top: 0 !important;
+        }
+        .challenge:nth-child(2) {
+          margin-top: 0 !important;
+        }
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="chrome" role="banner">
+      <div class="masthead">
+        <div class="glyph" aria-hidden="true"></div>
+        <div class="id">
+          <b>Cycle&nbsp;01</b> · 2026 · <span id="brand-name">Tradify</span>
+          Engineering Wrap &nbsp;<span style="color: var(--warm-strong); letter-spacing: 0.32em">⚡ OUTATIME</span>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="chip" id="brand-toggle" aria-pressed="false" title="Toggle brand (B)">
+          <span class="dot"></span>
+          <span id="brand-toggle-label">brand · tradify</span>
+        </button>
+        <button class="chip" id="theme-toggle" aria-pressed="false" title="Toggle theme (T)">
+          <span id="theme-toggle-label">theme · light</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="deck" id="deck">
+        <!-- ============ Slide 1 — Masthead ============ -->
+        <section class="slide masthead-slide active" data-slide="1">
+          <div class="left">
+            <div class="preheader bttf-pre">
+              <span class="bolt-glyph" aria-hidden="true">⚡</span>
+              <span><b>OUTATIME</b></span>
+              <span>·</span>
+              <span>CYCLE 01 · 2026</span>
+              <span>·</span>
+              <span><b>23 MAR</b> &rarr; <b>06 MAY</b></span>
+            </div>
+            <h1 class="title">
+              Where we&rsquo;re going,<br />we don&rsquo;t need a&nbsp;<em>monolith</em>.
+            </h1>
+            <div class="time-jump" aria-label="2014 to 2026 migration">
+              <span class="tj-year tj-past">2014</span>
+              <span class="tj-flux" aria-hidden="true">
+                <svg viewBox="0 0 240 60" width="100%" height="100%" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="fluxgrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="var(--secondary)" stop-opacity="0.0" />
+                      <stop offset="20%" stop-color="var(--secondary)" stop-opacity="0.55" />
+                      <stop offset="50%" stop-color="var(--warm-strong)" stop-opacity="0.95" />
+                      <stop offset="80%" stop-color="var(--primary)" stop-opacity="0.9" />
+                      <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.0" />
+                    </linearGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="1.6" result="b" />
+                      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                  </defs>
+                  <path d="M0,30 L240,30" stroke="url(#fluxgrad)" stroke-width="2" />
+                  <path d="M14,30 L36,16 L30,30 L48,30 L26,46 L34,30 Z"
+                        fill="var(--secondary)" filter="url(#glow)" opacity="0.85" />
+                  <path d="M186,30 L210,18 L204,30 L222,30 L198,46 L206,30 Z"
+                        fill="var(--primary)" filter="url(#glow)" />
+                  <g class="tj-arrows">
+                    <path d="M88,18 L112,30 L88,42 Z" fill="var(--warm-strong)" opacity="0.55" />
+                    <path d="M108,18 L132,30 L108,42 Z" fill="var(--warm-strong)" opacity="0.78" />
+                    <path d="M128,18 L152,30 L128,42 Z" fill="var(--warm-strong)" />
+                  </g>
+                </svg>
+              </span>
+              <span class="tj-year tj-future">2026</span>
+            </div>
+            <p class="lede bttf-lede" style="font-size: 16px; line-height: 1.45">
+              jQuery was still cool when this codebase was born. This cycle the
+              monolith began the process of stepping aside — replaced by a
+              Module-Federated mesh and a portable API layer.
+            </p>
+            <div class="signature">
+              <b>Jean-Claude Kirwan</b> · Frontend, Tradify · TRA-22640
+              &nbsp;<span class="sig-mph" aria-hidden="true">▸ 88 MPH</span>
+            </div>
+          </div>
+          <aside class="right time-circuits" aria-label="Time circuits — cycle manifest">
+            <div class="tc-row tc-destination">
+              <span class="tc-label">Destination<br />time</span>
+              <div class="tc-readout">
+                <span class="tc-readout-line">CYCLE 02 · EXEMPLAR</span>
+                <span class="tc-readout-sub">post-Spark · pillars in production</span>
+              </div>
+            </div>
+            <div class="tc-row tc-present">
+              <span class="tc-label">Present<br />time</span>
+              <div class="tc-readout">
+                <span class="tc-readout-line">06 MAY 2026</span>
+                <span class="tc-readout-sub">Spark · Cycle 01 wrap</span>
+              </div>
+            </div>
+            <div class="tc-row tc-departed">
+              <span class="tc-label">Last time<br />departed</span>
+              <div class="tc-readout">
+                <span class="tc-readout-line">23 MAR 2026</span>
+                <span class="tc-readout-sub">cycle kickoff</span>
+              </div>
+            </div>
+            <div class="manifest-row power-row">
+              <span class="k">Power<br />draw</span>
+              <span class="v">
+                <em style="font-style:italic;color:var(--warm-strong)">1.21 GW</em>
+                &nbsp;·&nbsp;
+                <span style="font-family: var(--font-sans); font-style: italic; font-weight: 300; text-transform: none; letter-spacing: 0; color: var(--muted-foreground)">a bolt of lightning</span>
+              </span>
+            </div>
+            <div class="manifest-row" style="border-bottom: none">
+              <span class="k">Inside</span>
+              <span class="v" style="font-size: 11px; line-height: 1.55; font-family: var(--font-sans); text-transform: none; letter-spacing: 0; font-weight: 300; color: var(--muted-foreground)">
+                <em style="font-style:italic;color:var(--primary-strong)">Foundation</em> · what got built &nbsp;·&nbsp;
+                <em style="font-style:italic;color:var(--warm-strong)">Challenges</em> · obstacles faced &nbsp;·&nbsp;
+                <em style="font-style:italic;color:var(--accent)">Enhancements</em> · sharpened the saw
+              </span>
+            </div>
+          </aside>
+        </section>
+
+        <!-- ============ Slide 2 — Pillars ============ -->
+        <section class="slide" data-slide="2">
+          <header class="slide-head">
+            <div class="kicker">II · Foundation · what got built</div>
+            <div class="slide-num">02&nbsp;/&nbsp;09</div>
+          </header>
+          <div class="pillars">
+            <div class="copy">
+              <h2 class="title">Where we&rsquo;re going,<br />we don&rsquo;t need <em>jQuery</em>.</h2>
+              <p class="lede">
+                The legacy <code style="font-family:var(--font-mono)">web-frontend</code>
+                — born when jQuery was still cool and
+                <code style="font-family:var(--font-mono)">$scope.$apply()</code>
+                was a love language — stepped politely off the timeline.
+                In its place,
+                <code style="font-family:var(--font-mono);color:var(--primary-strong)">tradify-frontend-platform</code>:
+                a Module-Federation host that <em>contains</em> every MFE and
+                lets them speak through one portable API layer,
+                <code style="font-family:var(--font-mono)">@tradify/frontend-context</code>.
+                Great Scott!
+              </p>
+              <div class="legend">
+                <div class="legend-row">
+                  <span class="swatch" style="background: var(--warm-strong); width: 18px; height: 18px"></span>
+                  <div>
+                    <b>/enquiries</b> — first surface migrated end-to-end.
+                    Seven phases of parity with the Angular original; the
+                    proof the platform is real. Stands on three sub-pillars:
+                  </div>
+                </div>
+                <div class="legend-row" style="margin-left: 30px">
+                  <span class="swatch" style="background: var(--primary)"></span>
+                  <div>
+                    <b>/me</b> — session, CSRF, identity. Bootstrap today;
+                    <code>GET&nbsp;/v2/api/v1/me</code> tomorrow — same
+                    contract, zero consumer churn.
+                  </div>
+                </div>
+                <div class="legend-row" style="margin-left: 30px">
+                  <span class="swatch" style="background: var(--accent)"></span>
+                  <div>
+                    <b>/analytics</b> — page-view telemetry, dev dashboard,
+                    parity with Angular events (<em>TRA-23263</em>).
+                  </div>
+                </div>
+                <div class="legend-row" style="margin-left: 30px">
+                  <span class="swatch" style="background: var(--secondary)"></span>
+                  <div>
+                    <b>AngularJS message bridge</b> — postMessage choreography
+                    between the legacy shell and React: bootstrap, route
+                    sync, navigation interception, sidebar totals.
+                  </div>
+                </div>
+                <div class="legend-row" style="margin-left: 30px">
+                  <span class="swatch" style="background: var(--gray)"></span>
+                  <div>
+                    <b>/feature-adoption</b> — upsell banners &amp; onboarding
+                    panels; the carrot when an entitlement gate denies access.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pillars-diagram" aria-label="Platform architecture diagram">
+              <svg viewBox="0 0 580 450" class="diagram" width="100%" height="100%" aria-hidden="true">
+                <defs>
+                  <pattern id="grid3" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M40,0 L0,0 L0,40" fill="none" stroke="var(--grid-line)" stroke-width="1" />
+                  </pattern>
+                  <marker id="retArrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="var(--muted-foreground)" />
+                  </marker>
+                </defs>
+                <rect width="580" height="450" fill="url(#grid3)" />
+
+                <!-- BEFORE: legacy web-frontend retired -->
+                <g opacity="0.5">
+                  <rect x="36" y="20" width="190" height="58" rx="8" fill="none" stroke="var(--muted-foreground)" stroke-width="1" stroke-dasharray="3 4" />
+                  <text x="48" y="38" font-size="9.5" letter-spacing="2" class="muted">LEGACY · RETIRED</text>
+                  <text x="48" y="58" font-size="13" font-weight="500" class="muted">web-frontend</text>
+                  <text x="48" y="72" font-size="10" class="muted">monolithic React app</text>
+                </g>
+                <line x1="230" y1="49" x2="304" y2="49" stroke="var(--muted-foreground)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#retArrow)" />
+                <text x="266" y="42" font-size="9" text-anchor="middle" class="muted">supersedes</text>
+
+                <!-- HOST SHELL — outer rim -->
+                <rect x="20" y="92" width="540" height="340" rx="14" fill="var(--surface-raised)" stroke="var(--primary)" stroke-width="2" />
+                <rect x="20" y="92" width="540" height="32" rx="14" fill="var(--primary)" />
+                <text x="40" y="113" font-size="11" letter-spacing="2" font-weight="500" fill="var(--color-white)">HOST SHELL · tradify-frontend-platform</text>
+                <text x="540" y="113" font-size="10" letter-spacing="1.4" text-anchor="end" fill="var(--color-white)" opacity="0.85">module federation 2.0</text>
+
+                <!-- TOP PILLAR — /enquiries inside shell -->
+                <g>
+                  <rect x="50" y="142" width="480" height="68" rx="10" fill="none" stroke="var(--warm-strong)" stroke-width="2.5" />
+                  <text x="68" y="160" font-size="9.5" letter-spacing="2" fill="var(--warm-strong)">PILLAR · MIGRATED SURFACE</text>
+                  <text x="68" y="186" font-size="19" font-weight="500" fill="var(--warm-strong)">/enquiries</text>
+                  <text x="68" y="202" font-size="10" class="muted">end-to-end React · seven phases of parity</text>
+                </g>
+
+                <!-- @tradify/frontend-context — portable API bus -->
+                <g>
+                  <rect x="50" y="226" width="480" height="46" rx="8" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="6 3" />
+                  <text x="68" y="245" font-size="10.5" letter-spacing="1.6" font-weight="500" fill="var(--primary-strong)">PORTABLE API · @tradify/frontend-context</text>
+                  <text x="68" y="262" font-size="9.5" class="muted">state slices · RTK injection · plugin registry · message bus</text>
+                </g>
+
+                <!-- enquiries connects through bus -->
+                <line x1="290" y1="210" x2="290" y2="226" stroke="var(--warm-strong)" stroke-width="1.5" stroke-dasharray="3 3" />
+
+                <!-- bus → 4 sub-pillars -->
+                <line x1="106" y1="272" x2="106" y2="292" stroke="var(--primary)" stroke-width="1.5" />
+                <line x1="229" y1="272" x2="229" y2="292" stroke="var(--accent)" stroke-width="1.5" />
+                <line x1="352" y1="272" x2="352" y2="292" stroke="var(--secondary)" stroke-width="1.5" />
+                <line x1="475" y1="272" x2="475" y2="292" stroke="var(--gray)" stroke-width="1.5" />
+
+                <text x="40" y="284" font-size="9" letter-spacing="1.6" class="muted">SUB-PILLARS</text>
+
+                <!-- SUB: /me -->
+                <g>
+                  <rect x="50" y="294" width="112" height="118" rx="8" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="1.5" />
+                  <text x="62" y="316" font-size="12" font-weight="500">/me</text>
+                  <text x="62" y="332" font-size="9.5" class="muted">SESSION · CSRF</text>
+                  <text x="62" y="356" class="label-serif" font-size="10.5">postMessage</text>
+                  <text x="62" y="372" class="label-serif" font-size="10.5">today</text>
+                  <text x="62" y="392" class="label-serif" font-size="10.5">→ GET /me</text>
+                </g>
+
+                <!-- SUB: /analytics -->
+                <g>
+                  <rect x="173" y="294" width="112" height="118" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5" />
+                  <text x="185" y="316" font-size="12" font-weight="500">/analytics</text>
+                  <text x="185" y="332" font-size="9.5" class="muted">EVENTS · DASH</text>
+                  <text x="185" y="356" class="label-serif" font-size="10.5">page-view</text>
+                  <text x="185" y="372" class="label-serif" font-size="10.5">+ identify</text>
+                  <text x="185" y="392" class="label-serif" font-size="10.5">TRA-23263</text>
+                </g>
+
+                <!-- SUB: ng-bridge -->
+                <g>
+                  <rect x="296" y="294" width="112" height="118" rx="8" fill="none" stroke="var(--secondary)" stroke-width="1.5" />
+                  <text x="308" y="316" font-size="12" font-weight="500">ng-bridge</text>
+                  <text x="308" y="332" font-size="9.5" class="muted">ANG ↔ REACT</text>
+                  <text x="308" y="356" class="label-serif" font-size="10.5">postMessage</text>
+                  <text x="308" y="372" class="label-serif" font-size="10.5">route · nav</text>
+                  <text x="308" y="392" class="label-serif" font-size="10.5">totals · boot</text>
+                </g>
+
+                <!-- SUB: /feature-adoption -->
+                <g>
+                  <rect x="419" y="294" width="112" height="118" rx="8" fill="none" stroke="var(--gray)" stroke-width="1.5" />
+                  <text x="431" y="314" font-size="11" font-weight="500" fill="var(--gray)">/feature-</text>
+                  <text x="431" y="328" font-size="11" font-weight="500" fill="var(--gray)">adoption</text>
+                  <text x="431" y="346" font-size="9.5" class="muted">UPSELL · ONBOARD</text>
+                  <text x="431" y="368" class="label-serif" font-size="10.5">banners</text>
+                  <text x="431" y="384" class="label-serif" font-size="10.5">entitlement</text>
+                  <text x="431" y="400" class="label-serif" font-size="10.5">carrot</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Slide 5 — Angular shell ============ -->
+        <section class="slide" data-slide="3">
+          <header class="slide-head">
+            <div class="kicker">III · Foundation · what got built</div>
+            <div class="slide-num">03&nbsp;/&nbsp;09</div>
+          </header>
+          <div class="angular">
+            <div class="copy">
+              <h2 class="title">An old <em>dog</em>, four&nbsp;new&nbsp;tricks.</h2>
+              <p class="lede" style="margin-top: 14px">
+                The 2014 shell still hosts production. Picture a pile of
+                <em>444-line</em> controllers, the smell of <code style="font-family:var(--font-mono)">$scope</code>
+                in the morning. This cycle that shell learned to broadcast bootstrap
+                proactively, intercept cross-frame nav, and stop fighting the
+                React router on its own page &mdash; without ripping a single
+                <code style="font-family:var(--font-mono)">ng-controller</code> out.
+              </p>
+              <div class="msg-list">
+                <div class="msg-row"><span class="from">Angular →</span><span>PLATFORM_BOOTSTRAP <span class="label">— session, csrfToken, identity</span></span><span class="ticket">TRA-23113</span></div>
+                <div class="msg-row" style="border-left-color: var(--secondary)"><span class="from" style="color: var(--secondary)">Angular →</span><span>UPDATE_REACT_ROUTE <span class="label">— deep-link sync</span></span><span class="ticket">TRA-22653</span></div>
+                <div class="msg-row" style="border-left-color: var(--accent)"><span class="from" style="color: var(--accent)">React →</span><span>NAVIGATE_TO <span class="label">— bypass-flag for inner routes</span></span><span class="ticket">TRA-23319</span></div>
+                <div class="msg-row" style="border-left-color: var(--warm-strong)"><span class="from" style="color: var(--warm-strong)">Angular ↔</span><span>PLATFORM_ENTITY_TOTALS_UPDATED <span class="label">— sidebar count refresh</span></span><span class="ticket">TRA-23325</span></div>
+              </div>
+            </div>
+            <div class="right" aria-label="postMessage choreography">
+              <svg viewBox="0 0 560 460" class="diagram" width="100%" height="100%" aria-hidden="true">
+                <defs>
+                  <pattern id="grid5" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M40,0 L0,0 L0,40" fill="none" stroke="var(--grid-line)" stroke-width="1" />
+                  </pattern>
+                  <marker id="arrowprim" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="var(--primary)" />
+                  </marker>
+                  <marker id="arrowsec" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="var(--secondary)" />
+                  </marker>
+                  <marker id="arrowacc" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)" />
+                  </marker>
+                </defs>
+                <rect width="560" height="460" fill="url(#grid5)" />
+
+                <!-- Angular column -->
+                <rect x="40" y="50" width="200" height="370" rx="10" fill="var(--surface-raised)" stroke="var(--secondary)" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="60" y="78" font-size="11" letter-spacing="2" font-weight="500" fill="var(--secondary)">ANGULARJS · :8080</text>
+                <text x="60" y="98" font-size="10.5" class="muted">app shell · session of</text>
+                <text x="60" y="112" font-size="10.5" class="muted">record</text>
+
+                <!-- Angular UI skeleton -->
+                <g opacity="0.55">
+                  <rect x="60" y="128" width="110" height="8" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="60" y="146" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="153" width="64" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="161" width="104" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="174" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="181" width="84" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="189" width="124" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="202" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="209" width="52" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="217" width="92" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="230" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="237" width="74" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="245" width="116" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="258" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="265" width="58" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="273" width="98" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="286" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="293" width="68" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="301" width="118" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="314" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="321" width="50" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="329" width="108" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="342" width="160" height="22" rx="3" fill="none" stroke="var(--rule)" stroke-width="0.75" />
+                  <rect x="68" y="349" width="78" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="357" width="102" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="60" y="372" width="160" height="32" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="68" y="380" width="54" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="68" y="388" width="124" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="68" y="395" width="90" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                </g>
+
+                <!-- React column -->
+                <rect x="320" y="50" width="200" height="370" rx="10" fill="var(--surface-raised)" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="4 4" />
+                <text x="340" y="78" font-size="11" letter-spacing="2" font-weight="500" fill="var(--primary)">REACT · /r/* · :3000</text>
+                <text x="340" y="98" font-size="10.5" class="muted">module-federated</text>
+                <text x="340" y="112" font-size="10.5" class="muted">host</text>
+
+                <!-- React UI skeleton -->
+                <g opacity="0.55">
+                  <rect x="340" y="128" width="120" height="8" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="146" width="48" height="48" rx="4" fill="var(--rule)" opacity="0.22" />
+                  <rect x="346" y="152" width="32" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="346" y="160" width="20" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="346" y="180" width="36" height="9" rx="2" fill="var(--rule)" opacity="0.5" />
+                  <rect x="396" y="146" width="48" height="48" rx="4" fill="var(--rule)" opacity="0.22" />
+                  <rect x="402" y="152" width="32" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="402" y="160" width="20" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="402" y="180" width="36" height="9" rx="2" fill="var(--rule)" opacity="0.5" />
+                  <rect x="452" y="146" width="48" height="48" rx="4" fill="var(--rule)" opacity="0.22" />
+                  <rect x="458" y="152" width="32" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="458" y="160" width="20" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="458" y="180" width="36" height="9" rx="2" fill="var(--rule)" opacity="0.5" />
+                  <rect x="340" y="208" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="213" width="84" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="228" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="233" width="106" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="248" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="253" width="62" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="268" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="273" width="92" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="288" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="293" width="74" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="308" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="313" width="118" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="328" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="333" width="56" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="348" width="160" height="14" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="353" width="88" height="4" rx="2" fill="var(--rule)" opacity="0.85" />
+                  <rect x="340" y="372" width="160" height="32" rx="3" fill="var(--rule)" opacity="0.18" />
+                  <rect x="346" y="380" width="60" height="4" rx="2" fill="var(--rule)" opacity="0.9" />
+                  <rect x="346" y="388" width="128" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                  <rect x="346" y="395" width="96" height="3" rx="1.5" fill="var(--rule)" opacity="0.6" />
+                </g>
+
+                <!-- messages -->
+                <line x1="240" y1="160" x2="320" y2="160" stroke="var(--primary)" stroke-width="2" marker-end="url(#arrowprim)" />
+                <text x="280" y="152" font-size="10.5" text-anchor="middle" font-weight="500">PLATFORM_BOOTSTRAP</text>
+                <text x="280" y="174" font-size="9.5" text-anchor="middle" class="muted">proactive · TRA-23113</text>
+
+                <line x1="240" y1="220" x2="320" y2="220" stroke="var(--secondary)" stroke-width="2" marker-end="url(#arrowsec)" />
+                <text x="280" y="212" font-size="10.5" text-anchor="middle" font-weight="500" fill="var(--secondary)">UPDATE_REACT_ROUTE</text>
+                <text x="280" y="234" font-size="9.5" text-anchor="middle" class="muted">deep-link · TRA-22653</text>
+
+                <line x1="320" y1="280" x2="240" y2="280" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrowacc)" />
+                <text x="280" y="272" font-size="10.5" text-anchor="middle" font-weight="500" fill="var(--accent)">NAVIGATE_TO</text>
+                <text x="280" y="294" font-size="9.5" text-anchor="middle" class="muted">bypass-flag · TRA-23319</text>
+
+                <line x1="240" y1="340" x2="320" y2="340" stroke="var(--warm-strong)" stroke-width="2" marker-end="url(#arrowprim)" />
+                <text x="280" y="332" font-size="10.5" text-anchor="middle" font-weight="500" fill="var(--warm-strong)">ENTITY_TOTALS_UPDATED</text>
+                <text x="280" y="354" font-size="9.5" text-anchor="middle" class="muted">sidebar refresh · TRA-23325</text>
+
+                <!-- iframe seam -->
+                <line x1="280" y1="50" x2="280" y2="420" stroke="var(--rule)" stroke-dasharray="2 6" />
+                <text x="280" y="442" font-size="9.5" text-anchor="middle" class="muted">iframe seam · postMessage</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Slide 4 — Unexpected challenges ============ -->
+        <section class="slide" data-slide="4">
+          <header class="slide-head">
+            <div class="kicker">IV · Challenges faced</div>
+            <div class="slide-num">04&nbsp;/&nbsp;09</div>
+          </header>
+          <h2 class="title" style="font-size: clamp(30px, 4vw, 52px); margin-bottom: 0">Two <em>leaks</em>. Both sealed.</h2>
+          <div class="challenges" style="margin-top: 20px">
+            <article class="challenge">
+              <header class="ch-head">
+                <span class="ch-marker" style="background: var(--primary)">α</span>
+                <span class="ch-tag">PERFORMANCE · 1.21 GW · ENQUIRIES COLD-LOAD</span>
+              </header>
+              <h3 class="ch-title">The <em>six-second</em> white screen.</h3>
+              <div class="ch-stat">
+                <span class="ch-before">6.0s</span>
+                <span class="ch-arrow">⟶</span>
+                <span class="ch-after">1.9s</span>
+              </div>
+              <p class="ch-body">
+                A waterfall straight out of 2014: source aliases, eager-shared
+                leaks, a CDN-fetched manifest. Collapsed into one inlined
+                manifest, a preloaded remote entry, and a host-shell hoist of
+                <code style="font-family:var(--font-mono)">/me</code>. Roads?
+                Where we&rsquo;re going we don&rsquo;t need round trips.
+              </p>
+              <div class="ch-commits">
+                <div class="commit-row"><b>TRA-23095</b><span>Removed source aliases from plugin <em>boundaries</em></span></div>
+                <div class="commit-row"><b>TRA-23113</b><span>Proactive <em>PLATFORM_BOOTSTRAP</em> push</span></div>
+                <div class="commit-row"><b>TRA-23293</b><span>Host-shell <em>/me</em> hoist + manifest</span></div>
+                <div class="commit-row"><b>TRA-23325</b><span>Killed polling + tab-change <em>refetch</em></span></div>
+                <div class="commit-row"><b>perf #59</b><span>Eager-shared <em>follow caller</em></span></div>
+              </div>
+            </article>
+
+            <article class="challenge">
+              <header class="ch-head">
+                <span class="ch-marker" style="background: var(--warm-strong)">β</span>
+                <span class="ch-tag">ENTITLEMENT GATES · PLAN-TIER PADLOCKS</span>
+              </header>
+              <h3 class="ch-title">Doc Brown&rsquo;s <em>padlock</em>, ported.</h3>
+              <p class="ch-body">
+                AngularJS shipped <code style="font-family:var(--font-mono)">&lt;upsell-padlock&gt;</code>
+                — a plan-tier gate riveted onto the 2014 dashboard.
+                Re-implementing it in an MFE that boots <em>before</em>
+                bootstrap arrives surfaced two paradoxes at once: a contract
+                the platform didn&rsquo;t have, and a loading state nobody
+                wanted to see.
+              </p>
+              <pre class="ch-code"><span class="tk-c">&lt;EntitlementGate</span>
+  <span class="tk-a">entitlement</span>=<span class="tk-s">"purchaseOrders"</span>
+  <span class="tk-a">fallback</span>=<span class="tk-b">{</span><span class="tk-c">&lt;FeatureAdoptionPanel</span> /<span class="tk-c">&gt;</span><span class="tk-b">}</span>
+  <span class="tk-a">optimistic</span>
+<span class="tk-c">&gt;</span>
+  <span class="tk-c">&lt;PurchaseOrderList</span> /<span class="tk-c">&gt;</span>
+<span class="tk-c">&lt;/EntitlementGate&gt;</span></pre>
+              <ul class="ch-list">
+                <li>
+                  <b>useEntitlement</b> — reads
+                  <code style="font-family:var(--font-mono)">bootstrap.entitlements[key]</code>
+                  off the <code style="font-family:var(--font-mono)">/me</code> slice; resolves <span class="ch-state ok">granted</span> · <span class="ch-state no">denied</span> · <span class="ch-state load">loading</span>.
+                </li>
+                <li>
+                  <b>optimistic</b> — render children while bootstrap is in
+                  flight; swap to fallback if denied. Trades a brief flash
+                  for happy-path speed (off for paid-only content).
+                </li>
+                <li>
+                  <b>FeatureAdoptionPanel</b> — the carrot inside the
+                  padlock: heading, body, primary CTA, dismiss/remind. The
+                  upsell when access is denied <em>or</em> the onboarding
+                  banner when the feature exists but isn't set up yet.
+                </li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============ Slide 6 — Evo / Access ============ -->
+        <section class="slide" data-slide="5">
+          <header class="slide-head">
+            <div class="kicker">V · Brand parity</div>
+            <div class="slide-num">05&nbsp;/&nbsp;09</div>
+          </header>
+          <div class="evo">
+            <div class="copy">
+              <h2 class="title">One <em>flux capacitor</em>,<br />two&nbsp;power sources.</h2>
+              <p class="lede" style="margin-top: 14px">
+                Every component reads from token contracts under
+                <code style="font-family:var(--font-mono)">[data-brand]</code>
+                — Tradify-blue ↔ Access teal flips at runtime. Hit
+                <b>B</b> on the keyboard. Plutonium not required.
+              </p>
+              <div class="swatch-grid" aria-label="Brand semantic tokens">
+                <div class="swatch-tile" style="background: var(--primary)"></div>
+                <div class="swatch-tile" style="background: var(--secondary)"></div>
+                <div class="swatch-tile" style="background: var(--accent)"></div>
+                <div class="swatch-tile" style="background: var(--error)"></div>
+                <div class="swatch-tile" style="background: var(--success)"></div>
+                <div class="swatch-tile" style="background: var(--warning)"></div>
+                <div class="swatch-tile" style="background: var(--gray)"></div>
+              </div>
+
+              <div class="comp-row" aria-label="Live components">
+                <div class="comp-block">
+                  <span class="comp-tag">TABS · STORYBOOK PARITY</span>
+                  <div class="rt-tablist" role="tablist">
+                    <button class="rt-tab active" type="button" role="tab" aria-selected="true">
+                      To-Do
+                      <span class="rt-tab-badge">12</span>
+                    </button>
+                    <button class="rt-tab" type="button" role="tab" aria-selected="false">
+                      Done
+                      <span class="rt-tab-badge">3</span>
+                    </button>
+                  </div>
+                  <div class="rt-tab-panel" role="tabpanel" aria-busy="true">
+                    <div class="skel skel-bar" style="width: 86%"></div>
+                    <div class="skel skel-bar" style="width: 64%"></div>
+                    <div class="skel skel-bar" style="width: 78%"></div>
+                  </div>
+                </div>
+                <div class="comp-block">
+                  <span class="comp-tag">BUTTONS · STORYBOOK PARITY</span>
+                  <div class="rt-btn-grid">
+                    <button class="rt-btn rt-btn-primary" type="button">Primary</button>
+                    <button class="rt-btn rt-btn-secondary" type="button">Secondary</button>
+                    <button class="rt-btn rt-btn-accent" type="button">Accent</button>
+                    <button class="rt-btn rt-btn-destructive" type="button">Destructive</button>
+                    <button class="rt-btn rt-btn-success" type="button">Success</button>
+                    <button class="rt-btn rt-btn-warning" type="button">Warning</button>
+                    <button class="rt-btn rt-btn-info" type="button">Info</button>
+                    <button class="rt-btn rt-btn-neutral" type="button">Neutral</button>
+                    <button class="rt-btn rt-btn-outline" type="button">Outline</button>
+                    <button class="rt-btn rt-btn-ghost" type="button">Ghost</button>
+                    <button class="rt-btn rt-btn-link" type="button">Link</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <h3>Parity, audited.</h3>
+              <p style="font-family: var(--font-sans); color: var(--muted-foreground); margin: 0 0 16px; font-size: 15px;">
+                ui-components aligned to Evo specs across button, badge,
+                tab, modal, tooltip — without forking. The contract is the
+                seam.
+              </p>
+              <div class="commits" style="margin-top: 4px">
+                <div class="commit-row"><b>TRA-23228</b><span>Evo brand parity for <em>ui-components</em></span></div>
+                <div class="commit-row"><b>TRA-23083</b><span>Brand theming <em>consolidation</em> (review)</span></div>
+                <div class="commit-row"><b>TRA-22952</b><span>Tooltip styling <em>contract</em></span></div>
+                <div class="commit-row"><b>TRA-23163</b><span>Standardised loading spinner <em>position</em></span></div>
+                <div class="commit-row"><b>—</b><span>Access · Evo integration <em>handbook</em> in Storybook</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Slide 6 — Agentic Workflow ============ -->
+        <section class="slide" data-slide="6">
+          <header class="slide-head">
+            <div class="kicker">VI · Agentic workflow</div>
+            <div class="slide-num">06&nbsp;/&nbsp;09</div>
+          </header>
+          <h2 class="title">A bench of <em>Docs</em>,<br />on call.</h2>
+          <p class="lede" style="margin-top: 8px; max-width: 78ch">
+            Stood up <code style="font-family:var(--font-mono);color:var(--primary-strong)">tradify-agent-skills</code>
+            &mdash; the user-level garage for tech-lead agents and project skills, shared across every repo. Each one a
+            Doc Brown for its domain. Repo-level agents handle bundle, platform, and DevX work close to the code &mdash;
+            no DeLorean required. An <code style="font-family:var(--font-mono);color:var(--primary-strong)">AGENTS.md</code>
+            generator script mirrors every agent into a flat doc so folks without Claude Code access can still read the
+            playbook.
+          </p>
+          <div class="agentic">
+            <article class="agent-col">
+              <header class="ac-head">
+                <span class="ac-tag">USER · TECH LEADS · 8</span>
+                <span class="ac-count">tradify-agent-skills/agents</span>
+              </header>
+              <ul class="ac-list">
+                <li><b>frontend-tech-lead</b><span>React 19 platform, MF, Tailwind</span></li>
+                <li><b>backend-tech-lead</b><span>.NET 10 / 4.7.2, EF, multi-tenancy</span></li>
+                <li><b>angularjs-tech-lead</b><span>legacy shell, interop, digest cycle</span></li>
+                <li><b>ux-tech-lead</b><span>Figma · Evo · WCAG · component patterns</span></li>
+                <li><b>e2e-testing-tech-lead</b><span>cross-repo coverage strategy</span></li>
+                <li><b>devops-engineer</b><span>Docker, Azure, CI/CD pipelines</span></li>
+                <li><b>security-reviewer</b><span>tenant isolation, CSRF, OWASP</span></li>
+                <li><b>engineering-manager</b><span>cross-repo arch &amp; impact</span></li>
+              </ul>
+            </article>
+            <article class="agent-col">
+              <header class="ac-head">
+                <span class="ac-tag">REPO · SPECIALISTS · 7</span>
+                <span class="ac-count">.claude/agents</span>
+              </header>
+              <ul class="ac-list">
+                <li><b>platform-engineer</b><span>Rspack · MF · plugin manifest</span></li>
+                <li><b>frontend-context-architect</b><span>portable API · RTK injection</span></li>
+                <li><b>frontend-architect-ui</b><span>ui-components · Storybook · a11y</span></li>
+                <li><b>bundle-performance-engineer</b><span>chunk graph · waterfall · LCP</span></li>
+                <li><b>devx-engineer</b><span>generators · Turbo · scripts/</span></li>
+                <li><b>docs-engineer</b><span>READMEs · ADRs · runbooks</span></li>
+                <li><b>code-reviewer</b><span>DRY · dead code · package-agnostic</span></li>
+              </ul>
+            </article>
+            <article class="agent-col">
+              <header class="ac-head">
+                <span class="ac-tag">SKILLS · PROJECT-SPECIFIC · 7</span>
+                <span class="ac-count">.claude/skills</span>
+              </header>
+              <ul class="ac-list">
+                <li><b>evo-shadcn</b><span>token theming · ui-components rules</span></li>
+                <li><b>module-federation</b><span>host/remote · shared singletons</span></li>
+                <li><b>react-19</b><span>R19.2 pinned · no SSR · Tailwind-only</span></li>
+                <li><b>tailwind-v4</b><span>token contracts · no inline styles</span></li>
+                <li><b>html5-react</b><span>JSX semantics · WCAG · ARIA</span></li>
+                <li><b>storybook-10</b><span>CSF Factories · webpack5 builder</span></li>
+                <li><b>cross-platform-dx</b><span>macOS + Windows scripts &amp; paths</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============ Slide 7 — Developer Experience ============ -->
+        <section class="slide" data-slide="7">
+          <header class="slide-head">
+            <div class="kicker">VII · Developer experience</div>
+            <div class="slide-num">07&nbsp;/&nbsp;09</div>
+          </header>
+          <h2 class="title"><em>Hoverboard</em>-grade<br />developer&nbsp;loops.</h2>
+          <div class="dx-grid">
+            <article class="dx-card dx-gen">
+              <span class="dx-tag">GENERATORS · scaffold from one command</span>
+              <ul class="dx-list">
+                <li><code>generate:mfe</code> — Module Federation plugin from template</li>
+                <li><code>generate:evo-mfe</code> — Evo-themed MFE w/ tokens wired</li>
+                <li><code>generate:context</code> — frontend-context state slice</li>
+                <li><code>generate:api-call</code> — RTK Query endpoint w/ types</li>
+                <li><code>generate:icons</code> — Lucide → ui-icons SSR-safe</li>
+              </ul>
+            </article>
+            <article class="dx-card dx-targets">
+              <span class="dx-tag">TARGETS &amp; MODES · same shell, many backends</span>
+              <ul class="dx-list">
+                <li><code>dev</code> — local stack w/ Docker proxy &amp; Angular shell</li>
+                <li><code>dev:qa</code> — point at QA APIs from local React</li>
+                <li><code>dev:mock</code> — frontend-context mock bootstrap</li>
+                <li><code>switch-api.mjs</code> — flip targets without restart</li>
+                <li><code>ensure-env-local.mjs</code> — fail-soft .env bootstrap</li>
+              </ul>
+            </article>
+            <article class="dx-card dx-validate">
+              <span class="dx-tag">CONTRACTS &amp; PARITY · catch drift in CI</span>
+              <ul class="dx-list">
+                <li><code>check:brand-parity</code> — tokens align across brands</li>
+                <li><code>validate-shared-config</code> — Rspack singletons match</li>
+                <li><code>validate-manifest-consistency</code> — plugin manifest schema</li>
+                <li><code>validate-env-completeness</code> — every MFE has env keys</li>
+                <li><code>sync:singletons</code> — propagate React/RTK pins</li>
+              </ul>
+            </article>
+            <article class="dx-card dx-views">
+              <span class="dx-tag">DEV-ONLY VIEWS &amp; AGENT MODE</span>
+              <ul class="dx-list">
+                <li><code>/analytics</code> dashboard — non-prod visualisation of events</li>
+                <li><code>/feature-adoption</code> playground — banner variants live</li>
+                <li>generators support <code>--agent</code> for non-interactive use</li>
+                <li><code>graph</code> script — render dependency graph as SVG</li>
+                <li>Design-Sync DevX branch — staged for merge</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============ Slide 8 — Demo handoff ============ -->
+        <section class="slide demo-slide" data-slide="8">
+          <header class="slide-head">
+            <div class="kicker">VIII · Live demo</div>
+            <div class="slide-num">08&nbsp;/&nbsp;09</div>
+          </header>
+          <div class="demo-stage">
+            <h1 class="demo-title">
+              <em>Demo</em>&nbsp;time.
+            </h1>
+          </div>
+        </section>
+
+        <!-- ============ Slide 9 — Cycle ledger / hard metrics ============ -->
+        <section class="slide" data-slide="9">
+          <header class="slide-head">
+            <div class="kicker">IX · Foundation laid · the receipts</div>
+            <div class="slide-num">09&nbsp;/&nbsp;09</div>
+          </header>
+          <h2 class="title" style="font-size: clamp(24px, 3vw, 40px); margin-bottom: 0; line-height: 1">The <em>almanac</em> doesn&rsquo;t lie.</h2>
+          <div class="receipts" style="margin-top: 14px">
+            <div class="receipts-stats">
+              <div class="num-card md">
+                <div class="corner">UNIT TEST COVERAGE</div>
+                <div class="label">Lines covered · combined</div>
+                <div class="figure"><em>95.1%</em></div>
+                <div class="sublabel"><b>4,313</b> / 4,537 lines</div>
+              </div>
+              <div class="num-card md">
+                <div class="corner">PERF · OUT OF IFRAME</div>
+                <div class="label">Projected · React-owned route</div>
+                <div class="figure"><em>~0.8s</em></div>
+                <div class="sublabel">no shell relay · no postMessage hop</div>
+              </div>
+              <div class="num-card sm">
+                <div class="corner">A11Y</div>
+                <div class="label">Components a11y-attributed</div>
+                <div class="figure"><em>36<span class="figure-sub">/49</span></em></div>
+                <div class="sublabel">aria · roles · focus mgmt</div>
+              </div>
+              <div class="num-card sm">
+                <div class="corner">CI</div>
+                <div class="label">Turbo affected-graph</div>
+                <div class="figure"><em>~5×</em></div>
+                <div class="sublabel">build &amp; test only what changed</div>
+              </div>
+            </div>
+            <div class="receipts-diff">
+              <div class="diff-head">
+                <span class="diff-tag">SAME FEATURE · TWO ARCHITECTURES · ONE ROOF vs INJECTED ENDPOINTS</span>
+              </div>
+              <div class="diff-cols">
+                <pre class="diff-pane diff-old">
+<span class="dh">// 2014 · one roof · EnquiriesCtrl.js</span>
+<span class="dt">angular</span>.module(<span class="ds">'tradify'</span>)
+  .controller(<span class="ds">'EnquiriesCtrl'</span>, <span class="dt">function</span>(
+    <span class="da">$scope</span>, <span class="da">$http</span>, <span class="da">$state</span>,
+    <span class="da">SessionSvc</span>, <span class="da">ToastSvc</span>, ...
+  ) {
+    <span class="da">$scope</span>.enquiries = [];
+    <span class="da">$scope</span>.load   = () =&gt; <span class="da">$http</span>.get(...);
+    <span class="da">$scope</span>.save   = (e) =&gt; <span class="da">$http</span>.post(...);
+    <span class="da">$scope</span>.del    = (id) =&gt; <span class="da">$http</span>.del(...);
+    <span class="da">$scope</span>.format = (row) =&gt; { ... };
+    <span class="da">$scope</span>.valid  = (e)   =&gt; { ... };
+    <span class="da">$scope</span>.edit   = ($i)  =&gt; { ... };
+    <span class="dc">// + 380 lines: auth, paging, DOM, errors</span>
+  });
+<span class="dc">// state + api + format + nav — entangled.</span>
+<span class="dc">// every feature reinvents auth, retry,</span>
+<span class="dc">// cache, invalidation. god-controller.</span></pre>
+                <pre class="diff-pane diff-new">
+<span class="dh">// 2026 · feature owns its slice · enquiriesApi.ts</span>
+<span class="dt">export const</span> enquiriesApi =
+  baseApi.<span class="da">injectEndpoints</span>({
+    <span class="da">endpoints</span>: (build) =&gt; ({
+      list:   build.<span class="da">query</span>&lt;Enquiry[], Args&gt;({
+        query: (a) =&gt; ({ url: <span class="ds">'/enquiries'</span> }),
+        providesTags: [<span class="ds">'Enquiries'</span>],
+      }),
+      save:   build.<span class="da">mutation</span>&lt;Enquiry, In&gt;({...}),
+      remove: build.<span class="da">mutation</span>&lt;<span class="dt">void</span>, <span class="dt">string</span>&gt;({...}),
+    }),
+  });
+<span class="dt">export const</span> { useListQuery, useSaveMutation }
+  = enquiriesApi;
+<span class="dc">// baseApi gives auth, retry, cache,</span>
+<span class="dc">// invalidation — for free.</span>
+<span class="dc">// feature only declares what's NEW.</span>
+<span class="dc">// composable, testable, code-split per MFE.</span></pre>
+              </div>
+              <div class="diff-foot">
+                <span><b>1</b> controller, 444 lines &rarr; <b>N</b> features, each owning <b>~80</b> lines</span>
+                <span>·</span>
+                <span>auth/retry/cache solved <b>once</b> in <code style="font-family:var(--font-mono)">baseApi</code></span>
+                <span>·</span>
+                <span>add a feature = <code style="font-family:var(--font-mono)">injectEndpoints</code>, not edit a god-controller</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="left-foot">
+        <span style="color: var(--warm-strong)">⚡ 88 MPH</span> &nbsp;·&nbsp;
+        ←&nbsp;/&nbsp;→ navigate &nbsp;·&nbsp; B brand &nbsp;·&nbsp; T theme
+        &nbsp;·&nbsp; <span style="font-style: italic; opacity: 0.65">roads? where we&rsquo;re going we don&rsquo;t need roads</span>
+      </div>
+      <div class="progress" id="progress" role="tablist">
+        <button data-go="1" class="tick active" aria-label="Slide 1"></button>
+        <button data-go="2" class="tick" aria-label="Slide 2"></button>
+        <button data-go="3" class="tick" aria-label="Slide 3"></button>
+        <button data-go="4" class="tick" aria-label="Slide 4"></button>
+        <button data-go="5" class="tick" aria-label="Slide 5"></button>
+        <button data-go="6" class="tick" aria-label="Slide 6"></button>
+        <button data-go="7" class="tick" aria-label="Slide 7"></button>
+        <button data-go="8" class="tick" aria-label="Slide 8"></button>
+        <button data-go="9" class="tick" aria-label="Slide 9"></button>
+      </div>
+      <div class="nav-arrows">
+        <button class="arrow-btn" id="prev" aria-label="Previous slide">‹</button>
+        <button class="arrow-btn" id="next" aria-label="Next slide">›</button>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const slides = Array.from(document.querySelectorAll(".slide"));
+        const ticks = Array.from(document.querySelectorAll(".progress .tick"));
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const brandToggle = document.getElementById("brand-toggle");
+        const themeToggle = document.getElementById("theme-toggle");
+        const brandLabel = document.getElementById("brand-toggle-label");
+        const themeLabel = document.getElementById("theme-toggle-label");
+        const brandName = document.getElementById("brand-name");
+        const root = document.documentElement;
+
+        let idx = 0;
+
+        function go(i) {
+          idx = (i + slides.length) % slides.length;
+          slides.forEach((s, k) => s.classList.toggle("active", k === idx));
+          ticks.forEach((t, k) => t.classList.toggle("active", k === idx));
+        }
+
+        prev.addEventListener("click", () => go(idx - 1));
+        next.addEventListener("click", () => go(idx + 1));
+        ticks.forEach((t) =>
+          t.addEventListener("click", () => go(parseInt(t.dataset.go, 10) - 1))
+        );
+
+        document.addEventListener("keydown", (e) => {
+          if (
+            ["ArrowRight", " ", "PageDown", "Enter"].includes(e.key)
+          ) {
+            e.preventDefault();
+            go(idx + 1);
+          } else if (["ArrowLeft", "PageUp"].includes(e.key)) {
+            e.preventDefault();
+            go(idx - 1);
+          } else if (e.key === "Home") {
+            go(0);
+          } else if (e.key === "End") {
+            go(slides.length - 1);
+          } else if (e.key === "b" || e.key === "B") {
+            toggleBrand();
+          } else if (e.key === "t" || e.key === "T") {
+            toggleTheme();
+          }
+        });
+
+        function toggleBrand() {
+          const cur = root.getAttribute("data-brand");
+          const nx = cur === "tradify" ? "access" : "tradify";
+          root.setAttribute("data-brand", nx);
+          brandLabel.textContent = "brand · " + nx;
+          brandToggle.setAttribute(
+            "aria-pressed",
+            nx === "access" ? "true" : "false"
+          );
+          brandName.textContent = nx === "access" ? "Access · Evo" : "Tradify";
+        }
+        function toggleTheme() {
+          const cur = root.getAttribute("data-theme");
+          const nx = cur === "light" ? "dark" : "light";
+          root.setAttribute("data-theme", nx);
+          themeLabel.textContent = "theme · " + nx;
+          themeToggle.setAttribute(
+            "aria-pressed",
+            nx === "dark" ? "true" : "false"
+          );
+        }
+
+        brandToggle.addEventListener("click", toggleBrand);
+        themeToggle.addEventListener("click", toggleTheme);
+
+        // touch / swipe
+        let tx = 0;
+        document.addEventListener(
+          "touchstart",
+          (e) => {
+            tx = e.touches[0].clientX;
+          },
+          { passive: true }
+        );
+        document.addEventListener(
+          "touchend",
+          (e) => {
+            const dx = e.changedTouches[0].clientX - tx;
+            if (Math.abs(dx) > 60) go(dx < 0 ? idx + 1 : idx - 1);
+          },
+          { passive: true }
+        );
+      })();
+    </script>
+  </body>
+</html>

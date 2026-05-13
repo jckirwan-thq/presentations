@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcome to the Real World — JC's Agentic Workflow</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  /* ---------- Tradify Evo dark tokens, remapped for Matrix theme ---------- */
+  :root {
+    --matrix-green: #00FF41;
+    --matrix-green-bright: #39FF6A;
+    --matrix-green-dim: #008F11;
+    --matrix-green-deep: #003B00;
+    --matrix-black: #000000;
+    --matrix-bg: #050A05;
+    --matrix-panel: rgba(0, 20, 0, 0.78);
+    --matrix-border: rgba(0, 255, 65, 0.35);
+    --matrix-text: #C8FFD4;
+    --matrix-muted: #66B07A;
+
+    /* Evo dark mode anchor tokens (adapted) */
+    --evo-teal-300: hsl(179, 45%, 74%);
+    --evo-teal-500: hsl(180, 43%, 44%);
+    --evo-neutral-50: hsl(207, 22%, 10%);
+
+    --r-background-color: var(--matrix-black);
+    --r-main-color: var(--matrix-text);
+    --r-heading-color: var(--matrix-green);
+    --r-link-color: var(--evo-teal-300);
+    --r-selection-background-color: var(--matrix-green);
+    --r-selection-color: var(--matrix-black);
+    --r-main-font: 'Inter', sans-serif;
+    --r-heading-font: 'VT323', 'JetBrains Mono', monospace;
+    --r-code-font: 'JetBrains Mono', monospace;
+  }
+
+  html, body { background: var(--matrix-black); }
+
+  /* ---------- Digital rain canvas ---------- */
+  #matrix-rain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .reveal { z-index: 1; position: relative; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 1.5rem 2rem; }
+
+  /* ---------- Headings ---------- */
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    color: var(--matrix-green);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    text-shadow: 0 0 12px rgba(0, 255, 65, 0.4);
+    font-family: var(--r-heading-font);
+    font-weight: 400;
+  }
+  .reveal h1 { font-size: 3.2rem; }
+  .reveal h2 { font-size: 2.4rem; }
+  .reveal h3 { font-size: 1.8rem; }
+  .reveal h4 { font-size: 1.3rem; color: var(--evo-teal-300); text-shadow: none; }
+
+  .reveal p, .reveal li {
+    color: var(--matrix-text);
+    font-size: 1.15rem;
+    line-height: 1.55;
+  }
+  .reveal li { margin: 0.25em 0; }
+
+  /* ---------- Quote bar ---------- */
+  .quote {
+    font-family: var(--r-heading-font);
+    font-size: 1.5rem;
+    color: var(--matrix-green-bright);
+    border-left: 3px solid var(--matrix-green);
+    padding: 0.4em 0 0.4em 1em;
+    margin: 0.5em 0 1.2em;
+    background: linear-gradient(90deg, rgba(0,255,65,0.08), transparent);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+  }
+  .quote .attr {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    color: var(--matrix-muted);
+    font-size: 0.85rem;
+    margin-top: 0.25em;
+  }
+
+  /* ---------- Title slide ---------- */
+  .title-slide {
+    text-align: center !important;
+  }
+  .title-slide h1 {
+    font-size: 4.5rem;
+    line-height: 1.05;
+    margin-bottom: 0.2em;
+  }
+  .title-slide .sub {
+    font-family: var(--r-code-font);
+    color: var(--matrix-green-bright);
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    margin-top: 1.5em;
+  }
+  .title-slide .who {
+    color: var(--matrix-muted);
+    font-family: 'Inter';
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+
+  /* ---------- Two-column layout ---------- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+  .col-card {
+    background: var(--matrix-panel);
+    border: 1px solid var(--matrix-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 0 16px rgba(0, 255, 65, 0.12) inset;
+  }
+  .col-card h4 {
+    margin: 0 0 0.6em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    border-bottom: 1px dashed var(--matrix-border);
+    padding-bottom: 0.4em;
+  }
+  .col-card .platform-icon {
+    font-family: var(--r-code-font);
+    color: var(--matrix-green);
+    font-size: 0.95rem;
+  }
+  .col-card pre, .col-card code {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+  .col-card pre {
+    background: rgba(0, 0, 0, 0.55) !important;
+    border: 1px solid rgba(0, 255, 65, 0.18);
+    border-radius: 4px;
+    padding: 0.6em 0.8em !important;
+    margin: 0.4em 0 !important;
+    box-shadow: none !important;
+  }
+  .col-card ol, .col-card ul { padding-left: 1.1em; margin: 0.3em 0; }
+  .col-card li { font-size: 0.92rem; }
+
+  /* ---------- Mermaid container ---------- */
+  .mermaid {
+    background: rgba(0, 20, 0, 0.55);
+    border: 1px solid var(--matrix-border);
+    border-radius: 8px;
+    padding: 0.6rem;
+    margin: 0.4rem auto;
+    text-align: center;
+    max-height: 56vh;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mermaid svg {
+    max-width: 100% !important;
+    max-height: 52vh !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  .mermaid[style*="max-height"] svg {
+    max-height: inherit !important;
+  }
+  .mermaid .nodeLabel, .mermaid .edgeLabel {
+    color: var(--matrix-text) !important;
+  }
+
+  /* ---------- Footer chip ---------- */
+  .chip {
+    display: inline-block;
+    border: 1px solid var(--matrix-green-dim);
+    color: var(--matrix-green-bright);
+    border-radius: 999px;
+    padding: 0.15em 0.7em;
+    font-family: var(--r-code-font);
+    font-size: 0.75rem;
+    margin-right: 0.4em;
+  }
+  .chip.priority {
+    background: var(--matrix-green-deep);
+    color: var(--matrix-green-bright);
+    border-color: var(--matrix-green);
+  }
+
+  /* ---------- Inline code ---------- */
+  .reveal code:not(pre code) {
+    color: var(--matrix-green-bright);
+    background: rgba(0, 255, 65, 0.08);
+    padding: 0.05em 0.35em;
+    border-radius: 3px;
+    font-family: var(--r-code-font);
+    font-size: 0.92em;
+  }
+
+  /* ---------- Links ---------- */
+  .reveal a { color: var(--evo-teal-300); text-decoration: underline dotted; }
+  .reveal a:hover { color: var(--matrix-green-bright); }
+
+  /* ---------- Slide controls + progress ---------- */
+  .reveal .controls { color: var(--matrix-green); }
+  .reveal .progress { color: var(--matrix-green); }
+  .reveal .slide-number {
+    color: var(--matrix-green-dim);
+    background: rgba(0,0,0,0.5);
+    font-family: var(--r-code-font);
+  }
+
+  /* ---------- Tradify watermark ---------- */
+  .watermark {
+    position: fixed;
+    bottom: 8px;
+    left: 12px;
+    color: var(--matrix-green-dim);
+    font-family: var(--r-code-font);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ---------- Lists fit ---------- */
+  .reveal .compact li { font-size: 0.95rem; line-height: 1.4; margin: 0.15em 0; }
+
+  /* ---------- Banner ---------- */
+  .banner {
+    background: linear-gradient(90deg, rgba(0, 255, 65, 0.18), transparent);
+    border-left: 4px solid var(--matrix-green);
+    padding: 0.6em 1em;
+    margin: 0.8em 0;
+    font-family: var(--r-code-font);
+    color: var(--matrix-green-bright);
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrix-rain"></canvas>
+<div class="watermark">TRADIFY × CLAUDE — wake up, Neo...</div>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. Title -->
+    <section class="title-slide">
+      <h1>Welcome to<br/>the Real World.</h1>
+      <p class="quote" style="display:inline-block;text-align:left;margin-top:1.5em;">
+        "I'm trying to free your mind, Neo. But I can only show you the door. You're the one that has to walk through it."
+        <span class="attr">— Morpheus, The Matrix (1999)</span>
+      </p>
+      <p class="sub">JC'S AGENTIC WORKFLOW · CLAUDE CODE</p>
+      <p class="who">Jean-Claude Kirwan · Tradify Frontend · 2026-05-14</p>
+    </section>
+
+    <!-- 2. Why -->
+    <section>
+      <h2>Why this matters</h2>
+      <p class="quote">"What is real? How do you define 'real'?"<span class="attr">— Morpheus</span></p>
+      <p>Raw Claude: clever autocomplete. Curated setup: a teammate that knows your repos, recalls last session, ships in your conventions, burns ~75% fewer tokens.</p>
+      <div class="two-col">
+        <div class="col-card" style="border-color: rgba(255,80,80,0.4); box-shadow: 0 0 16px rgba(255,40,40,0.08) inset;">
+          <h4 style="color:#ff8080; border-bottom-color: rgba(255,80,80,0.35);">Raw Claude</h4>
+          <ul class="compact" style="font-size:1rem;">
+            <li>Re-explain stack each session</li>
+            <li>No cross-session memory</li>
+            <li>Token-heavy prose output</li>
+            <li>Generic suggestions</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h4>Curated Setup</h4>
+          <ul class="compact" style="font-size:1rem;">
+            <li>Knows 4 repos cold</li>
+            <li>Remembers decisions weeks later</li>
+            <li>Right specialist agent per domain</li>
+            <li>~75% fewer tokens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. The three things -->
+    <section>
+      <h2>The three things</h2>
+      <p class="quote">"This is your last chance. After this, there is no turning back."<span class="attr">— Morpheus</span></p>
+      <ol>
+        <li><span class="chip priority">★</span> <strong>Run <code>claude</code> via <code>agent-deck</code> from the <code>tradify/</code> folder root</strong> — cross-repo brain, session multiplexing, MCP attach in one shell</li>
+        <li><span class="chip priority">★</span> <strong>Install <code>rtk</code> · <code>caveman</code> · <code>icm</code></strong> — token compression + persistent memory <em style="color:var(--matrix-green-bright);">(shoutout to Rafael)</em></li>
+        <li><span class="chip priority">★</span> <strong>Use and contribute to <code>tradify-agent-skills</code></strong> — agents and skills live once, symlinked everywhere</li>
+      </ol>
+    </section>
+
+    <!-- ============= PIECE 1: Claude Code CLI ============= -->
+    <section>
+      <h2>1. Claude Code CLI</h2>
+      <p class="quote">"Wake up, Neo..."<span class="attr">— opening line</span></p>
+      <p>The CLI itself. Everything below plugs into it. Authenticated against Anthropic API or via Claude Pro/Max plan.</p>
+      <div class="mermaid" style="max-height: 38vh;">
+flowchart LR
+  T["Terminal"] --> C["claude"]
+  C --> M["Models · Opus/Sonnet/Haiku"]
+  C --> H["Hooks"]
+  C --> P["Plugins + MCP"]
+  C --> A["Agents"]
+  C --> S["Skills"]
+  style C fill:#003B00,stroke:#00FF41,color:#00FF41
+      </div>
+    </section>
+    <!-- ============= PIECE 2: Parent CLAUDE.md ============= -->
+    <section>
+      <h2>2. Parent <code>tradify/</code> + layered <code>CLAUDE.md</code> <span class="chip priority">★</span></h2>
+      <p class="quote">"The Matrix is everywhere. It is all around us."<span class="attr">— Morpheus</span></p>
+      <p>Open Claude from <code>~/development/tradify/</code> and you get cross-repo brain. Each subdir is a real git repo with its own <code>CLAUDE.md</code> for stack-specific rules.</p>
+      <div class="mermaid" style="max-height: 44vh;">
+flowchart TB
+  TAS["tradify-agent-skills repo"] -->|symlink via setup script| CL["tradify/.claude/ - agents + skills"]
+  CL --> P["tradify/ CLAUDE.md - cross-repo brain"]
+  P --> F["tradify-frontend-platform · React 19"]
+  P --> A["web-frontend-angularjs · AngularJS 1.8"]
+  P --> W["web-platform · .NET 4.7.2"]
+  P --> S["tradify-shared-api · .NET 10"]
+  classDef hub fill:#003B00,stroke:#00FF41,color:#00FF41
+  classDef src fill:#001a00,stroke:#39FF6A,color:#C8FFD4
+  class P hub
+  class TAS,CL src
+      </div>
+    </section>
+    <!-- ============= PIECE 3: RTK · Caveman · ICM ============= -->
+    <section>
+      <h2>3. <code>rtk</code> · <code>caveman</code> · <code>icm</code> <span class="chip priority">★</span></h2>
+      <p class="quote">"I know kung fu."<span class="attr">— Neo</span></p>
+      <p>Three hook-driven tools that compound silently. Install once, forget. Setup details in the handouts.</p>
+      <div class="mermaid">
+flowchart LR
+  RTK["rtk · bash proxy · 60-90% fewer tokens"] --> H["settings.json hooks"]
+  CAV["caveman · prose compression · 75% fewer tokens"] --> H
+  ICM["icm · persistent memory · recall + store"] --> H
+  H --> CC["Claude Code session"]
+  style RTK fill:#003B00,stroke:#00FF41,color:#00FF41
+  style CAV fill:#003B00,stroke:#00FF41,color:#00FF41
+  style ICM fill:#003B00,stroke:#00FF41,color:#00FF41
+      </div>
+      <p style="font-size:0.9rem;color:var(--matrix-muted);">Daily friction: zero. Recall before work, store on the five triggers, the rest is automatic. <em style="color:var(--matrix-green-bright);">(shoutout to Rafael)</em></p>
+    </section>
+
+    <!-- ============= PIECE 4: Agents + skills dependency graph ============= -->
+    <section>
+      <h2>4. Agents pull skills <span class="chip priority">★</span></h2>
+      <p class="quote">"I can only show you the door. You're the one that has to walk through it."<span class="attr">— Morpheus</span></p>
+      <p>Each agent in <code>tradify-agent-skills/agents/*.md</code> declares a <code>skills:</code> array. Skills are reusable knowledge bundles. Edit once → every agent that uses it learns it.</p>
+      <div class="mermaid" style="max-height: 44vh;">
+flowchart LR
+  EM["engineering-manager"] --> SK_react["react-19"]
+  EM --> SK_ts["typescript"]
+  EM --> SK_dn["dotnet"]
+  EM --> SK_ng["angularjs"]
+  FE["frontend-tech-lead"] --> SK_react
+  FE --> SK_ts
+  FE --> SK_tw["tailwind-v4"]
+  FE --> SK_mf["module-federation"]
+  FE --> SK_jest["jest"]
+  BE["backend-tech-lead"] --> SK_dn
+  BE --> SK_ef["entity-framework"]
+  BE --> SK_xunit["xunit"]
+  AJ["angularjs-tech-lead"] --> SK_ng
+  AJ --> SK_jest
+  AJ --> SK_ts
+  UX["ux-tech-lead"] --> SK_tw
+  UX --> SK_react
+  SR["security-reviewer"] --> SK_dn
+  SR --> SK_ef
+  SR --> SK_react
+  classDef agent fill:#003B00,stroke:#00FF41,color:#00FF41
+  classDef skill fill:#001a00,stroke:#39FF6A,color:#C8FFD4
+  class EM,FE,BE,AJ,UX,SR agent
+  class SK_react,SK_tw,SK_ts,SK_mf,SK_dn,SK_ng,SK_jest,SK_ef,SK_xunit skill
+      </div>
+    </section>
+
+    <!-- ============= PIECE 5: Plugins ranked ============= -->
+    <section>
+      <h2>5. 18 plugins, ranked by usage <span class="chip priority">★</span></h2>
+      <p class="quote">"Guns. Lots of guns."<span class="attr">— Neo</span></p>
+      <div class="two-col" style="grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+        <div class="col-card" style="padding: 0.6rem 0.9rem;">
+          <h4 style="font-size:1rem;">Daily (top 9)</h4>
+          <ol class="compact" style="margin:0; font-size:0.8rem;">
+            <li><strong>atlassian</strong> — Jira queries, transitions, Confluence search</li>
+            <li><strong>caveman</strong> — always-on prose compression</li>
+            <li><strong>agent-deck</strong> — multi-session, MCP attach, worktrees</li>
+            <li><strong>superpowers</strong> — brainstorming, TDD, writing-plans, code review</li>
+            <li><strong>pr-review-toolkit</strong> — multi-agent PR review</li>
+            <li><strong>chrome-devtools-mcp</strong> — perf traces, a11y, console/network</li>
+            <li><strong>figma</strong> — design-to-code, Code Connect</li>
+            <li><strong>slack</strong> — search, send, drafts</li>
+            <li><strong>claude-md-management</strong> — audit/improve CLAUDE.md</li>
+          </ol>
+        </div>
+        <div class="col-card" style="padding: 0.6rem 0.9rem;">
+          <h4 style="font-size:1rem;">Weekly / on-demand (10-18)</h4>
+          <ol class="compact" start="10" style="margin:0; font-size:0.8rem;">
+            <li><strong>skill-creator</strong> — build/eval custom skills</li>
+            <li><strong>github</strong> — gh-CLI extensions, PR ops</li>
+            <li><strong>frontend-design</strong> — polished UI generation</li>
+            <li><strong>n1-optimizer</strong> — perf hotspot detection</li>
+            <li><strong>claude-code-setup</strong> — automation recommender</li>
+            <li><strong>code-simplifier</strong> — post-edit cleanup pass</li>
+            <li><strong>playwright</strong> — E2E spike testing</li>
+            <li><strong>typescript-lsp</strong> — fast type lookups</li>
+            <li><strong>security-guidance</strong> — security review pass</li>
+          </ol>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--matrix-muted);margin-top:0.5rem;">Install via <code>/plugin install &lt;name&gt;</code>. Don't enable all 18 day 1 — add as you hit the use case.</p>
+    </section>
+
+    <!-- ============= PIECE 6: Lifecycle event hooks ============= -->
+    <section>
+      <h2>6. Lifecycle event hooks</h2>
+      <p class="quote">"Free your mind."<span class="attr">— Morpheus</span></p>
+      <p>Hooks fire on session lifecycle events. <code>~/.claude/settings.json</code> wires command-line tools to each event. Multiple tools per event run in sequence.</p>
+      <div class="two-col">
+        <div class="col-card">
+          <h4>Event → what fires</h4>
+          <ul class="compact" style="font-size:0.85rem;">
+            <li><code>SessionStart</code> → caveman-activate · icm hook start · agent-deck</li>
+            <li><code>UserPromptSubmit</code> → caveman-mode-tracker · icm hook prompt</li>
+            <li><code>PreToolUse:Bash</code> → rtk proxy (rewrites command)</li>
+            <li><code>PreCompact</code> → icm hook compact (snapshot)</li>
+            <li><code>SessionEnd</code> → icm hook end · agent-deck</li>
+            <li><code>Stop</code> · <code>Notification</code> · <code>PermissionRequest</code> → agent-deck</li>
+          </ul>
+        </div>
+        <div class="col-card">
+          <h4>Why each matters</h4>
+          <ul class="compact" style="font-size:0.85rem;">
+            <li><strong>SessionStart</strong> — load memory + activate compression before first prompt</li>
+            <li><strong>UserPromptSubmit</strong> — inject context (auto-recall ICM, keep caveman alive)</li>
+            <li><strong>PreToolUse:Bash</strong> — token-killer transparent rewrite</li>
+            <li><strong>PreCompact</strong> — checkpoint long sessions to ICM before context trim</li>
+            <li><strong>SessionEnd</strong> — store progress without you having to remember</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--matrix-muted);">Full JSON in handouts §8.</p>
+    </section>
+
+    <!-- ============= PIECE 7: Plans live in markdown ============= -->
+    <section>
+      <h2>7. Plans live in markdown</h2>
+      <p class="quote">"Follow the white rabbit."<span class="attr">— Trinity</span></p>
+      <p>Plans are <code>.md</code> files. Symlink the <code>plans/</code> folder out of the repo into whatever markdown tool you like. Plans commit with code; the tool gives you the editor.</p>
+      <div class="two-col">
+        <div class="col-card">
+          <h4>Sample plan structure</h4>
+          <pre style="font-size:0.7rem;line-height:1.3;"><code># TRA-23186 · pre-push agent review
+
+## Why
+Catch convention violations before
+remote review. Run affected tests +
+parallel Claude agents.
+
+## Scope
+- Husky pre-push hook
+- Affected pkg gate (turbo)
+- Opt-in via push option
+- Severity classifier
+
+## Plan
+1. Detect claude CLI + TTY
+2. Run turbo affected tests
+3. If --o agent-review, dispatch
+4. Severity → interactive prompt
+
+## Out of scope
+- CI mirror (separate ticket)
+
+## Done when
+- 23 test suites pass
+- Hook warns gracefully if no CLI
+- Manual smoke test on main</code></pre>
+        </div>
+        <div class="col-card">
+          <h4>Markdown editor options</h4>
+          <ul class="compact" style="font-size:0.85rem;">
+            <li><strong>Obsidian</strong> (JC's choice) — PARA vault, links, embeds, graph view</li>
+            <li><strong>VS Code</strong> — already open, Markdown All in One ext, preview side-by-side</li>
+            <li><strong>iA Writer</strong> — distraction-free, paid</li>
+            <li><strong>Typora</strong> — WYSIWYG, paid</li>
+            <li><strong>Logseq</strong> — outliner + bidirectional links, free</li>
+            <li><strong>Plain text editor</strong> — nano, vim, helix</li>
+          </ul>
+          <p style="font-size:0.8rem;color:var(--matrix-muted);margin-top:0.5em;">Pick whatever you'll actually open. The symlink doesn't care.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= PIECE 10: Convention memory ============= -->
+    <section>
+      <h2>8. Conventions in memory</h2>
+      <p class="quote">"Fate, it seems, is not without a sense of irony."<span class="attr">— Morpheus</span></p>
+      <p>The "always / never" rules — stored in <code>~/.claude/projects/...tradify/memory/</code>. Loaded every session via <code>MEMORY.md</code> index. Teach a new rule by saying "remember that X".</p>
+      <ul class="compact">
+        <li>Never push to main · always branch + PR</li>
+        <li>Never implement directly — delegate to specialist agent</li>
+        <li>PR title: <code>TRA-NUMBER - feature/bucket/name</code></li>
+        <li>TS 3.4.5 in AngularJS repo — no <code>?.</code>, no <code>??</code></li>
+        <li>Tradify-frontend-platform uses Jest, not Vitest</li>
+        <li>Named Tailwind utilities, never arbitrary <code>[300]</code></li>
+        <li>Extract components to own files</li>
+        <li>Verify bundle size after every Rspack/MF change</li>
+      </ul>
+    </section>
+    <!-- ============= PIECE 9: Pre-push hook ============= -->
+    <section>
+      <h2>9. Pre-push agent-review hook (TRA-23186)</h2>
+      <p class="quote">"There is a difference between knowing the path and walking the path."<span class="attr">— Morpheus</span></p>
+      <p>Every <code>git push</code> runs affected-package tests + coverage. Opt in with <code>git push -o agent-review</code> for parallel Claude agent review on the diff.</p>
+      <div class="mermaid">
+flowchart TB
+  Push["git push"] --> Tests["Affected tests + coverage"]
+  Tests --> Pass{"tests pass"}
+  Pass -- no --> Block["Block push"]
+  Pass -- yes --> Gate{"opt-in agent-review"}
+  Gate -- no --> Done["Push proceeds"]
+  Gate -- yes --> AR["Parallel agent review"]
+  AR --> Sev["Severity classifier"]
+  Sev --> Prompt["autofix / commit-plan / quit"]
+  Prompt --> Done
+  style AR fill:#003B00,stroke:#00FF41,color:#00FF41
+  style Done fill:#001a00,stroke:#00FF41,color:#00FF41
+  style Block fill:#1a0000,stroke:#660000,color:#ff8080
+      </div>
+    </section>
+
+    <!-- ============= Daily workflow recap ============= -->
+    <section>
+      <h2>Daily workflow shape</h2>
+      <div class="mermaid">
+flowchart TB
+  M["Morning: cd tradify · claude · icm recall · Jira check"] --> P["Pick ticket"]
+  P --> EM["engineering-manager · scope + impact"]
+  EM --> BR["brainstorming skill"]
+  BR --> PL["writing-plans · Obsidian"]
+  PL --> IMP["Implement via specialist agents in parallel"]
+  IMP --> V["Verify: package tests · Chrome DevTools MCP"]
+  V --> S["git agent-push"]
+  S --> PR["PR · TRA-XXXXX - feature/bucket/name"]
+  PR --> JR["Jira auto · Code Review"]
+  JR --> ST["icm store decisions before EOD"]
+  style M fill:#001a00,stroke:#00FF41,color:#00FF41
+  style ST fill:#001a00,stroke:#00FF41,color:#00FF41
+      </div>
+    </section>
+
+    <!-- ============= 5-min path reminder ============= -->
+    <section>
+      <h2>The 5-minute red pill path</h2>
+      <p style="font-family:var(--r-code-font); color:var(--matrix-green-bright); margin-top:-0.4em; font-size:0.9rem;">(not the bad one from reddit)</p>
+      <p class="quote">"Remember, all I'm offering is the truth."<span class="attr">— Morpheus</span></p>
+      <ol>
+        <li>Install Claude Code</li>
+        <li>Install <code>icm</code> · <code>rtk</code> · <code>caveman</code></li>
+        <li>Clone <code>tradify-agent-skills</code> · run <code>./setup.sh</code> · delegate one real task</li>
+        <li>Install plugins</li>
+        <li>Profit?</li>
+      </ol>
+      <p class="banner">Everything else compounds. Don't try to install all 18 plugins up front — that's the blue pill.</p>
+    </section>
+
+    <!-- ============= Handouts ============= -->
+    <section>
+      <h2>Handouts</h2>
+      <p class="quote">"I can only show you the door. You're the one that has to walk through it."<span class="attr">— Morpheus</span></p>
+      <ul>
+        <li>🍏 <a href="./handout-mac.md">handout-mac.md</a> — exact commands, copy/paste ready</li>
+        <li>🪟 <a href="./handout-windows.md">handout-windows.md</a> — Windows 11 + WSL2 variants</li>
+        <li>📕 Full playbook source: <code>~/Desktop/claude-code-playbook.md</code></li>
+      </ul>
+      <p style="font-size:0.9rem;color:var(--matrix-muted);">PDF? Open the .md in VS Code with "Markdown PDF" ext, or <code>npx md-to-pdf handout-mac.md</code>.</p>
+      <p class="banner">Ping JC on Slack with the convention you want to formalize. New rules added by saying "remember that X" in any session.</p>
+    </section>
+
+    <!-- ============= End ============= -->
+    <section class="title-slide">
+      <h1>There is no spoon.</h1>
+      <p class="quote" style="display:inline-block;text-align:left;margin-top:1.5em;">
+        "Do not try and bend the spoon. That's impossible. Instead, only try to realize the truth — there is no spoon."
+        <span class="attr">— Spoon Boy</span>
+      </p>
+      <p class="sub">QUESTIONS?</p>
+      <p class="who">JC · #frontend · jeanclaude.kirwan@theaccessgroup.com</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+
+<script>
+  // ---------- Matrix digital rain ----------
+  (function () {
+    const c = document.getElementById('matrix-rain');
+    const ctx = c.getContext('2d');
+    let w, h, cols, drops;
+    const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    function size() {
+      w = c.width = window.innerWidth;
+      h = c.height = window.innerHeight;
+      cols = Math.floor(w / 16);
+      drops = new Array(cols).fill(1).map(() => Math.random() * h / 16);
+    }
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#00FF41';
+      ctx.font = '15px JetBrains Mono, monospace';
+      for (let i = 0; i < cols; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * 16, drops[i] * 16);
+        if (drops[i] * 16 > h && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    size();
+    window.addEventListener('resize', size);
+    setInterval(draw, 55);
+  })();
+
+  // ---------- Mermaid theming ----------
+  // Mermaid renders our own static, author-controlled diagram source — not untrusted input.
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    securityLevel: 'loose',
+    themeVariables: {
+      primaryColor: '#001a00',
+      primaryTextColor: '#C8FFD4',
+      primaryBorderColor: '#00FF41',
+      lineColor: '#00FF41',
+      secondaryColor: '#003B00',
+      tertiaryColor: '#000000',
+      background: '#000000',
+      fontFamily: 'JetBrains Mono, monospace',
+      fontSize: '14px',
+      nodeBorder: '#00FF41',
+      mainBkg: '#001a00',
+      edgeLabelBackground: '#000000',
+      clusterBkg: '#001a00',
+      clusterBorder: '#00FF41'
+    },
+    flowchart: {
+      htmlLabels: false,
+      curve: 'basis',
+      useMaxWidth: true,
+      nodeSpacing: 30,
+      rankSpacing: 40,
+      padding: 8
+    }
+  });
+
+  // Stash original mermaid source so we can re-render
+  document.querySelectorAll('.mermaid').forEach((el, i) => {
+    el.dataset.mermaidSrc = el.textContent.trim();
+    el.id = el.id || ('mermaid-' + i);
+  });
+
+  function clearEl(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+  function showSvg(el, svgString) {
+    clearEl(el);
+    var doc = new DOMParser().parseFromString(svgString, 'image/svg+xml');
+    var svg = doc.documentElement;
+    if (svg && svg.tagName.toLowerCase() === 'svg') {
+      el.appendChild(document.importNode(svg, true));
+    } else {
+      showError(el, 'No SVG produced');
+    }
+  }
+
+  function showError(el, err) {
+    clearEl(el);
+    var pre = document.createElement('pre');
+    pre.style.color = '#ff8080';
+    pre.style.fontSize = '0.75rem';
+    pre.style.textAlign = 'left';
+    pre.textContent = 'Mermaid render failed:\n' + String((err && err.message) || err);
+    el.appendChild(pre);
+    console.error('Mermaid error for', el.id, err);
+  }
+
+  async function renderMermaid() {
+    var nodes = document.querySelectorAll('.mermaid');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      try {
+        el.removeAttribute('data-processed');
+        var result = await mermaid.render('svg-' + el.id + '-' + Date.now(), el.dataset.mermaidSrc);
+        showSvg(el, result.svg);
+      } catch (err) {
+        showError(el, err);
+      }
+    }
+  }
+
+  // ---------- Reveal init ----------
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    width: 1280,
+    height: 800,
+    margin: 0.04,
+    transition: 'fade',
+    backgroundTransition: 'fade',
+    plugins: [RevealHighlight, RevealNotes]
+  }).then(renderMermaid);
+</script>
+
+</body>
+</html>
