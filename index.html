@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JC's Presentations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --green: #00FF41;
+    --green-bright: #39FF6A;
+    --green-dim: #008F11;
+    --bg: #000;
+    --text: #C8FFD4;
+    --muted: #66B07A;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+  #rain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+  h1 {
+    font-family: 'VT323', monospace;
+    font-size: 3.5rem;
+    color: var(--green);
+    margin: 0 0 0.2em;
+    text-shadow: 0 0 12px rgba(0,255,65,0.4);
+  }
+  .sub {
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.2em;
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+  }
+  ul.decks { list-style: none; padding: 0; margin: 0; }
+  ul.decks li {
+    border: 1px solid rgba(0, 255, 65, 0.35);
+    border-radius: 8px;
+    margin: 1rem 0;
+    padding: 1.25rem 1.5rem;
+    background: rgba(0, 20, 0, 0.5);
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  ul.decks li:hover {
+    border-color: var(--green);
+    transform: translateX(4px);
+  }
+  ul.decks a {
+    color: var(--green-bright);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+  }
+  ul.decks a:hover { color: var(--green); }
+  .meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.4em;
+    font-family: 'Inter', sans-serif;
+  }
+  footer {
+    margin-top: 4rem;
+    color: var(--green-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+  }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+<main>
+  <h1>JC's Presentations</h1>
+  <p class="sub">JEAN-CLAUDE KIRWAN · TRADIFY FRONTEND</p>
+
+  <ul class="decks">
+    <li>
+      <a href="./claude-code-playbook/">→ Welcome to the Real World — JC's Agentic Workflow</a>
+      <div class="meta">2026-05-14 · Claude Code playbook (Matrix-themed) · <a href="./claude-code-playbook/handout-mac.md">mac handout</a> · <a href="./claude-code-playbook/handout-windows.md">windows handout</a></div>
+    </li>
+    <li>
+      <a href="./2026-cycle-1/">→ Cycle 1 Steering Committee</a>
+      <div class="meta">2026 Q1 · BTTF-themed steering committee deck</div>
+    </li>
+  </ul>
+
+  <footer>
+    SOURCE · <a href="https://github.com/jckirwan-thq/presentations">github.com/jckirwan-thq/presentations</a>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var c = document.getElementById('rain');
+  var ctx = c.getContext('2d');
+  var chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var w, h, cols, drops;
+  function size() {
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+    cols = Math.floor(w / 16);
+    drops = new Array(cols).fill(1).map(function () { return Math.random() * h / 16; });
+  }
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#00FF41';
+    ctx.font = '15px JetBrains Mono, monospace';
+    for (var i = 0; i < cols; i++) {
+      var text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * 16, drops[i] * 16);
+      if (drops[i] * 16 > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  size();
+  window.addEventListener('resize', size);
+  setInterval(draw, 55);
+})();
+</script>
+</body>
+</html>
