@@ -484,6 +484,7 @@
   </div>
   <div class="callout danger">
     <p><strong>Architectural reminder:</strong> Semantic tokens never hold hex literals — they reference primitives via <code>var()</code>. Every swap below is either a primitive mutation (Bucket A) or a semantic alias change (B/C/E/F). Bucket-A is the only path that touches hex.</p>
+    <p><strong>Sizing rule (global):</strong> We do <strong>not</strong> ship Tradify/Angular odd-number px sizes. Every radius and type stop rounds <strong>UP to the next-largest rem-compatible (even) px</strong>. E.g. font 13px → 14px (<code>0.875rem</code>), 15px → 16px (<code>1rem</code>), 25px → 26px; radius 5px → 6px, 3px → 4px. (Supersedes any earlier "round to nearest even" phrasing — that rounded 25→24 down, which is now incorrect.)</p>
   </div>
 
   <!-- =================== Status update (post-#146) =================== -->
@@ -517,7 +518,7 @@
       <tr>
         <td><strong>Q2</strong></td>
         <td>Card radius 5px vs 6px</td>
-        <td><strong>6px</strong> (<code>--radius-card 0.375rem</code>). Even-px-only rule overrides Angular literal.</td>
+        <td><strong>6px</strong> (<code>--radius-card 0.375rem</code>). Round-UP-to-next-largest-even rule (5px → 6px) overrides the Angular literal.</td>
         <td>Deck slide 10 (Bucket C)</td>
       </tr>
       <tr>
@@ -1938,7 +1939,7 @@
       </tr>
       <tr>
         <td><strong>F</strong> Type scale fill-ins</td>
-        <td><code>--text-label 14px</code>, <code>--text-card-body 16px</code>, <code>--text-card-title 18px</code>, <code>--text-page-title 20px</code>, <code>--text-page-emphasis 22px</code>, <code>--text-dashboard 24px</code>, <code>--text-display-sm 30px</code>, <code>--text-display 38px</code>.</td>
+        <td>Per the global round-UP-to-next-largest-even rule: <code>--text-label 14px</code> (Angular 13→14), <code>--text-card-body 16px</code> (15→16), <code>--text-card-title 18px</code>, <code>--text-page-title 20px</code>, <code>--text-page-emphasis 22px</code>, <code>--text-dashboard 26px</code> (Angular 25→26), <code>--text-display-sm 30px</code>, <code>--text-display 38px</code>. <strong>⚠️ Note:</strong> <code>--text-dashboard</code> shipped at 24px (rounded down) — should be 26px under this rule; correct on next touch.</td>
         <td>Label, Card (title + body padding), Dialog (title alias), Empty (title), FeatureAdoptionBanner (title + body), Heading (Tailwind alignment).</td>
         <td>~40 (F existing) + ~10 from component swaps</td>
         <td>Low.</td>
