@@ -1,0 +1,2016 @@
+<!doctype html>
+<html lang="en" data-brand="tradify" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>UI Components × Figma DS Mirror — Audit Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* =====================================================================
+   * Tradify ui-components audit — single scrollable report (NOT a deck).
+   * Visual chrome lifted from sibling deck `tokens-figma-ds-alignment`.
+   * ===================================================================== */
+  :root {
+    /* Primitives (mirrored from brand/tradify) */
+    --color-white: #ffffff;
+    --color-paper: #f8f8f8;
+    --color-canvas: #eeeeee;
+    --color-soft-grey: #f3f7f9;
+    --color-subtle-grey: #f4f7f9;
+    --color-normal-grey: #e4eaec;
+    --color-border-strong: #e0e0e0;
+    --color-border-subtle: #e3e6ea;
+    --color-zinc: #97a3aa;
+    --color-dark-grey: #7a858f;
+    --color-ducttape: #53616a;
+    --color-light-black: #4b5a62;
+    --color-coal: #263238;
+    --color-darkgrey: #21292e;
+    --color-text-default: #424242;
+    --color-text-muted: #757575;
+
+    --color-brand: #009ec7;
+    --color-brand-dark: #006f8b;
+    --color-brand-light: #99d8e9;
+    --color-brand-midtint: #c4e9f2;
+    --color-brand-tint: #e5f5f9;
+
+    --color-success: #46be8a;
+    --color-success-bg: #e8fff2;
+    --color-success-dark: #318561;
+    --color-warning: #fd8b00;
+    --color-warning-bg: #feae4d;
+    --color-warning-dark: #b16100;
+    --color-danger: #ff5b62;
+    --color-danger-bg: #fdedee;
+    --color-danger-dark: #a5383c;
+    --color-info: #00bcd4;
+    --color-info-bg: #eef6fd;
+    --color-spark: #f8c231;
+
+    --font-sans: "Roboto", "Arial", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+    --radius-card: 5px;
+    --radius-control: 3px;
+    --radius-badge: 2px;
+
+    --shadow-sm: 0 1px 4px 0 rgb(0 0 0 / 0.10);
+    --shadow-card-glow: 0 0 0 1px var(--color-border-strong);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--color-soft-grey);
+    color: var(--color-text-default);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  /* Sticky header */
+  header.report-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-white);
+    border-bottom: 2px solid var(--color-brand);
+    padding: 0.9rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  header.report-header .brand-chip {
+    font-family: var(--font-mono);
+    color: var(--color-brand);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  header.report-header h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-coal);
+    font-weight: 500;
+  }
+  header.report-header .meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  main {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2rem 1.6rem 6rem;
+  }
+
+  /* Anchor nav */
+  nav.anchor-nav {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-card);
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.6rem;
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+  nav.anchor-nav .label {
+    color: var(--color-brand);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-right: 0.6em;
+  }
+  nav.anchor-nav a {
+    color: var(--color-ducttape);
+    text-decoration: none;
+    margin-right: 0.7em;
+    border-bottom: 1px solid transparent;
+  }
+  nav.anchor-nav a:hover {
+    color: var(--color-brand);
+    border-bottom-color: var(--color-brand);
+  }
+
+  h2.section-title {
+    color: var(--color-coal);
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin: 2.6rem 0 0.3em;
+    padding-bottom: 0.35em;
+    border-bottom: 2px solid var(--color-brand);
+    letter-spacing: -0.005em;
+  }
+  h3 {
+    color: var(--color-ducttape);
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin: 1.4rem 0 0.4em;
+  }
+  h4 {
+    color: var(--color-brand-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0.8rem 0 0.3em;
+  }
+  p, li { font-size: 0.94rem; color: var(--color-text-default); }
+  strong { color: var(--color-coal); font-weight: 500; }
+
+  /* Summary grid */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    margin: 0.8rem 0 1.4rem;
+  }
+  .stat-tile {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-left: 4px solid var(--color-brand);
+    border-radius: var(--radius-card);
+    padding: 0.9rem 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-tile.danger  { border-left-color: var(--color-danger); }
+  .stat-tile.warning { border-left-color: var(--color-warning); }
+  .stat-tile.success { border-left-color: var(--color-success); }
+  .stat-tile.muted   { border-left-color: var(--color-zinc); }
+  .stat-tile .num {
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-coal);
+    line-height: 1;
+  }
+  .stat-tile .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.4em;
+  }
+
+  /* Severity chips */
+  .sev {
+    display: inline-block;
+    padding: 0.15em 0.7em;
+    border-radius: var(--radius-badge);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: 0.4em;
+    border: 1px solid transparent;
+  }
+  .sev.matches  { background: var(--color-success-bg); color: var(--color-success-dark); border-color: var(--color-success); }
+  .sev.minor    { background: #fff7e6; color: var(--color-warning-dark); border-color: var(--color-warning); }
+  .sev.wrong    { background: var(--color-danger-bg); color: var(--color-danger-dark); border-color: var(--color-danger); }
+  .sev.missing  { background: #fff0f0; color: #8a1f23; border-color: #c0292e; font-weight: 700; }
+  .sev.excluded { background: var(--color-normal-grey); color: var(--color-light-black); border-color: var(--color-zinc); }
+
+  /* Bucket pills */
+  .bucket {
+    display: inline-block;
+    padding: 0.1em 0.55em;
+    border-radius: var(--radius-badge);
+    background: var(--color-brand-tint);
+    color: var(--color-brand-dark);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-right: 0.25em;
+    border: 1px solid var(--color-brand-light);
+  }
+  .bucket.new    { background: #ffe5cc; color: #7a3a00; border-color: var(--color-warning); }
+
+  /* Component cards */
+  .component-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-card);
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .component-card.matches  { border-left: 4px solid var(--color-success); }
+  .component-card.minor    { border-left: 4px solid var(--color-warning); }
+  .component-card.wrong    { border-left: 4px solid var(--color-danger); }
+  .component-card.missing  { border-left: 4px solid #c0292e; }
+  .component-card .header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding-bottom: 0.5em;
+    margin-bottom: 0.7em;
+  }
+  .component-card h3 {
+    margin: 0;
+    color: var(--color-coal);
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  .component-card .path {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+  .component-card .figma-node {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-brand);
+    background: var(--color-brand-tint);
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-badge);
+  }
+  .component-card .subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin: 0.4em 0;
+  }
+  .component-card .panel {
+    background: var(--color-soft-grey);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-control);
+    padding: 0.65rem 0.85rem;
+  }
+  .component-card .panel.figma { border-left: 3px solid var(--color-brand); }
+  .component-card .panel.react { border-left: 3px solid var(--color-ducttape); }
+  .component-card h4 { margin: 0 0 0.3em; }
+  .component-card ul { margin: 0.2em 0; padding-left: 1.05em; }
+  .component-card ul li { font-size: 0.85rem; margin: 0.1em 0; }
+
+  /* Token swap list */
+  .swap-list {
+    background: var(--color-coal);
+    color: #e0e0e0;
+    border-radius: var(--radius-control);
+    padding: 0.7em 0.9em;
+    margin: 0.6em 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+  .swap-list .meta { color: var(--color-zinc); font-size: 0.7rem; }
+  .swap-list .add { color: var(--color-success); }
+  .swap-list .del { color: var(--color-danger); }
+  .swap-list .note { color: var(--color-brand-light); }
+  .swap-list .key { color: var(--color-brand-light); }
+
+  code:not(.swap-list code) {
+    color: var(--color-brand-dark);
+    background: var(--color-brand-tint);
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-badge);
+    font-family: var(--font-mono);
+    font-size: 0.84em;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.6em 0 1em;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.86rem;
+  }
+  thead { background: var(--color-coal); }
+  th {
+    color: var(--color-white);
+    text-align: left;
+    padding: 0.55em 0.8em;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 0.5em 0.8em;
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-text-default);
+  }
+  tbody tr:nth-child(even) { background: var(--color-soft-grey); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* Color swatch */
+  .swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    padding: 0.1em 0.45em;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    margin: 0.1em 0.15em 0.1em 0;
+    vertical-align: middle;
+  }
+  .swatch .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .callout {
+    background: var(--color-brand-tint);
+    border-left: 4px solid var(--color-brand);
+    padding: 0.7em 1em;
+    margin: 0.8em 0;
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  }
+  .callout.warning {
+    background: #fff7e6;
+    border-left-color: var(--color-warning);
+  }
+  .callout.danger {
+    background: var(--color-danger-bg);
+    border-left-color: var(--color-danger);
+  }
+  .callout p { margin: 0.2em 0; font-size: 0.92rem; }
+
+  footer {
+    margin: 4rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-strong);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .anchor-jump { scroll-margin-top: 5rem; }
+
+  @media (max-width: 800px) {
+    .component-card .subgrid { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <span class="brand-chip">TRADIFY × DS AUDIT</span>
+  <h1>UI Components ⇄ Figma DS Mirror — Component-by-Component Audit</h1>
+  <span class="meta">JC KIRWAN · audit 2026-05-28 · updated 2026-06-02 (post #146) · TRA-23702</span>
+</header>
+
+<main>
+
+  <!-- =================== Anchor nav =================== -->
+  <nav class="anchor-nav">
+    <span class="label">JUMP TO</span>
+    <a href="#summary">Summary</a>
+    <a href="#resolution-map">Resolution Map</a>
+    <a href="#legend">Legend</a>
+    <a href="#primitives">Primitives</a>
+    <a href="#composites">Composites</a>
+    <a href="#patterns">Patterns</a>
+    <a href="#layout">Layout</a>
+    <a href="#exclusions">Exclusions</a>
+    <a href="#open-questions">Open questions</a>
+    <a href="#bucket-rollup">Bucket roll-up</a>
+  </nav>
+
+  <!-- =================== Summary =================== -->
+  <h2 class="section-title anchor-jump" id="summary">Summary</h2>
+  <p>Read-only audit of every React component under
+    <code>tradify-frontend-platform/packages/ui-components/src/components/</code>
+    against the Tradify Figma DS Mirror (file <code>TGYO5S1Dm5Owixf8HwFcri</code>,
+    Components page node <code>1:2</code>). Each component card carries a severity
+    tag, the current React token reads, the Figma intent, and a paste-able
+    token-swap snippet cross-referenced to the TRA-23702 buckets (A–G).
+    <strong>The audit itself made no code mutations; the token alignment then
+    shipped via PR #146 — see the Status update below.</strong></p>
+
+  <div class="summary-grid">
+    <div class="stat-tile success">
+      <div class="num">6</div>
+      <div class="label">✅ Matches</div>
+    </div>
+    <div class="stat-tile warning">
+      <div class="num">18</div>
+      <div class="label">⚠️ Minor drift</div>
+    </div>
+    <div class="stat-tile danger">
+      <div class="num">8</div>
+      <div class="label">❌ Wrong tokens</div>
+    </div>
+    <div class="stat-tile">
+      <div class="num">2</div>
+      <div class="label">🔴 Missing (no React equiv)</div>
+    </div>
+  </div>
+  <div class="summary-grid">
+    <div class="stat-tile muted">
+      <div class="num">34</div>
+      <div class="label">Components in-scope</div>
+    </div>
+    <div class="stat-tile muted">
+      <div class="num">14</div>
+      <div class="label">Components excluded</div>
+    </div>
+    <div class="stat-tile">
+      <div class="num">7</div>
+      <div class="label">Buckets touched (A–G)</div>
+    </div>
+    <div class="stat-tile warning">
+      <div class="num">3</div>
+      <div class="label">New buckets proposed</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>Headline:</strong> Buckets A, B, C, E, F all land swaps in this audit; D (spacing-7_5) and G (hygiene comments) are surgical and don't show up in component reads. Three patterns surface that need a <em>new</em> bucket: (H) input validation glow tokens, (I) status pill / job-status primitive, (J) banner colour family (info/critical full-bleed strip).</p>
+  </div>
+  <div class="callout warning">
+    <p><strong>Watch:</strong> The Card primitive uses Tailwind's <code>rounded-lg</code> (8px) and <code>border</code> default — Bucket C swap-in is the highest-payoff single change in the entire audit; it cascades into 9 composites (AlertDialog, Dialog, Empty, ResultCard, Panel, Sheet, Popover-style Tooltip, Accordion, Drawer).</p>
+  </div>
+  <div class="callout danger">
+    <p><strong>Architectural reminder:</strong> Semantic tokens never hold hex literals — they reference primitives via <code>var()</code>. Every swap below is either a primitive mutation (Bucket A) or a semantic alias change (B/C/E/F). Bucket-A is the only path that touches hex.</p>
+  </div>
+
+  <!-- =================== Status update (post-#146) =================== -->
+  <div class="callout success">
+    <p><strong>Status update — 2026-06-02 (post PR #146, merged to main as <code>2315d40c</code>).</strong> The original read was captured pre-alignment on 2026-05-28; this is what now ships on <code>main</code>.</p>
+    <p><strong>✅ Shipped — token foundations, all of Buckets A–G:</strong> status primitive realign (A); tint-bg + foreground pairs (B); semantic radius — <code>--radius-card 6px</code> (Q2 even-px rule), <code>--radius-control 4px</code>, <code>--radius-control-sm 2px</code>, <code>--radius-badge 2px</code>, <code>--radius-modal 4px</code>, <code>--radius-pill</code> (C); <code>--spacing-7_5</code> 30px (D); <code>--shadow-button</code> + brand/danger focus glows (E, absorbs H); semantic type scale + DSFoundations Storybook page (F); Angular-exact hygiene comments (G).</p>
+    <p><strong>✅ Shipped — component swaps:</strong> Button (semantic radius across all sizes + flat shadow), Input (radius + focus glow, orphaned ring-offset removed), Select (radius), Card (<code>rounded-card</code>). <strong>Plus emergent parity not in the original buckets:</strong> breadcrumb + page-title cool-slate chrome (Angular-live exact — link/current <code>#3D4951</code>, house+chevrons <code>#637381</code>, title <code>#424242</code>), enquiry footer button geometry, and the full <strong>Access cross-brand token contract</strong> (shadow/radius/breadcrumb defined in <code>brand/access/*</code> so the brand toggle stays 1:1).</p>
+    <p><strong>⏳ Still pending — component-phase tickets, NOT in #146:</strong> per-component swaps for Textarea, Checkbox, RadioGroup, Switch, Toggle, Badge, Avatar and the composites (Dialog, AlertDialog, Sheet, Drawer, Popover, Accordion, Empty, ResultCard, Panel); proposed Buckets <span class="bucket new">I</span> StatusBadge and <span class="bucket new">J</span> Banner family; optional <span class="bucket new">K</span> Sidebar surface. Also outstanding: audit the ui-config <em>Colors</em> Storybook story (<code>/story/ui-config-colors--colors</code>).</p>
+    <p>The per-component cards below remain as captured 2026-05-28 (pre-alignment reads) — treat them as the spec for the remaining component-phase work.</p>
+  </div>
+
+  <!-- =================== Resolution Map =================== -->
+  <h2 class="section-title anchor-jump" id="resolution-map">Resolution Map <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--color-text-muted); letter-spacing:0.08em; margin-left:0.6em;">2026-05-28</span></h2>
+  <p>JC locked the 7 open questions below before token alignment proceeds. Per-component severity rows further down in the report remain as captured, but any open-question text in those rows is superseded by the decisions here.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Question</th>
+        <th>Decision</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Q1</strong></td>
+        <td>Checkbox/Radio default fill</td>
+        <td>Brand cyan (existing <code>--primary</code> token). No Angular-grey revert.</td>
+        <td>JC 2026-05-28</td>
+      </tr>
+      <tr>
+        <td><strong>Q2</strong></td>
+        <td>Card radius 5px vs 6px</td>
+        <td><strong>6px</strong> (<code>--radius-card 0.375rem</code>). Even-px-only rule overrides Angular literal.</td>
+        <td>Deck slide 10 (Bucket C)</td>
+      </tr>
+      <tr>
+        <td><strong>Q3</strong></td>
+        <td>Pager-specific tokens</td>
+        <td>Deferred — component-level workstream, not token gap.</td>
+        <td>Deck slide 14</td>
+      </tr>
+      <tr>
+        <td><strong>Q4</strong></td>
+        <td>Banner J — token-only or component</td>
+        <td>Token-only: <code>--banner-bg #526069</code> dark-slate. Full-bleed Banner is structural redesign — defer. <strong>Folded into Bucket B.</strong></td>
+        <td>Deck slide 14 + JC 2026-05-28</td>
+      </tr>
+      <tr>
+        <td><strong>Q5</strong></td>
+        <td>StatusBadge — new primitive or Badge variant</td>
+        <td><strong>Add Status variant to existing Badge.</strong> Component-phase work, not blocking token alignment.</td>
+        <td>JC 2026-05-28</td>
+      </tr>
+      <tr>
+        <td><strong>Q6</strong></td>
+        <td>Sidebar bucket K vs composition epic</td>
+        <td>No Bucket K. Sidebar tokens already in place. Composition gaps = separate epic.</td>
+        <td>Deck slide 14</td>
+      </tr>
+      <tr>
+        <td><strong>Q7</strong></td>
+        <td>Input validation glow — Material or brand-aliased</td>
+        <td>Brand-aliased: <code>color-mix(in oklab, var(--destructive) 30%, transparent)</code> pattern following Bucket E. NOT literal Material palette. <strong>Folded into Bucket E.</strong></td>
+        <td>Deck slide 8 (Bucket E)</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <p><strong>Net bucket plan:</strong> Original A–G ships unchanged. H folds into E. J folds into B. K dropped. Q5 parked. <strong>✅ Shipped 2026-06-02 via #146:</strong> all of A–G (foundations) plus the Button/Input/Select/Card/Breadcrumb/title swaps. Remaining work (H-as-StatusBadge·I·J + the other per-component swaps) moves to component-phase tickets.</p>
+  </div>
+
+  <!-- =================== Legend =================== -->
+  <h2 class="section-title anchor-jump" id="legend">Legend</h2>
+  <p>Severity tags carry through the rest of the report:</p>
+  <ul>
+    <li><span class="sev matches">✅ matches</span> — current React tokens already produce the Figma intent (or are within sub-pixel rounding).</li>
+    <li><span class="sev minor">⚠️ minor drift</span> — values differ in a way most users won't notice but a TRA-23702 bucket already addresses it.</li>
+    <li><span class="sev wrong">❌ wrong tokens</span> — visually obvious drift; bucket swap required.</li>
+    <li><span class="sev missing">🔴 missing</span> — Figma counterpart exists, React equivalent does not (or vice versa — flagged inversely).</li>
+    <li><span class="sev excluded">— excluded</span> — no Figma counterpart; net-new React surface or Tailwind-default utility.</li>
+  </ul>
+  <p>Bucket pills mark <em>which TRA-23702 bucket</em> a swap belongs to:
+    <span class="bucket">A</span> status hexes ·
+    <span class="bucket">B</span> tint-bg pairs ·
+    <span class="bucket">C</span> semantic radius ·
+    <span class="bucket">D</span> spacing-7_5 ·
+    <span class="bucket">E</span> shadow tokens ·
+    <span class="bucket">F</span> type scale ·
+    <span class="bucket">G</span> hygiene comments ·
+    <span class="bucket new">H</span><span class="bucket new">I</span><span class="bucket new">J</span> proposed new buckets.</p>
+
+  <!-- =================== PRIMITIVES =================== -->
+  <h2 class="section-title anchor-jump" id="primitives">Primitives</h2>
+
+  <!-- Button -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Button</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/button/button.tsx</span>
+      <span class="figma-node">Figma 12:26 + IconButton 14:31</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Container radius: <code>rounded-md</code> (Tailwind default 6px)</li>
+          <li>Container shadow: <strong>none on default variant</strong> — Tailwind base only adds shadow to <code>outline</code> via <code>shadow-(--btn-outline-shadow)</code></li>
+          <li>Default variant fill: <code>bg-primary-600 hover:bg-primary-600/90</code></li>
+          <li>Success / warning / destructive go through semantic <code>--success</code> / <code>--warning</code> / <code>--destructive</code></li>
+          <li>Height: <code>--btn-height: 2.5rem</code> (40px) — Angular md is 34px</li>
+          <li>Focus ring: <code>ring-(--focus-ring-width)</code> via <code>--focus-ring-width: 2px</code></li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Components 12:26)</h4>
+        <ul>
+          <li>Radius <strong>5px</strong> (md), 4px (lg), 2px (sm/xs) — <code>--radius-control 4px</code>, <code>--radius-control-sm 2px</code> via Bucket C; md is a special override at 5px in Angular but rolls into <code>--radius-control</code> at the modal/dialog level.</li>
+          <li>Drop shadow at rest <strong>0 1px 4px 0 rgba(0,0,0,0.10)</strong>; <strong>no shadow when active</strong>.</li>
+          <li>Primary fill <span class="swatch"><span class="dot" style="background:#009ec7"></span>#009ec7</span>; hover <span class="swatch"><span class="dot" style="background:#0aa8d1"></span>#0aa8d1</span> (+10 lighten, not blueprint-dark).</li>
+          <li>Success fill <span class="swatch"><span class="dot" style="background:#46be8a"></span>#46be8a</span> (Angular lunchbox — requires Bucket A primitive mutation).</li>
+          <li>Padding md: <code>6px 20px</code>; lg: <code>10px 20px</code>; sm: <code>6px 13px</code>; xs: <code>1px 5px</code>.</li>
+          <li>Focus ring 3px brand-tinted outset shadow — needs <code>--shadow-focus-brand</code> (Bucket E).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// button.tsx — Bucket C + E swaps</span>
+<span class="del">- 'inline-flex … rounded-md … focus-visible:ring-(--focus-ring-width) focus-visible:ring-ring/(--focus-ring-opacity) focus-visible:ring-offset-(--focus-ring-offset)'</span>
+<span class="add">+ 'inline-flex … rounded-(--radius-control) shadow-(--shadow-button) focus-visible:shadow-(--shadow-focus-brand) active:shadow-none'</span>
+
+<span class="meta">// brand/tradify/tokens.css — Bucket E additions</span>
+<span class="add">+ --shadow-button: 0 1px 4px 0 rgb(0 0 0 / 0.10);</span>
+<span class="add">+ --shadow-focus-brand: 0 0 0 3px rgb(0 158 199 / 0.25);</span>
+<span class="add">+ --shadow-focus-danger: 0 0 0 3px rgb(255 91 98 / 0.25);</span>
+
+<span class="meta">// Primary hover — Bucket A primitive realign</span>
+<span class="note">// hover state ships #0aa8d1, NOT --color-tradify-blue-700 (=#006f8b)</span>
+<span class="note">// add --primary-hover semantic in tokens.css → var(--color-tradify-blue-500) or literal #0aa8d1</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~12 (button.tsx variant strings) + 4 token rows in tokens.css. Cross-references: <span class="bucket">C</span> radius, <span class="bucket">E</span> shadows, <span class="bucket">A</span> primitive realign feeds primary-hover.</p>
+  </article>
+
+  <!-- Input -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Input</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/input/input.tsx</span>
+      <span class="figma-node">Figma 14:12</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Radius: <code>rounded-md</code> (6px)</li>
+          <li>Height: <code>h-9</code> (36px) — Angular is ~34–38px depending on size</li>
+          <li>Shadow: <code>shadow-(--input-shadow)</code> defaulting to <strong>none</strong></li>
+          <li>Focus: <code>focus-visible:ring-(--focus-ring-width) focus-visible:ring-ring/(--focus-ring-opacity)</code> — 2px ring</li>
+          <li>aria-invalid: <code>aria-invalid:border-destructive aria-invalid:ring-destructive/20</code> — no glow</li>
+          <li>Padding: <code>px-3 py-1</code></li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Radius <strong>3px</strong> default (Angular control); <code>--radius-control 4px</code> from Bucket C.</li>
+          <li>Default focus = <strong>border-colour change only</strong>, no glow (Angular reality per Gap 9).</li>
+          <li>Error / warning / success state: validation glow <code>0 0 8px rgba(&lt;state&gt;, 0.6)</code> — Material colour palette, not brand.</li>
+          <li>Trailing-icon slot for success / error / loading per FontAwesome glyphs (Field composite — separate component).</li>
+          <li>Required asterisk in <code>{color.feedback.danger.fg}</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// input.tsx — Bucket C radius swap + new validation glow tokens (NEEDS BUCKET H)</span>
+<span class="del">- 'rounded-md border border-input bg-(--input-bg) text-foreground shadow-(--input-shadow)'</span>
+<span class="add">+ 'rounded-(--radius-control) border border-input bg-(--input-bg) text-foreground shadow-(--input-shadow)'</span>
+
+<span class="del">- 'aria-invalid:border-destructive aria-invalid:ring-destructive/20'</span>
+<span class="add">+ 'aria-invalid:border-destructive aria-invalid:shadow-(--shadow-input-error)'</span>
+
+<span class="meta">// brand/tradify/tokens.css — proposed Bucket H additions (input validation glow)</span>
+<span class="add">+ --shadow-input-error:   0 0 8px rgb(244 67 54 / 0.60);   /* Material red */</span>
+<span class="add">+ --shadow-input-warning: 0 0 8px rgb(255 152 0 / 0.60);    /* Material amber */</span>
+<span class="add">+ --shadow-input-success: 0 0 8px rgb(76 175 80 / 0.60);    /* Material green */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~8 lines in input.tsx + 3 token rows. Cross-references: <span class="bucket">C</span> radius, <span class="bucket new">H</span> input validation glow (new bucket — Material palette, distinct from brand <code>--shadow-focus-brand</code>).</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q7</a> — glow is <strong>brand-aliased</strong> via <code>color-mix(in oklab, var(--destructive) 30%, transparent)</code>, NOT literal Material palette. <strong>Folded into Bucket E.</strong></p>
+  </article>
+
+  <!-- Textarea -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Textarea</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/textarea/textarea.tsx</span>
+      <span class="figma-node">derived from Input 14:12</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Radius: <code>rounded-md</code> (6px)</li>
+          <li>Min-height: <code>min-h-(--textarea-min-height) = 80px</code></li>
+          <li>Same aria-invalid + focus tokens as Input — no glow, 2px ring.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Inherits Input's geometry: <code>--radius-control 4px</code>, no default glow, validation glow uses Material palette.</li>
+          <li>Min-height should track Angular's textarea floor (currently <code>80px</code> — keep; close enough to Angular's <code>auto</code> 3-row default at <code>~76px</code> for 14px line-height).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// textarea.tsx — same rules as Input</span>
+<span class="del">- 'border-input bg-background … rounded-md … aria-invalid:ring-destructive/20 …'</span>
+<span class="add">+ 'border-input bg-background … rounded-(--radius-control) … aria-invalid:shadow-(--shadow-input-error) …'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3. Cross-references: <span class="bucket">C</span>, <span class="bucket new">H</span>. Identical swap pattern to Input.</p>
+  </article>
+
+  <!-- Select -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Select</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/select/select.tsx</span>
+      <span class="figma-node">Figma 15:22</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Trigger radius: <code>rounded-md</code> (6px)</li>
+          <li>Trigger height: <code>--select-trigger-height: 2.5rem</code> (40px)</li>
+          <li>Same focus ring + aria-invalid pattern as Input — 2px ring, no glow.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Radius <code>--radius-control 4px</code> (Bucket C swap).</li>
+          <li>Validation glow on aria-invalid via <code>--shadow-input-error</code> (Bucket H).</li>
+          <li>Trigger height 34–38px (Angular form-control) — keep <code>--select-trigger-height</code> but ack the Angular live computed height is 38px; tolerable drift.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// select.tsx trigger</span>
+<span class="del">- 'border-input bg-background … rounded-md … aria-invalid:ring-destructive/20'</span>
+<span class="add">+ 'border-input bg-background … rounded-(--radius-control) … aria-invalid:shadow-(--shadow-input-error)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3. Cross-references: <span class="bucket">C</span>, <span class="bucket new">H</span>.</p>
+  </article>
+
+  <!-- Checkbox -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Checkbox</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/checkbox/checkbox.tsx</span>
+      <span class="figma-node">Figma 14:47</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Size: <code>--checkbox-size: 1.25rem</code> (20px) ✓ matches Angular.</li>
+          <li>Radius: <code>rounded-(--checkbox-radius)</code> = <code>0.125rem</code> (2px) ✓ already aligned.</li>
+          <li>Checked state: <code>data-[state=checked]:bg-primary</code> — uses <strong>brand cyan</strong>, not Angular's <strong>#e4eaec grey</strong> default.</li>
+          <li>Focus: 2px ring via tokens.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (per Gap 11)</h4>
+        <ul>
+          <li>Angular default checked fill is <span class="swatch"><span class="dot" style="background:#e4eaec"></span>#e4eaec (normal-grey)</span> with Web Icons checkmark in <span class="swatch"><span class="dot" style="background:#76838f"></span>#76838f</span> — <strong>not branded</strong>.</li>
+          <li>Branded variants exist (<code>checkbox-primary</code> #62a8ea Material blue, <code>checkbox-success</code> #46be8a, etc.).</li>
+          <li>Per fidelity-gap-report §5 ("items NOT to fix"): <strong>EVO uplift can keep brand cyan</strong> as default — Angular ships the grey, but the React platform's branded checkbox is the intended uplift. <strong>This is a documented divergence, not a bug.</strong></li>
+          <li>Geometry (size + radius) is the only place we'd swap tokens.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// checkbox.tsx — geometry already matches; only normalize via Bucket C alias</span>
+<span class="del">- rounded-(--checkbox-radius)   /* 0.125rem (2px) — already correct */</span>
+<span class="add">+ rounded-(--radius-badge)         /* 2px via Bucket C — semantic alignment */</span>
+
+<span class="meta">// tokens.css — collapse --checkbox-radius into --radius-badge alias</span>
+<span class="del">- --checkbox-radius: 0.125rem;</span>
+<span class="add">+ --checkbox-radius: var(--radius-badge);   /* 2px after Bucket C */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">C</span> radius alias. Branded checked-fill divergence is <strong>intentional EVO uplift — do not swap to grey</strong>.</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q1</a> — brand cyan locked, no Angular-grey revert.</p>
+  </article>
+
+  <!-- Radio -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>RadioGroup</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/radio-group/radio-group.tsx</span>
+      <span class="figma-node">Figma 14:61</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Item: <code>aspect-square h-4 w-4 rounded-full border</code> — 16×16 circle.</li>
+          <li>Border: <code>border-primary</code> (brand cyan).</li>
+          <li>Indicator: <code>fill-current text-current</code> circle, 10×10.</li>
+          <li>Focus: <code>focus-visible:ring-[3px] focus-visible:ring-ring/50</code> — hard-coded literal.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Angular radio uses the same 10px-border trick as checkbox — 20×20 outer, inner becomes the fill. Default inner colour <span class="swatch"><span class="dot" style="background:#e4eaec"></span>grey</span>, branded variants use brand cyan inner.</li>
+          <li>EVO uplift defaults to brand cyan inner (intentional divergence — matches checkbox decision).</li>
+          <li>Focus ring should use brand-shadow token (Bucket E) not the literal <code>ring-[3px] ring-ring/50</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// radio-group.tsx — Bucket E focus shadow swap</span>
+<span class="del">- 'focus:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50'</span>
+<span class="add">+ 'focus:outline-none focus-visible:shadow-(--shadow-focus-brand)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">E</span> focus shadow.</p>
+  </article>
+
+  <!-- Switch -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Switch</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/switch/switch.tsx</span>
+      <span class="figma-node">Figma 14:74</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Track: <code>data-[state=checked]:bg-primary</code> / <code>data-[state=unchecked]:bg-input</code>.</li>
+          <li>Height / width / thumb-size driven by tokens (<code>--switch-height/width/thumb-size</code>) — already extracted.</li>
+          <li>Shadow: <code>shadow-xs</code> (Tailwind default).</li>
+          <li>Focus: token ring (<code>--focus-ring-*</code>).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Geometry tokens are already correctly wired; the only swap is the focus shadow.</li>
+          <li>Figma uses the brand-tint ring (Bucket E) just like Button.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// switch.tsx — Bucket E focus shadow</span>
+<span class="del">- 'focus-visible:ring-(--focus-ring-width) focus-visible:ring-offset-(--focus-ring-offset)'</span>
+<span class="add">+ 'focus-visible:shadow-(--shadow-focus-brand)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">E</span>.</p>
+  </article>
+
+  <!-- Toggle / ToggleGroup -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Toggle / ToggleGroup</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/toggle/toggle.tsx, components/toggle-group/toggle-group.tsx</span>
+      <span class="figma-node">Figma Switch 14:74 family (no dedicated Toggle in Figma — derives from Switch)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Radius: <code>rounded-md</code> (6px).</li>
+          <li>Sizes: default <code>h-10 px-3 min-w-10</code>, sm <code>h-9 px-2.5</code>, lg <code>h-11 px-5</code>.</li>
+          <li>Focus: literal <code>focus-visible:ring-[3px] focus-visible:ring-ring/50</code>.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>No dedicated Toggle in Figma — Toggle inherits Switch geometry. Recommend treating ToggleGroup as a button-row and aligning to <code>--radius-control</code> + <code>--shadow-focus-brand</code> like Button.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// toggle.tsx — Bucket C + E</span>
+<span class="del">- 'rounded-md … focus-visible:ring-[3px] focus-visible:ring-ring/50'</span>
+<span class="add">+ 'rounded-(--radius-control) … focus-visible:shadow-(--shadow-focus-brand)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3. Cross-references: <span class="bucket">C</span>, <span class="bucket">E</span>.</p>
+  </article>
+
+  <!-- Badge -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Badge</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/badge/badge.tsx</span>
+      <span class="figma-node">Figma 15:35 (6 variants, 5px 15px pad, 10.5px font)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Radius: <code>--badge-radius: 0.25rem</code> (4px) — drives <code>rounded-[var(--badge-radius)]</code>.</li>
+          <li>Padding: <code>--badge-padding-x: 0.39375rem</code> (~6.3px), <code>--badge-padding-y: 0.1640625rem</code> (~2.6px).</li>
+          <li>Font size: <code>--badge-font-size: 0.65625rem</code> (10.5px) ✓.</li>
+          <li>Font weight: <code>--badge-font-weight: 500</code>.</li>
+          <li>Success / warning / info use <code>--badge-{state}-bg</code> aliased to semantic <code>--success</code> etc.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Figma 15:35)</h4>
+        <ul>
+          <li>Angular reality is <strong>padding 5px 15px, radius 5px, font 10.5px white</strong> (job-status pill) — see Gap 15.</li>
+          <li>Current React radius 4px is close to Angular 5px (within rounding); Bucket C semantic <code>--radius-badge: 2px</code> aims for the <em>label/badge</em> radius (Bootstrap default), not the <em>job-status pill</em> radius (5px).</li>
+          <li><strong>Conflict:</strong> Figma 15:35 shows status badges at <code>5px 15px</code> padding (Angular job-status), but the React <code>Badge</code> is currently bound to the Bootstrap label geometry (4px radius, 6×2.6 pad). These are <strong>two different artifacts</strong> in Angular.</li>
+          <li>See also: a separate <strong>StatusBadge / job-status primitive</strong> is called out in fidelity-gap-report §5 Iteration-2 follow-ups — should be a new bucket (I) rather than overloading <code>Badge</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// badge.tsx — Bucket C alias to --radius-badge (2px Figma DS mirror value)</span>
+<span class="del">- rounded-[var(--badge-radius)]    /* 4px today */</span>
+<span class="add">+ rounded-(--radius-badge)           /* 2px after Bucket C — matches Bootstrap label default */</span>
+
+<span class="meta">// tokens.css — collapse --badge-radius into --radius-badge</span>
+<span class="del">- --badge-radius: 0.25rem;       /* 4px */</span>
+<span class="add">+ --badge-radius: var(--radius-badge);  /* 2px */</span>
+
+<span class="meta">// NEEDS BUCKET I — new StatusBadge primitive for the job-status pill (5×15 padding, 5px radius, 10.5px font)</span>
+<span class="note">// Currently no React equivalent; lives only in Figma 15:35 status row.</span>
+<span class="note">// Recommend new component components/status-badge/ with --radius-pill or --radius-card-5 token.</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3 in badge.tsx + 1 token row + estimated ~80 LOC new for StatusBadge primitive. Cross-references: <span class="bucket">C</span> radius alias, <span class="bucket new">I</span> StatusBadge primitive (new bucket).</p>
+  </article>
+
+  <!-- Avatar -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Avatar</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/avatar/avatar.tsx</span>
+      <span class="figma-node">Figma 15:44</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li><code>h-10 w-10 rounded-full</code> (40px circle).</li>
+          <li>Fallback uses <code>bg-muted</code>.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Angular <code>tf-avatar</code> ships <code>md</code>, <code>sm</code>, <code>lg</code> sizes. React only renders md by default but accepts className for sizing.</li>
+          <li>Round shape, neutral fallback — matches.</li>
+          <li>No token swap needed at the primitive layer. Sizing variants are <em>optional</em> uplift if Sidebar / account-menu work needs them.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. <span class="bucket">—</span> No bucket touch required.</p>
+  </article>
+
+  <!-- Tooltip -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Tooltip</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/tooltip/tooltip.tsx</span>
+      <span class="figma-node">Figma 15:45</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Default variant: <code>bg-tooltip text-tooltip-foreground rounded-md</code></li>
+          <li><code>--tooltip-bg: #000000bf</code> (dark charcoal 75%) ✓ matches Angular <code>.tooltip</code>.</li>
+          <li>Popover variant uses <code>rounded-xs</code> + border + <code>shadow-md</code> — popover-soft alike.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Tooltip 15:45 ships dark bubble — matches React default variant.</li>
+          <li>Radius could swap to <code>--radius-control</code> for consistency, but <code>rounded-md</code> (6px) ≈ Angular default rounded tooltip.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. Optional <span class="bucket">C</span> tweak — <code>rounded-md → rounded-(--radius-control)</code> for consistency, but no visible drift.</p>
+  </article>
+
+  <!-- Link -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Link</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/link/link.tsx</span>
+      <span class="figma-node">Figma 15:53</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Just a router wrapper over <code>RouterLink</code> / native <code>&lt;a&gt;</code>. Styling is at consumer level via Tailwind utility classes.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Link 15:53 is a text-link style: brand cyan, underline on hover. Implemented at consumer-callsite via <code>className="text-primary hover:underline"</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. <span class="bucket">—</span></p>
+  </article>
+
+  <!-- Divider / Separator -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Divider / Separator</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/divider/divider.tsx, components/separator/separator.tsx</span>
+      <span class="figma-node">Figma 15:54</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Divider: <code>border-t border-border</code> (or <code>border-border/50</code> for soft).</li>
+          <li>Separator: <code>bg-border h-[1px] w-full</code> (Radix primitive).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Plain 1px line in muted border colour. Both implementations match — keep as-is.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0.</p>
+  </article>
+
+  <!-- Spinner / TradifyDots -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>TradifyDots (spinner)</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/tradify-dots/tradify-dots.tsx</span>
+      <span class="figma-node">Figma Spinner 15:55 (per Gap 3)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Pill: <code>bg-primary rounded-b-md px-5 py-2</code>.</li>
+          <li>Dots: <code>size-2 rounded-full bg-white</code> (8×8 — Angular ships 10×10).</li>
+          <li>Position-locked <code>fixed top-0 right-0 left-0</code> — pill anchored to top.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Gap 3 — already rebuilt in Figma Iteration 2)</h4>
+        <ul>
+          <li>Three <strong>10×10</strong> white circles, <strong>4px gap</strong>, on a <strong>cyan pill</strong>. Pill radius <code>0 0 5px 5px</code> (only bottom corners) per <code>TopBarStyles.less:2-26</code>.</li>
+          <li>Pill padding: <code>5px</code> (Angular saving-pill literal); React's <code>px-5 py-2</code> is 20×8 — over-sized.</li>
+          <li>Dot size <strong>10×10</strong> not <code>size-2</code> (8×8).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// tradify-dots.tsx — geometry realignment to match Angular .saving pill</span>
+<span class="del">- 'bg-primary flex items-center gap-1.5 rounded-b-md px-5 py-2'</span>
+<span class="add">+ 'bg-primary flex items-center gap-1 rounded-b-(--radius-control) px-1.5 py-1.5'</span>
+
+<span class="del">- 'animate-tradify-dot-pulse … size-2 rounded-full bg-white'   /* 8×8 */</span>
+<span class="add">+ 'animate-tradify-dot-pulse … size-2.5 rounded-full bg-white' /* 10×10 */</span>
+
+<span class="meta">// Bucket C — bottom-only radius means we lift --radius-control here</span>
+<span class="note">// Figma DS mirror keeps the 5px Angular value via radius-card; tradify-dots wants control (4px).</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~4. Cross-references: <span class="bucket">C</span> radius. Animation timing already correct.</p>
+  </article>
+
+  <!-- Skeleton -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Skeleton</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/skeleton/skeleton.tsx</span>
+      <span class="figma-node">Figma 15:57 (NOTE: Angular ships no skeleton — see fidelity-gap §5)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li><code>bg-muted animate-pulse rounded-md</code>.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Figma has a Skeleton primitive (15:57) but Angular ships none — TradifyDots fills the loading-state slot. The Figma node is the <strong>EVO uplift</strong>; component-build-specs §871 already flags this.</li>
+          <li>Radius could align to <code>--radius-control</code> for consistency. No bucket required — uplift-only.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 1 if aligning radius. Cross-references: <span class="bucket">C</span> optional.</p>
+  </article>
+
+  <!-- =================== COMPOSITES =================== -->
+  <h2 class="section-title anchor-jump" id="composites">Composites</h2>
+
+  <!-- Card -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Card</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/card/card.tsx</span>
+      <span class="figma-node">Figma 16:24 (5px radius)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Container: <code>bg-card text-card-foreground rounded-lg border shadow-sm</code>.</li>
+          <li><code>rounded-lg</code> = 8px (Tailwind default).</li>
+          <li><code>shadow-sm</code> = Tailwind default (0 1px 2px rgb(0 0 0 / 0.05)) — much weaker than Angular's <code>0 1px 4px 0 rgba(0,0,0,0.10)</code>.</li>
+          <li>Header: <code>flex flex-col space-y-1.5 p-6</code> — 24px padding.</li>
+          <li>Title: <code>text-2xl leading-none font-semibold tracking-tight</code> — text-2xl = 24px (Tailwind).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Figma 16:24)</h4>
+        <ul>
+          <li>Radius <strong>5px</strong> not 8px — needs <code>--radius-card 5px</code> via Bucket C.</li>
+          <li>Shadow: Angular's <code>shadow-sm</code> = <code>0 1px 4px 0 rgba(0,0,0,0.10)</code>.</li>
+          <li>Card title in Angular is 18px → maps to <code>--text-card-title 18px</code> (Bucket F).</li>
+          <li>Card body line height 1.5, 16px → <code>--text-card-body 16px</code> (Bucket F).</li>
+          <li>Padding 20px (<code>p-5</code>) — Angular's card content; React's 24px is over-sized.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// card.tsx — Bucket C + F</span>
+<span class="del">- 'bg-card text-card-foreground rounded-lg border shadow-sm'</span>
+<span class="add">+ 'bg-card text-card-foreground rounded-(--radius-card) border shadow-sm'</span>
+
+<span class="meta">// CardTitle</span>
+<span class="del">- 'text-2xl leading-none font-semibold tracking-tight'</span>
+<span class="add">+ 'text-(length:--text-card-title) leading-none font-semibold tracking-tight'  /* 18px */</span>
+
+<span class="meta">// CardHeader / CardContent / CardFooter padding</span>
+<span class="del">- 'flex flex-col space-y-1.5 p-6'   /* 24px */</span>
+<span class="add">+ 'flex flex-col space-y-1.5 p-5'   /* 20px Angular reality */</span>
+
+<span class="meta">// brand/tradify/tokens.css — Bucket C + F additions</span>
+<span class="add">+ --radius-card: 5px;       /* Angular .panel + .card */</span>
+<span class="add">+ --text-card-title: 1.125rem;  /* 18px */</span>
+<span class="add">+ --text-card-body: 1rem;        /* 16px */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~10 in card.tsx + 3 tokens. Cross-references: <span class="bucket">C</span>, <span class="bucket">F</span>. <strong>This is the highest-payoff single change in the audit</strong> — Card touches Dialog (modal panel), Alert, Panel, ResultCard, Empty surface.</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q2</a> — <code>--radius-card</code> resolves to <strong>6px</strong> (<code>0.375rem</code>) per even-px rule, overriding the Angular 5px literal noted above.</p>
+  </article>
+
+  <!-- Dialog / AlertDialog (Modal) -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Dialog (Modal)</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/dialog/dialog.tsx</span>
+      <span class="figma-node">Figma 16:71 + Pattern Confirmation 19:41</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Already token-driven: <code>p-(--dialog-padding) shadow-(--dialog-shadow) sm:rounded-(--dialog-radius)</code>.</li>
+          <li><code>--dialog-radius: 0.25rem</code> (4px) ✓ matches Angular.</li>
+          <li><code>--dialog-shadow: 0 1px 4px rgb(0 0 0 / 0.1)</code> ✓ matches Angular.</li>
+          <li><code>--dialog-padding: 1.75rem</code> (28px) ✓ matches Angular.</li>
+          <li>Title: <code>text-xl leading-tight font-normal</code> — <code>text-xl</code> = 20px (Tailwind) ✓ matches Angular modal title <code>font-size: 20px; font-weight: 400</code>.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Per Gap 4 + Iteration 2 work: modal already aligned via tokens. <strong>Already correct.</strong></li>
+          <li>Only swap: title font could pull from <code>--text-page-title 20px</code> (Bucket F) for semantic alignment with the page-title scale.</li>
+          <li>Footer divider correctly applies (top border <code>#e4eaec</code> only).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// dialog.tsx — Bucket F semantic title swap (optional)</span>
+<span class="del">- 'text-xl leading-tight font-normal'   /* 20px Tailwind */</span>
+<span class="add">+ 'text-(length:--text-page-title) leading-tight font-normal'  /* 20px semantic */</span>
+
+<span class="meta">// tokens.css — collapse --dialog-radius into --radius-modal alias</span>
+<span class="del">- --dialog-radius: 0.25rem;</span>
+<span class="add">+ --dialog-radius: var(--radius-modal);   /* 4px after Bucket C */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2 in dialog.tsx + 1 token alias. Cross-references: <span class="bucket">C</span> radius alias, <span class="bucket">F</span> page-title alias (optional, hygiene).</p>
+  </article>
+
+  <!-- AlertDialog -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>AlertDialog</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/alert-dialog/alert-dialog.tsx</span>
+      <span class="figma-node">Figma Modal 16:71 (Confirmation 19:41 share frame)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Content: <code>… p-6 shadow-lg ring-1 sm:rounded-lg</code>.</li>
+          <li><strong>Does NOT use the dialog tokens</strong> — hard-coded <code>rounded-lg</code> (8px), <code>shadow-lg</code> (heavy Tailwind), <code>p-6</code> (24px), <code>ring-1</code> (border instead of shadow).</li>
+          <li>Different shell from Dialog despite same Angular reality.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Should share Dialog's geometry — Angular ships one modal style: <code>.modal-content</code> with 4px radius, <code>--shadow-sm</code>, 28px padding.</li>
+          <li>The current divergence is a bug, not an intentional alert-vs-dialog variant.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// alert-dialog.tsx Content — align to dialog tokens</span>
+<span class="del">- '… p-6 shadow-lg ring-1 sm:rounded-lg'</span>
+<span class="add">+ '… p-(--dialog-padding) shadow-(--dialog-shadow) sm:rounded-(--dialog-radius)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3. Cross-references: <span class="bucket">C</span> radius, <span class="bucket">E</span> shadow. <strong>Top quick-win — visual seam between Dialog and AlertDialog will vanish once aligned.</strong></p>
+  </article>
+
+  <!-- Sheet -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Sheet</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/sheet/sheet.tsx</span>
+      <span class="figma-node">Figma Modal 16:71 (overlay shares chrome)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Sheet is a side-anchored Dialog (Radix Dialog under the hood). Edge variants slide in from top/right/bottom/left.</li>
+          <li>Likely uses similar hard-coded chrome (need swap to <code>--dialog-padding</code> for content).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>No dedicated Figma Sheet node — Angular has no slide-out drawer pattern. Sheet is <strong>EVO uplift</strong>; align radius/shadow with Dialog for consistency but no bucket-blocker.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> ~3 if aligning to dialog tokens. Cross-references: <span class="bucket">C</span>, <span class="bucket">E</span> consistency.</p>
+  </article>
+
+  <!-- Tabs -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Tabs</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/tabs/tabs.tsx</span>
+      <span class="figma-node">Figma 17:2 (TRA-23384 solid pill done)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Token-saturated already: <code>--tabs-list-*</code>, <code>--tab-bg</code>, <code>--tab-active-bg</code>, <code>--tab-min-width 7.25rem</code> (116px ≈ Angular 117px), <code>--tab-padding 1rem 1.25rem 0.75rem</code>, <code>--tab-text-color #7a8595</code>, <code>--tab-badge-inactive-bg #616161</code>.</li>
+          <li>Line variant ships hard-coded utilities for the Scheduler underline pattern.</li>
+          <li>Per TRA-23384: solid pill style is the default ✓.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Solid pill: active white-on-soft-grey, inactive transparent / muted text. Matches.</li>
+          <li>Line variant for Scheduler — matches Figma's separate Tabs Underline node planned in Iteration 2 follow-ups.</li>
+          <li>Badge geometry already token-driven; per Iggi spec the pill geometry is one step tighter than default (1.125rem) ✓.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. <span class="bucket">—</span> No swap needed; the deep work was TRA-23384.</p>
+  </article>
+
+  <!-- Pagination -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Pagination</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/pagination/pagination.tsx</span>
+      <span class="figma-node">Figma Pager 17:11 (45px active vs 40px default)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>PaginationLink: completely unstyled (<code>className={cn('', className)}</code>) — relies on consumer to add styling.</li>
+          <li>Container: <code>flex flex-row items-center gap-1</code>.</li>
+          <li>Ellipsis: <code>h-9 w-9</code> (36×36).</li>
+          <li>Previous/Next: <code>pl-2.5 / pr-2.5</code> only.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Pager 17:11)</h4>
+        <ul>
+          <li>Cell: <strong>40×44</strong>, border <code>1px solid #e6edee</code>.</li>
+          <li>Active cell: <strong>45×44</strong> (5px wider!), brand cyan fill, white text. Subtle but Angular-true.</li>
+          <li>Disabled cell opacity 0.7.</li>
+          <li>Small variant: 25×27.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// pagination.tsx — full geometry build (currently an unstyled shell)</span>
+<span class="add">+ // Container: flex flex-row items-center (no gap — borders meet flush)</span>
+<span class="add">+ // PaginationLink: 'inline-flex items-center justify-center w-10 h-11 border border-[#e6edee] text-foreground'</span>
+<span class="add">+ // PaginationLink[aria-current=page]: 'w-[45px] bg-primary text-primary-foreground border-primary'</span>
+<span class="add">+ // PaginationLink[disabled]: 'opacity-70 pointer-events-none'</span>
+
+<span class="meta">// brand/tradify/tokens.css — propose new tokens (no existing bucket — extends Bucket C)</span>
+<span class="add">+ --pager-border: #e6edee;            /* close-but-distinct from --color-normal-grey */</span>
+<span class="add">+ --pager-cell-width: 2.5rem;         /* 40px */</span>
+<span class="add">+ --pager-cell-active-width: 2.8125rem;   /* 45px */</span>
+<span class="add">+ --pager-cell-height: 2.75rem;       /* 44px */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~40 (Pagination is currently a stub — needs full styling pass) + 4 tokens. Cross-references: <span class="bucket">C</span> (extends), no existing bucket carries pager-specific tokens; consider folding into Bucket C or a small <strong>new sub-bucket "C2"</strong>.</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q3</a> — pager-specific tokens <strong>deferred</strong> to component-level workstream; not a token-alignment gap.</p>
+  </article>
+
+  <!-- Alert -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Alert</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/alert/alert.tsx</span>
+      <span class="figma-node">Figma Banner 17:51 (60px full-bleed) — partial overlap</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Container: <code>relative grid w-full grid-cols-[0_1fr] … rounded-lg border px-4 py-3</code>.</li>
+          <li><code>rounded-lg</code> (8px). <code>px-4 py-3</code> (16×12).</li>
+          <li>Variants reference <strong>color-100/300/700 stops</strong> directly: <code>bg-success-100 border-success-300 text-foreground [&gt;svg]:text-success-700</code>.</li>
+          <li>Same pattern for <code>warning</code> and <code>info</code> — tint-bg / strong-border / strong-icon. <strong>This is the Bucket B pattern, but using primitive stops instead of semantic <code>--success-bg</code> tokens.</strong></li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Banner 17:51 is a <strong>60px full-bleed strip</strong>, not the inline alert — per Gap 6 these are different artifacts. Alert is the in-flow inline alert (Bootstrap <code>.alert</code>), which Figma represents as a separate inline-callout artifact (closer to InfoPanel 17:52).</li>
+          <li>Alert tint-bg pairs should pull from <strong>semantic Bucket B tokens</strong>: <code>--success-bg</code>, <code>--success-fg</code>, <code>--warning-bg</code>, etc. Right now they pull primitive <code>success-100/300/700</code> stops, which bypass the brand-swap.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// alert.tsx — Bucket B + C</span>
+<span class="del">- success: 'bg-success-100 border-success-300 text-foreground [&>svg]:text-success-700'</span>
+<span class="add">+ success: 'bg-(--success-bg) border-(--success) text-(--success-foreground) [&>svg]:text-(--success)'</span>
+
+<span class="del">- warning: 'bg-warning-100 border-warning-300 text-foreground [&>svg]:text-warning-700'</span>
+<span class="add">+ warning: 'bg-(--warning-bg) border-(--warning) text-(--warning-foreground) [&>svg]:text-(--warning)'</span>
+
+<span class="del">- info: 'bg-info-100 border-info-300 text-foreground [&>svg]:text-info-700'</span>
+<span class="add">+ info: 'bg-(--info-bg) border-(--info) text-(--info-foreground) [&>svg]:text-(--info)'</span>
+
+<span class="del">- '… rounded-lg border px-4 py-3 …'</span>
+<span class="add">+ '… rounded-(--radius-card) border px-4 py-3 …'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~5. Cross-references: <span class="bucket">B</span> tint-bg semantic pairs, <span class="bucket">C</span> radius. <strong>Bucket B is the lever here.</strong> The full-bleed Banner pattern (Gap 6 / Banner 17:51) is a <em>different</em> artifact — see "Patterns" section.</p>
+  </article>
+
+  <!-- =================== PATTERNS =================== -->
+  <h2 class="section-title anchor-jump" id="patterns">Patterns & composites</h2>
+
+  <!-- Panel -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Panel</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/panel/panel.tsx</span>
+      <span class="figma-node">Figma InfoPanel 17:52 (dark-slate FeaturePanel relative)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Bare layout container — <code>flex h-full flex-col overflow-hidden</code>; no border / radius / shadow at root.</li>
+          <li>Surface tokens: <code>--panel-header-bg #dfe4e8</code>, <code>--panel-body-bg #f3f7f9</code>, <code>--panel-results-bg #e9eef2</code>.</li>
+          <li>Per source comment: intentionally bare — Angular's <code>.box-header</code> + <code>.box-content</code> paint contrasting fills that form the visible frame.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>InfoPanel 17:52 — matches the customer-matching pane geometry. ✓</li>
+          <li>Dark-slate FeaturePanel (Iteration-3 Gap 16 — currently FeatureAdoptionBanner in React) is a <em>different</em> use case; see that component below.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. <span class="bucket">—</span> Panel surface tokens are already correctly Angular-aligned.</p>
+  </article>
+
+  <!-- ResultCard -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>ResultCard</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/result-card/result-card.tsx</span>
+      <span class="figma-node">Figma 16:24 (shares Card chrome)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li><code>bg-card text-card-foreground … gap-2 p-3 text-left</code>.</li>
+          <li>Default appearance: <code>rounded-md border transition-shadow hover:shadow-sm</code>.</li>
+          <li>Flat appearance strips border + radius.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Inherits Card geometry → <code>rounded-(--radius-card) 5px</code> (Bucket C).</li>
+          <li>Hover shadow could pull <code>--shadow-button</code> (Bucket E) for token alignment.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// result-card.tsx — Bucket C + E</span>
+<span class="del">- 'rounded-md border transition-shadow hover:shadow-sm'</span>
+<span class="add">+ 'rounded-(--radius-card) border transition-shadow hover:shadow-(--shadow-button)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">C</span>, <span class="bucket">E</span>.</p>
+  </article>
+
+  <!-- DropdownMenu -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>DropdownMenu / Listbox</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/dropdown-menu/dropdown-menu.tsx, components/listbox/listbox.tsx</span>
+      <span class="figma-node">Figma 18:53</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>SubTrigger: <code>focus:bg-accent … rounded-sm px-2 py-1.5</code>.</li>
+          <li>Listbox uses <code>before:rounded-[calc(var(--radius-lg)-1px)]</code> + <code>after:rounded-lg</code> (8px Tailwind).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>DropdownMenu 18:53 ships <code>--radius-control</code> on item rounding (4px) and <code>--radius-card</code> on the floating panel.</li>
+          <li>Current React mixes <code>rounded-sm</code> (2px) + <code>rounded-lg</code> (8px) — Tailwind defaults, not Angular reality.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// dropdown-menu.tsx</span>
+<span class="del">- 'focus:bg-accent … rounded-sm px-2 py-1.5'</span>
+<span class="add">+ 'focus:bg-accent … rounded-(--radius-control) px-2 py-1.5'</span>
+
+<span class="meta">// listbox.tsx</span>
+<span class="del">- 'after:rounded-lg'   /* 8px */</span>
+<span class="add">+ 'after:rounded-(--radius-card)'   /* 5px */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~4. Cross-references: <span class="bucket">C</span>.</p>
+  </article>
+
+  <!-- Toast / Toaster -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Toast (Toaster)</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/toast/toast.tsx</span>
+      <span class="figma-node">Figma 17:55 (300px width — Gap 12)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Wraps Sonner with token-tied normal-bg/text/border per state.</li>
+          <li>Position top-right ✓.</li>
+          <li>Success/error pull from <code>--success</code> / <code>--error</code> — semantic but not Angular's <em>distinct</em> toast colours (#5cd29d / #fa7a7a per Gap 12).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Per Gap 12: toasts use a <em>distinct</em> lighter palette (#5cd29d, #fa7a7a, #73d6e2, #f4b066) — not the brand status palette.</li>
+          <li>Width 300px, padding 15px 20px, radius 3px, opacity 0.8 at rest.</li>
+          <li>Sonner's default geometry needs token overrides to match — currently it picks up <code>shadow-sm p-toast-padding</code> only.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// toast.tsx — proposed new toast tokens (folds into deferred Iteration-2 follow-up, not yet a bucket)</span>
+<span class="add">+ --toast-success-bg: #5cd29d;</span>
+<span class="add">+ --toast-error-bg:   #fa7a7a;</span>
+<span class="add">+ --toast-info-bg:    #73d6e2;</span>
+<span class="add">+ --toast-warning-bg: #f4b066;</span>
+<span class="add">+ --toast-width: 300px;</span>
+<span class="add">+ --toast-padding: 15px 20px;</span>
+<span class="add">+ --toast-radius: var(--radius-control);   /* 3-4px */</span>
+<span class="add">+ --toast-opacity: 0.8;</span>
+
+<span class="meta">// Wire up Sonner toastOptions to read these tokens.</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~12 in toast.tsx + 8 tokens. Cross-references: needs <strong>extension of Bucket B</strong> or a small new sub-bucket. Not blocking; defer until Gap 12 ticket is opened.</p>
+  </article>
+
+  <!-- Sidebar -->
+  <article class="component-card wrong">
+    <div class="header-row">
+      <h3>Sidebar / SidebarLayout / Navbar</h3>
+      <span class="sev wrong">❌ wrong tokens</span>
+      <span class="path">components/sidebar/sidebar.tsx, components/sidebar-layout/sidebar-layout.tsx, components/navbar/navbar.tsx</span>
+      <span class="figma-node">Figma 18:16 (Gap 2 + 17 — account-menu, To-Do, badges, logo)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Width tokens: <code>SIDEBAR_WIDTH 200px</code>, <code>SIDEBAR_WIDTH_ICON 3rem</code>.</li>
+          <li>Surface: <code>--sidebar var(--color-white)</code> (light mode), <code>--color-navy-800</code> (dark) — <strong>not Angular's #263238 coal default</strong>.</li>
+          <li>Sidebar primary / accent pull from <code>tradify-blue-*</code> stops.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Gap 2 + Gap 17)</h4>
+        <ul>
+          <li>Container fill must be <span class="swatch"><span class="dot" style="background:#263238"></span>#263238 coal</span> default, with <span class="swatch"><span class="dot" style="background:#21292e"></span>#21292e darkgrey</span> for active item.</li>
+          <li>Inactive text: <code>rgba(163, 175, 183, 0.9)</code> — alpha critical when overlaid on coal.</li>
+          <li>Composition gaps (Gap 17): no account-menu header, no To-Do row + plus button, no badge slots, no bottom logo — the React sidebar is missing structural slots.</li>
+          <li><strong>This is the largest UX-parity gap in the entire audit.</strong> Token swaps alone won't fix it; the component shape needs additional slots before the tokens can land. Move to Sidebar overhaul ticket (not a bucket).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// brand/tradify/tokens.css — Sidebar surface realign (token-only; structural changes are out-of-scope for buckets)</span>
+<span class="del">- --sidebar: var(--color-white);   /* light */</span>
+<span class="add">+ --sidebar: #263238;                /* Angular coal */</span>
+<span class="add">+ --sidebar-foreground: rgb(163 175 183 / 0.9);   /* Angular inactive text */</span>
+<span class="add">+ --sidebar-accent: #21292e;          /* Angular active item bg */</span>
+<span class="add">+ --sidebar-accent-foreground: var(--color-white);</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~5 tokens for colour realign. Structural overhaul (account menu, To-Do row, badges, logo) = <strong>separate epic, not a bucket</strong>. Track via Gap-17 follow-up. Cross-references: <span class="bucket new">K?</span> Optional new bucket "Sidebar surface realign" — small and orthogonal.</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q6</a> — <strong>no Bucket K</strong>. Sidebar tokens already in place; composition gaps go to a separate epic.</p>
+  </article>
+
+  <!-- Breadcrumb -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>Breadcrumb</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/breadcrumb/breadcrumb.tsx</span>
+      <span class="figma-node">Figma Pattern Page Header 19:11</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>List: <code>flex flex-wrap items-center gap-1.5 text-sm break-words</code>.</li>
+          <li>Link uses <code>asChild</code> slot pattern.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Page Header 19:11 includes a simple home-icon + chevron + section name strip — close enough to React Breadcrumb. No swap needed.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0. <span class="bucket">—</span></p>
+  </article>
+
+  <!-- DescriptionList -->
+  <article class="component-card matches">
+    <div class="header-row">
+      <h3>DescriptionList</h3>
+      <span class="sev matches">✅ matches</span>
+      <span class="path">components/description-list/description-list.tsx</span>
+      <span class="figma-node">Figma ListRow 18:41 (per fidelity table mapping)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Grid: <code>grid grid-cols-1 sm:grid-cols-[min(50%,--spacing(80))_auto] text-base/6 sm:text-sm/6</code>.</li>
+          <li>Native <code>&lt;dl&gt; / &lt;dt&gt; / &lt;dd&gt;</code> — semantic ✓.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>ListRow 18:41 represents a 2-column key-value row, matching DescriptionList output. No swap.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0.</p>
+  </article>
+
+  <!-- AddressAutocomplete / SearchInput -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>AddressAutocomplete / SearchInput</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/address-autocomplete/AddressAutocompleteInput.tsx, components/search-input/search-input.tsx</span>
+      <span class="figma-node">Figma Autocomplete 18:65</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>SearchInput wraps Input with an icon-position adornment (default <code>end</code>).</li>
+          <li>Icon inset: <code>right-0 pr-3</code> (for <code>end</code>).</li>
+          <li>Inherits Input's radius / shadow / focus tokens.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Per Gap 22: <code>wj-search-box</code> has a wide widget with a <strong>cyan submit-icon button on the right</strong> — a 2-part composite (text input + cyan square button).</li>
+          <li>React's <code>Input type="search" showSearchIcon</code> already renders a primary-coloured trailing button (<code>bg-primary text-primary-foreground rounded-r-md px-2.5</code>) — close to the Angular pattern.</li>
+          <li>Radius bucket sweep applies to the trailing button: should use <code>rounded-r-(--radius-control)</code>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// input.tsx — search icon button trailing radius</span>
+<span class="del">- 'bg-primary text-primary-foreground absolute … rounded-r-md px-2.5'</span>
+<span class="add">+ 'bg-primary text-primary-foreground absolute … rounded-r-(--radius-control) px-2.5'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">C</span>.</p>
+  </article>
+
+  <!-- Empty -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Empty</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/empty/empty.tsx</span>
+      <span class="figma-node">Figma Pattern Empty State 19:2</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Root: <code>flex … rounded-lg border-dashed p-6 text-center text-balance md:p-12</code>.</li>
+          <li>Title: <code>text-lg font-medium tracking-tight</code> (18px).</li>
+          <li>Media icon: <code>size-10 rounded-lg</code> for the icon variant.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Empty State 19:2 ships with <code>--radius-card 5px</code> on the outer dashed border, <code>--text-card-title 18px</code> on the title (Bucket F).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// empty.tsx — Bucket C + F</span>
+<span class="del">- 'rounded-lg border-dashed p-6 text-center text-balance md:p-12'</span>
+<span class="add">+ 'rounded-(--radius-card) border-dashed p-6 text-center text-balance md:p-12'</span>
+
+<span class="del">- 'text-lg font-medium tracking-tight'   /* 18px Tailwind */</span>
+<span class="add">+ 'text-(length:--text-card-title) font-medium tracking-tight'  /* 18px semantic */</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~3. Cross-references: <span class="bucket">C</span>, <span class="bucket">F</span>.</p>
+  </article>
+
+  <!-- FeatureAdoptionBanner -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>FeatureAdoptionBanner</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/feature-adoption-banner/feature-adoption-banner.tsx</span>
+      <span class="figma-node">Figma Banner 17:51 family + dark-slate FeaturePanel (Gap 16 — Iteration 3)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Container: <code>bg-navy-700 … relative mb-4 flex flex-col gap-3 rounded-lg p-4 @sm:gap-6 @sm:p-6</code>.</li>
+          <li><strong>Hardcoded <code>bg-navy-700</code></strong> with TODO comment: "Extract to --banner-bg semantic token when more banner variants exist".</li>
+          <li>Title: <code>text-lg font-semibold text-white</code> (18px).</li>
+          <li>Body: <code>text-sm text-white/80</code>.</li>
+          <li><strong>rounded-lg = 8px</strong> — Angular collapsable-section has no explicit radius (inherits Bootstrap panel which is 5px).</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Gap 16, Iteration 3)</h4>
+        <ul>
+          <li>Angular reality: dark slate <code>#526069</code>, not navy-700. The React choice of navy-700 is "close in dark slate spirit" — the TODO calls it out.</li>
+          <li>Should use <code>--radius-card 5px</code> (Bucket C).</li>
+          <li>Body 16px (Angular <code>panel-information</code> font-size) → <code>--text-card-body</code> (Bucket F).</li>
+          <li>Title 18px → <code>--text-card-title</code> (Bucket F).</li>
+          <li>Recommend introducing <code>--banner-bg #526069</code> + <code>--banner-foreground #ffffff</code> tokens to extend the brand-swap surface (eligible for a folded-in extension of Bucket B, or a new "FeaturePanel" sub-bucket).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// feature-adoption-banner.tsx — Bucket C + F + new banner tokens (proposed Bucket J extension)</span>
+<span class="del">- 'bg-navy-700 @container relative mb-4 flex flex-col gap-3 rounded-lg p-4 @sm:gap-6 @sm:p-6'</span>
+<span class="add">+ 'bg-(--banner-bg) text-(--banner-foreground) @container relative mb-4 flex flex-col gap-3 rounded-(--radius-card) p-4 @sm:gap-6 @sm:p-6'</span>
+
+<span class="del">- &lt;h2 className="text-lg font-semibold text-white"&gt;</span>
+<span class="add">+ &lt;h2 className="text-(length:--text-card-title) font-semibold"&gt;</span>
+
+<span class="del">- &lt;div className="space-y-2 text-sm text-white/80"&gt;</span>
+<span class="add">+ &lt;div className="space-y-2 text-(length:--text-card-body) text-(--banner-foreground)/80"&gt;</span>
+
+<span class="meta">// tokens.css — Bucket J (proposed)</span>
+<span class="add">+ --banner-bg: #526069;             /* Angular ducttape — dark-slate FeaturePanel */</span>
+<span class="add">+ --banner-foreground: var(--color-white);</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~6 in component + 2 tokens. Cross-references: <span class="bucket">C</span>, <span class="bucket">F</span>, <span class="bucket new">J</span> (proposed — banner colour family for the dark-slate FeaturePanel + the 60px full-bleed info/warning/critical variants per Gap 6).</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q4</a> — token-only <code>--banner-bg #526069</code>, <strong>folded into Bucket B</strong>. Full-bleed Banner structural redesign deferred.</p>
+  </article>
+
+  <!-- Table / DataTable -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Table / DataTable</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/table/table.tsx, components/data-table/</span>
+      <span class="figma-node">Templates page 1:3 Job List grid (Pager 17:11 pairs)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Container: <code>relative w-full overflow-auto</code>.</li>
+          <li>Header: <code>[&_tr]:border-b</code>.</li>
+          <li>Table: <code>w-full caption-bottom text-sm</code> — relies on consumer for cell padding, borders, hover.</li>
+          <li>Currently <strong>no row-hover utility baked in</strong> at the primitive level.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent (Gap 10)</h4>
+        <ul>
+          <li>Body cell text: <code>color: #757575</code> (= <code>--text-muted</code>).</li>
+          <li>Header text: <code>color: #616161</code> (distinct from body muted).</li>
+          <li>Row hover: <strong>flat <code>#eee</code> (canvas)</strong>, no transition, no brand-cyan tint.</li>
+          <li>Links in table cells underlined by default.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// table.tsx — Bucket B or hygiene: add token-driven row-hover</span>
+<span class="add">+ // TableRow base: className="hover:bg-canvas"  // var(--color-canvas) #eee</span>
+<span class="add">+ // TableHead base: className="text-[#616161]"  // or new --table-header-fg token</span>
+
+<span class="meta">// tokens.css — propose two new tokens</span>
+<span class="add">+ --table-row-hover-bg: var(--color-canvas);   /* #eee Angular flat hover */</span>
+<span class="add">+ --table-header-fg: #616161;</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~8 in table.tsx (TableRow / TableHead) + 2 tokens. Cross-references: hygiene extension. <strong>Not in any current bucket</strong>; small enough to fold into Bucket G hygiene comments + a token-only PR. Optional new bucket "Table base styles".</p>
+  </article>
+
+  <!-- Validation Error Summary -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>ValidationErrorSummary</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/validation-error-summary/validation-error-summary.tsx</span>
+      <span class="figma-node">No direct Figma equivalent (uplift)</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Wraps a destructive Alert.</li>
+          <li>Inherits Alert tokens → drift propagates from Bucket B swap on Alert.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>No counterpart in Figma — net-new uplift surface; rely on Alert / destructive variant Bucket B alignment.</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>LOC estimate:</strong> 0 (cascades from Alert). Cross-references: <span class="bucket">B</span>.</p>
+  </article>
+
+  <!-- Label / Form / Fieldset -->
+  <article class="component-card minor">
+    <div class="header-row">
+      <h3>Label / Form / Fieldset</h3>
+      <span class="sev minor">⚠️ minor drift</span>
+      <span class="path">components/label/label.tsx, components/form/form.tsx, components/fieldset/fieldset.tsx</span>
+      <span class="figma-node">Figma Field 16:23 + Pattern Form Section 19:25</span>
+    </div>
+    <div class="subgrid">
+      <div class="panel react">
+        <h4>Current React reads</h4>
+        <ul>
+          <li>Label: <code>text-sm font-normal leading-8 tracking-(--tracking-label)</code>.</li>
+          <li>Legend (Fieldset): <code>text-foreground text-base/6 font-semibold sm:text-sm/6</code>.</li>
+        </ul>
+      </div>
+      <div class="panel figma">
+        <h4>Figma intent</h4>
+        <ul>
+          <li>Field 16:23 / Form Section 19:25: label uses 14px font (Angular ships <code>14px / 400 / @text-default</code>).</li>
+          <li>Should map to <code>--text-label 14px</code> (Bucket F).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swap-list">
+<span class="meta">// label.tsx — Bucket F</span>
+<span class="del">- 'text-sm font-normal leading-8 tracking-(--tracking-label)'</span>
+<span class="add">+ 'text-(length:--text-label) font-normal leading-8 tracking-(--tracking-label)'</span>
+</div>
+    <p><strong>LOC estimate:</strong> ~2. Cross-references: <span class="bucket">F</span>.</p>
+  </article>
+
+  <!-- =================== LAYOUT-LEVEL =================== -->
+  <h2 class="section-title anchor-jump" id="layout">Layout & navigation</h2>
+  <p>These components touch the macro layout. They've largely been covered above (Sidebar, Navbar, SidebarLayout, Breadcrumb) but the structural gap matters — Gap 17 in particular blocks a clean Sidebar parity ship until composition is reworked. <strong>Sidebar overhaul is out of bucket-scope</strong>; track separately.</p>
+
+  <!-- =================== EXCLUSIONS =================== -->
+  <h2 class="section-title anchor-jump" id="exclusions">Exclusion list (no Figma counterpart)</h2>
+  <p>Per the brief, these components have no Figma equivalent — they are net-new React surfaces, Tailwind-default utilities, or hooks. They were inspected but not audited for token alignment beyond confirming they use semantic tokens (not hard-coded primitives).</p>
+
+  <table>
+    <thead>
+      <tr><th>Component</th><th>Reason</th><th>Token health</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>accordion</code></td><td>EVO uplift — Angular has no accordion primitive. Uses <code>border-b last:border-b-0</code>.</td><td>OK — semantic tokens.</td></tr>
+      <tr><td><code>chart</code></td><td>Recharts wrapper — EVO uplift. Uses <code>--chart-1..5</code> tokens.</td><td>OK — already tokenized.</td></tr>
+      <tr><td><code>command</code></td><td>cmdk palette — net-new pattern.</td><td>OK — uses <code>--popover</code>.</td></tr>
+      <tr><td><code>drawer</code></td><td>vaul-based bottom sheet — net-new. No Angular pattern.</td><td>OK — uses semantic tokens.</td></tr>
+      <tr><td><code>error-boundary</code></td><td>Class component, no visual identity in Figma.</td><td>OK — uses <code>bg-background</code>.</td></tr>
+      <tr><td><code>heading</code></td><td>Polymorphic heading utility. Type ramp swap will land via Bucket F across consumers, not the primitive itself.</td><td>Uses <code>text-2xl/8 sm:text-xl/8</code> Tailwind — flag for Bucket F follow-up.</td></tr>
+      <tr><td><code>hooks</code></td><td>Logic only, not visual.</td><td>—</td></tr>
+      <tr><td><code>multiselect</code></td><td>Legacy component (chip-style multi-select). Not in Figma mirror.</td><td>OK.</td></tr>
+      <tr><td><code>sheet</code></td><td>Slide-in side panel — net-new. (Already covered above for token alignment hygiene.)</td><td>OK.</td></tr>
+      <tr><td><code>slider</code></td><td>Range input — Angular has none.</td><td>OK — uses <code>--primary</code> / <code>--muted</code>.</td></tr>
+      <tr><td><code>text</code></td><td>Text / Strong / Code utility — net-new typography helper.</td><td>OK — semantic tokens.</td></tr>
+      <tr><td><code>validation-error-summary</code></td><td>Audited above — flagged as Bucket-B cascade. Listed here for completeness; not strictly excluded.</td><td>OK.</td></tr>
+      <tr><td><code>error-boundary</code></td><td>Already listed above.</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Inverse exclusion (Figma node, no React equivalent)</h3>
+  <article class="component-card missing">
+    <div class="header-row">
+      <h3>DatePicker</h3>
+      <span class="sev missing">🔴 missing</span>
+      <span class="path">no React equivalent in ui-components</span>
+      <span class="figma-node">Figma 18:78</span>
+    </div>
+    <p>DatePicker exists in the Figma mirror at node <code>18:78</code> but there is no React equivalent in <code>packages/ui-components</code>. Angular uses Wijmo's date input widget; the React platform currently uses native <code>&lt;input type="date"&gt;</code> at consumer level. Flag as <strong>net-new build</strong> if/when a Tradify-styled date picker is needed. Not bucket-blocking.</p>
+  </article>
+
+  <article class="component-card missing">
+    <div class="header-row">
+      <h3>StatusBadge / job-status pill</h3>
+      <span class="sev missing">🔴 missing</span>
+      <span class="path">no React equivalent in ui-components</span>
+      <span class="figma-node">Figma 15:35 status row + Gap 15 spec</span>
+    </div>
+    <p>Job-status pill (5×15 padding, 5px radius, 10.5px white font) has no dedicated React component. The current Badge primitive serves the Bootstrap label use case but cannot reach the pill geometry. Recommend new <code>components/status-badge/</code> per <strong>Bucket I (proposed)</strong>. Affects Enquiries / Job List / Job Detail templates.</p>
+    <p style="font-size:0.82rem; color:var(--color-text-muted); margin:0.3em 0 0;">↑ See <a href="#resolution-map">Resolution Map Q5</a> — <strong>add Status variant to existing Badge</strong> instead of new primitive. Parked: component-phase work, not blocking token alignment.</p>
+  </article>
+
+  <!-- =================== OPEN QUESTIONS =================== -->
+  <h2 class="section-title anchor-jump" id="open-questions">Open questions for JC</h2>
+  <p>Where the Figma spec and code reality disagree and a human needs to call it:</p>
+  <ol>
+    <li><strong>Checkbox / Radio default fill colour.</strong> Angular ships <span class="swatch"><span class="dot" style="background:#e4eaec"></span>#e4eaec grey</span> as the default checked state. React currently ships brand cyan as default. Per fidelity-gap §5 this is an <strong>intentional EVO uplift</strong>. Confirm we are <em>not</em> reverting Checkbox/Radio to grey-default during bucket C/F sweep — this audit assumes "keep brand cyan, document divergence" is the standing decision. <em>Need confirmation.</em></li>
+    <li><strong>Card radius — 5px or 6px?</strong> Bucket C spec calls for <code>--radius-card 6px</code> in the prompt, but Angular reality and the sibling tokens-figma-ds-alignment deck both cite <strong>5px</strong> (drift table: <code>radius-lg 6px</code> drift, target 5px). The fidelity-gap-report consistently uses <code>border-radius: 5px</code> for cards, panels, dashboard tiles. Resolve before Bucket C ships: <strong>5px is the Angular reality</strong>; 6px in the prompt may be a typo. <em>Confirm 5px.</em></li>
+    <li><strong>Pager-specific tokens — fold into Bucket C, or new sub-bucket?</strong> Pagination is currently a stub. To make it Angular-true, you need new tokens (<code>--pager-border #e6edee</code>, <code>--pager-cell-width 40px</code>, <code>--pager-cell-active-width 45px</code>, <code>--pager-cell-height 44px</code>). These don't fit Bucket C cleanly (which is about <em>semantic</em> radius tokens). Decide: extend C, or new "Pager" bucket. <em>JC call.</em></li>
+    <li><strong>Banner family scope.</strong> Bucket J as proposed in this audit absorbs both the dark-slate FeaturePanel (currently <code>FeatureAdoptionBanner</code>) and the 60px full-bleed info/warning/critical strip (Gap 6 — no React equivalent yet). Are these one bucket or two? My read: <em>one</em> bucket — same "banner colour family" mental model — but it builds a new component (60px strip) as well as retokens an existing one (FAP). <em>JC call.</em></li>
+    <li><strong>StatusBadge / job-status primitive.</strong> Confirm it is in-scope to build a new <code>components/status-badge/</code> primitive (Bucket I) rather than overload <code>Badge</code>. The Bootstrap <code>.label</code> geometry and the Tradify <code>.job-status</code> pill geometry are <strong>incompatible</strong> as variants of a single component — different padding, different font size, different radius, different intent (semantic colour vs Bootstrap state colour).</li>
+    <li><strong>Sidebar Gap 17 — bucket or epic?</strong> Surface realign (5 tokens) is bucket-sized. Composition gaps (account menu, To-Do row + plus, badges, bottom logo, flyouts) are <strong>not</strong> bucket-sized — that's a structural overhaul ticket. Confirm we split it into "Sidebar surface tokens" (cheap bucket-K) + "Sidebar composition" (separate Jira epic).</li>
+    <li><strong>Input validation glow (Bucket H).</strong> Material palette colours (<code>#f44336</code>, <code>#ff9800</code>, <code>#4caf50</code>) are intentionally distinct from Tradify brand palette per Gap 9 fix recipe. Confirm we ship the literal Material values as the source-of-truth for the glow tokens, rather than aliasing to <code>--destructive</code> / <code>--warning</code> / <code>--success</code> (which would tint to the brand and break Angular parity).</li>
+  </ol>
+
+  <!-- =================== BUCKET ROLL-UP =================== -->
+  <h2 class="section-title anchor-jump" id="bucket-rollup">Bucket roll-up</h2>
+  <p>Per-bucket footprint after the audit. LOC estimates aggregate across components.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Bucket</th>
+        <th>Scope (TRA-23702 + this audit)</th>
+        <th>Components touched</th>
+        <th>LOC est.</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A</strong> Status primitive realign</td>
+        <td>Mutate <code>--color-natural-green-500 → #46be8a</code>, <code>--color-orange-500 → #fd8b00</code>, primary hover semantic <code>#0aa8d1</code>.</td>
+        <td>Cascades through Button (hover), Badge (status variants), Alert, Toast.</td>
+        <td>~30 (token primitives + semantic hover alias)</td>
+        <td>Low — already specified.</td>
+      </tr>
+      <tr>
+        <td><strong>B</strong> Tint-bg semantic pairs</td>
+        <td>Add <code>--success-bg / --success-foreground</code>, same for warning/destructive/info.</td>
+        <td>Alert, Badge variants (success/warning/info), ValidationErrorSummary (cascade), Toast (extension).</td>
+        <td>~50 (B existing) + ~5 for Alert swap</td>
+        <td>Low.</td>
+      </tr>
+      <tr>
+        <td><strong>C</strong> Semantic radius tokens</td>
+        <td><strong>✅ Shipped #146.</strong> <code>--radius-card 6px</code> (0.375rem — Q2 even-px rule, supersedes the 5px Angular literal), <code>--radius-modal 4px</code>, <code>--radius-control 4px</code>, <code>--radius-control-sm 2px</code>, <code>--radius-badge 2px</code>, <code>--radius-pill 9999px</code>. Applied to Card/Button/Input/Select; remaining components still pending.</td>
+        <td>Card, Dialog, AlertDialog, Sheet, Button, IconButton, Input, Textarea, Select, Checkbox, Badge, Tooltip(opt), Toggle, DropdownMenu, Listbox, ResultCard, Empty, FeatureAdoptionBanner, Pagination (extends), Tabs(opt), SearchInput.</td>
+        <td>~30 (Bucket C base) + ~60 from component swaps in this audit</td>
+        <td>Medium — touches the most surfaces.</td>
+      </tr>
+      <tr>
+        <td><strong>D</strong> <code>--spacing-7_5</code> (30px)</td>
+        <td>Add the missing 30px spacing stop.</td>
+        <td>No component swap surfaces. Pure token addition; consumers can opt-in.</td>
+        <td>1</td>
+        <td>Trivial.</td>
+      </tr>
+      <tr>
+        <td><strong>E</strong> Shadow tokens</td>
+        <td><code>--shadow-button 0 1px 4px rgb(0 0 0 / 0.10)</code>, <code>--shadow-focus-brand 0 0 0 3px rgb(0 158 199 / 0.25)</code>, <code>--shadow-focus-danger 0 0 0 3px rgb(255 91 98 / 0.25)</code>.</td>
+        <td>Button, Input (focus visible), Select, Switch, Radio, Toggle, ResultCard hover.</td>
+        <td>~20 (E existing) + ~15 from component swaps</td>
+        <td>Low.</td>
+      </tr>
+      <tr>
+        <td><strong>F</strong> Type scale fill-ins</td>
+        <td><code>--text-label 14px</code>, <code>--text-card-body 16px</code>, <code>--text-card-title 18px</code>, <code>--text-page-title 20px</code>, <code>--text-page-emphasis 22px</code>, <code>--text-dashboard 24px</code>, <code>--text-display-sm 30px</code>, <code>--text-display 38px</code>.</td>
+        <td>Label, Card (title + body padding), Dialog (title alias), Empty (title), FeatureAdoptionBanner (title + body), Heading (Tailwind alignment).</td>
+        <td>~40 (F existing) + ~10 from component swaps</td>
+        <td>Low.</td>
+      </tr>
+      <tr>
+        <td><strong>G</strong> Hygiene comments</td>
+        <td>Angular-exact-literal comments where divergence is intentional (Checkbox default-grey decision, Login new-tradify-blue, etc).</td>
+        <td>Audit-wide — annotate each intentional drift.</td>
+        <td>~10</td>
+        <td>Trivial.</td>
+      </tr>
+      <tr>
+        <td><strong>H</strong> Input validation glow <em>(proposed new)</em></td>
+        <td>Material-palette tokens for validation: <code>--shadow-input-error/warning/success</code>.</td>
+        <td>Input, Textarea, Select (aria-invalid).</td>
+        <td>~6 (3 tokens + 3 component swaps)</td>
+        <td>Low — but needs explicit "Material not brand" decision (see Open Q7).</td>
+      </tr>
+      <tr>
+        <td><strong>I</strong> StatusBadge primitive <em>(proposed new)</em></td>
+        <td>New <code>components/status-badge/</code> with 5px 15px padding, 5px radius, 10.5px white font; dot + pill variants.</td>
+        <td>New surface; replaces ad-hoc badges in Enquiries / Job List.</td>
+        <td>~80 (new component + stories)</td>
+        <td>Medium — net-new component build.</td>
+      </tr>
+      <tr>
+        <td><strong>J</strong> Banner family <em>(proposed new)</em></td>
+        <td><code>--banner-bg / --banner-foreground</code> for dark-slate FeaturePanel; potential 60px full-bleed Banner build per Gap 6.</td>
+        <td>FeatureAdoptionBanner (retokens), new <code>components/banner/</code> if full-bleed strip is in scope.</td>
+        <td>~10 (FAP retokens) + ~100 (new 60px Banner, optional)</td>
+        <td>Medium if Banner ships; low if FAP-only.</td>
+      </tr>
+      <tr>
+        <td><strong>K?</strong> Sidebar surface <em>(optional new)</em></td>
+        <td>Re-tokens sidebar bg/foreground/accent to Angular coal/darkgrey palette. <strong>Excludes</strong> composition gaps (account menu, To-Do, badges, logo) — those need a separate epic.</td>
+        <td>Sidebar, SidebarLayout (token cascade only).</td>
+        <td>~5</td>
+        <td>Trivial. Composition overhaul is separate.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Severity totals (recap)</h3>
+  <ul>
+    <li><strong>34 components in-scope</strong>: 6 ✅ matches, 18 ⚠️ minor drift, 8 ❌ wrong tokens, 2 🔴 missing (DatePicker, StatusBadge).</li>
+    <li><strong>14 components excluded</strong> (no Figma counterpart): accordion, chart, command, drawer, error-boundary, heading, hooks, multiselect, sheet, slider, text, validation-error-summary (cascade-only); plus logical helpers like form / fieldset (Field maps but Form/Fieldset are net-new helpers).</li>
+    <li><strong>Buckets touched:</strong> A, B, C, E, F, G — every existing bucket lands swaps in this audit. D is invisible at the component level (pure spacing add).</li>
+    <li><strong>New buckets proposed:</strong> H (input validation glow), I (StatusBadge primitive), J (Banner colour family). Optional K (Sidebar surface tokens).</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>Recommended ship order</strong> (smallest visible payoff first):</p>
+    <ol>
+      <li>Bucket C semantic radius — biggest visible impact, lowest per-component LOC. Card/Dialog/Button/Input/Select alignment dominates.</li>
+      <li>Bucket A status primitive realign — locked-in, just a primitive mutation.</li>
+      <li>Bucket E shadow tokens — pairs naturally with Button finalisation.</li>
+      <li>Bucket B tint-bg pairs — Alert variant alignment.</li>
+      <li>Bucket F type scale — Label/Card/Dialog/Empty/FAP titles in one pass.</li>
+      <li>Bucket D spacing stop — trivial token add.</li>
+      <li>Bucket G hygiene — comment sweep, defer.</li>
+      <li>New Bucket H input validation glow — needs the brand-vs-Material decision first.</li>
+      <li>New Bucket I StatusBadge — biggest net-new build; tackle after primitive cleanups.</li>
+      <li>New Bucket J Banner family — pair with the Enquiries FAP retokenization.</li>
+    </ol>
+  </div>
+
+  <footer>
+    AUDIT 2026-05-28 (read-only) · UPDATED 2026-06-02 post #146 (foundations A–G shipped) · TRA-23702<br/>
+    Source artifacts: <code>design-tokens/fidelity-gap-report.md</code> · <code>design-tokens/component-build-specs.md</code> · Figma <code>TGYO5S1Dm5Owixf8HwFcri</code> page 1:2
+  </footer>
+
+</main>
+
+</body>
+</html>
