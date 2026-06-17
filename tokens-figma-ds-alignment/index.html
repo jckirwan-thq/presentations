@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en" data-brand="tradify" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Token Alignment — Figma DS Mirror ⇄ Tradify Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css"
+      integrity="sha384-AJKv9Ui5SfA0VsFksFI9GuA1ztX9Ca3CLP6HGfX4YY/tYSVodC+PUszaQZFIlkuy" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css"
+      integrity="sha384-YgvgKeZJykuztG+iQPoZHNZENTFZvOcOJ/uRzmJTje6GHYN9zAw+y5rx/L8MQKA/" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" id="theme"
+      integrity="sha384-/TZMdZeq0ZGi4iePTHhOMXOkyv2f72ZcwmhAtOmSZlPkx+5qCOfyc/U1kjd5Su6S" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/atom-one-light.css"
+      integrity="sha384-S8PdtfD7NEcy4dhv2JRNzJeVuVw2i9i4hmYFQ1TIKuEefm6cl1VjbB9hmNLjwNdo" crossorigin="anonymous" />
+<style>
+  /* =====================================================================
+   * Tradify token-alignment deck — design tokens lifted from
+   * packages/ui-config/src/brand/tradify/{colors,tokens,typography}.css
+   * ===================================================================== */
+  :root {
+    --color-white: #ffffff;
+    --color-paper: #f8f8f8;
+    --color-canvas: #eeeeee;
+    --color-soft-grey: #f3f7f9;
+    --color-subtle-grey: #f4f7f9;
+    --color-normal-grey: #e4eaec;
+    --color-border-strong: #e0e0e0;
+    --color-border-subtle: #e3e6ea;
+    --color-zinc: #97a3aa;
+    --color-dark-grey: #7a858f;
+    --color-ducttape: #53616a;
+    --color-light-black: #4b5a62;
+    --color-coal: #263238;
+    --color-darkgrey: #21292e;
+    --color-text-default: #424242;
+    --color-text-muted: #757575;
+
+    /* Tradify brand */
+    --color-brand: #009ec7;
+    --color-brand-dark: #006f8b;
+    --color-brand-light: #99d8e9;
+    --color-brand-midtint: #c4e9f2;
+    --color-brand-tint: #e5f5f9;
+    --color-jeans: #004b8c;
+
+    /* Status — Angular hexes (the target after Bucket A) */
+    --color-success: #46be8a;
+    --color-success-bg: #e8fff2;
+    --color-success-dark: #318561;
+    --color-warning: #fd8b00;
+    --color-warning-bg: #feae4d;
+    --color-warning-dark: #b16100;
+    --color-danger: #ff5b62;
+    --color-danger-bg: #fdedee;
+    --color-danger-dark: #a5383c;
+    --color-info: #00bcd4;
+    --color-info-bg: #eef6fd;
+
+    /* Spark */
+    --color-spark: #f8c231;
+
+    /* Type + radius */
+    --font-sans: "Roboto", "Arial", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+    --radius-card: 6px;
+    --radius-control: 4px;
+    --radius-badge: 2px;
+
+    --shadow-sm: 0 1px 4px 0 rgb(0 0 0 / 0.10);
+    --shadow-card-glow: 0 0 0 1px var(--color-border-strong);
+    --shadow-modal: 0 6px 10px rgb(0 0 0 / 0.15);
+
+    /* Reveal overrides */
+    --r-background-color: var(--color-soft-grey);
+    --r-main-color: var(--color-text-default);
+    --r-heading-color: var(--color-coal);
+    --r-link-color: var(--color-brand);
+    --r-selection-background-color: var(--color-brand);
+    --r-selection-color: var(--color-white);
+    --r-main-font: var(--font-sans);
+    --r-heading-font: var(--font-sans);
+    --r-code-font: var(--font-mono);
+  }
+
+  html, body { background: var(--color-soft-grey); }
+  .reveal { font-family: var(--font-sans); font-weight: 300; color: var(--color-text-default); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 1.2rem 1.8rem; }
+
+  /* Headings */
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    color: var(--color-coal);
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-family: var(--r-heading-font);
+    font-weight: 500;
+    margin: 0 0 0.5em;
+  }
+  .reveal h1 { font-size: 2.8rem; font-weight: 300; }
+  .reveal h2 { font-size: 1.9rem; }
+  .reveal h2::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--color-brand);
+    margin-top: 0.4em;
+  }
+  .reveal h3 { font-size: 1.4rem; color: var(--color-ducttape); }
+  .reveal h4 { font-size: 1.05rem; color: var(--color-brand-dark); margin-bottom: 0.4em; }
+
+  .reveal p, .reveal li {
+    color: var(--color-text-default);
+    font-size: 1.1rem;
+    line-height: 1.55;
+    font-weight: 300;
+  }
+  .reveal li { margin: 0.25em 0; }
+
+  .reveal strong { color: var(--color-coal); font-weight: 500; }
+
+  /* Title slide */
+  .title-slide { text-align: left !important; padding: 3rem 3rem !important; }
+  .title-slide .eyebrow {
+    font-family: var(--font-mono);
+    color: var(--color-brand);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.8em;
+  }
+  .title-slide h1 {
+    font-size: 3.6rem;
+    line-height: 1.05;
+    margin-bottom: 0.4em;
+    color: var(--color-coal);
+  }
+  .title-slide h1 .accent { color: var(--color-brand); }
+  .title-slide .lede {
+    font-size: 1.4rem;
+    color: var(--color-text-muted);
+    max-width: 800px;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+  .title-slide .meta {
+    font-family: var(--font-mono);
+    color: var(--color-dark-grey);
+    font-size: 0.85rem;
+    margin-top: 3rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* Two-column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.8rem;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+  .col-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-card);
+    padding: 1rem 1.2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .col-card.brand { border-left: 4px solid var(--color-brand); }
+  .col-card.danger { border-left: 4px solid var(--color-danger); }
+  .col-card.success { border-left: 4px solid var(--color-success); }
+  .col-card.warning { border-left: 4px solid var(--color-warning); }
+  .col-card.muted { background: var(--color-soft-grey); }
+
+  .col-card h4 {
+    margin: 0 0 0.5em;
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .col-card ul, .col-card ol { padding-left: 1.2em; margin: 0.3em 0; }
+  .col-card li { font-size: 0.95rem; margin: 0.2em 0; }
+  .col-card p { font-size: 0.95rem; margin: 0.3em 0; }
+
+  /* Tables */
+  .reveal table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 0.8em 0;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .reveal table thead {
+    background: var(--color-coal);
+    color: var(--color-white);
+  }
+  .reveal table th {
+    padding: 0.6em 0.9em;
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-white);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .reveal table td {
+    padding: 0.55em 0.9em;
+    border-bottom: 1px solid var(--color-border-subtle);
+    color: var(--color-text-default);
+    font-size: 0.92rem;
+  }
+  .reveal table tbody tr:nth-child(even) { background: var(--color-soft-grey); }
+  .reveal table tbody tr:last-child td { border-bottom: none; }
+  .check { color: var(--color-success); font-weight: 700; }
+  .cross { color: var(--color-danger); font-weight: 700; }
+
+  /* Code */
+  .reveal code:not(pre code) {
+    color: var(--color-brand-dark);
+    background: var(--color-brand-tint);
+    padding: 0.05em 0.4em;
+    border-radius: var(--radius-badge);
+    font-family: var(--r-code-font);
+    font-size: 0.85em;
+  }
+  .reveal pre {
+    background: var(--color-coal) !important;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: 0.8em 1em !important;
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
+    margin: 0.6em 0 !important;
+  }
+  .reveal pre code {
+    color: #d0d0d0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  .reveal pre code .comment { color: var(--color-zinc) !important; }
+  .reveal pre .hljs-comment, .reveal pre .hljs-quote { color: var(--color-zinc); }
+  .reveal pre .hljs-attr, .reveal pre .hljs-property { color: var(--color-brand-light); }
+  .reveal pre .hljs-string { color: var(--color-success); }
+  .reveal pre .hljs-number { color: var(--color-warning); }
+  .reveal pre .hljs-selector-class, .reveal pre .hljs-selector-pseudo { color: var(--color-brand); }
+
+  /* Chips */
+  .chip {
+    display: inline-block;
+    padding: 0.15em 0.7em;
+    border-radius: 1000px;
+    font-family: var(--r-code-font);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: 0.4em;
+  }
+  .chip.brand    { background: var(--color-brand);     color: var(--color-white); }
+  .chip.success  { background: var(--color-success-bg); color: var(--color-success-dark); }
+  .chip.warning  { background: var(--color-warning-bg); color: var(--color-warning-dark); }
+  .chip.danger   { background: var(--color-danger-bg); color: var(--color-danger-dark); }
+  .chip.info     { background: var(--color-info-bg);   color: var(--color-brand-dark); }
+  .chip.muted    { background: var(--color-normal-grey); color: var(--color-light-black); }
+  .chip.spark    { background: var(--color-spark);     color: var(--color-coal); }
+
+  .risk-low    { color: var(--color-success); font-weight: 500; }
+  .risk-med    { color: var(--color-warning); font-weight: 500; }
+  .risk-high   { color: var(--color-danger);  font-weight: 500; }
+
+  /* Bucket header strip */
+  .bucket-strip {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--color-brand);
+    margin-bottom: 0.6em;
+  }
+  .bucket-strip .letter {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand);
+    line-height: 1;
+  }
+  .bucket-strip h2 { margin: 0; }
+  .bucket-strip h2::after { display: none; }
+  .bucket-strip .meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Token chip — color swatch */
+  .swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background: var(--color-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    padding: 0.2em 0.6em;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    margin: 0.15em 0.2em 0.15em 0;
+  }
+  .swatch .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* Tradify watermark */
+  .watermark {
+    position: fixed;
+    bottom: 10px;
+    left: 16px;
+    color: var(--color-dark-grey);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    z-index: 2;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+  .watermark .accent { color: var(--color-brand); }
+
+  .reveal .controls { color: var(--color-brand); }
+  .reveal .progress { color: var(--color-brand); height: 4px; }
+  .reveal .slide-number {
+    color: var(--color-text-muted);
+    background: transparent;
+    font-family: var(--r-code-font);
+  }
+
+  .compact li { font-size: 0.92rem; line-height: 1.4; margin: 0.15em 0; }
+
+  .callout {
+    background: var(--color-brand-tint);
+    border-left: 4px solid var(--color-brand);
+    padding: 0.7em 1em;
+    margin: 0.8em 0;
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  }
+  .callout.warning {
+    background: var(--color-warning-bg);
+    border-left-color: var(--color-warning);
+  }
+  .callout p { margin: 0.2em 0; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="watermark">TRADIFY <span class="accent">×</span> DESIGN SYSTEM</div>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. Title -->
+    <section class="title-slide">
+      <p class="eyebrow">Design System · Token Alignment</p>
+      <h1>Closing the gap between<br/><span class="accent">Figma</span> and <span class="accent">code</span>.</h1>
+      <p class="lede">Reconcile the Tradify brand tokens in <code>ui-config</code> with the Figma DS Mirror — preserve Tailwind v4 ecosystem + the <code>data-brand</code> toggle.</p>
+      <p class="meta">JC KIRWAN · 2026-05-27 · RESOLUTIONS 2026-05-28 · 7 BUCKETS · 2 SPRINTS</p>
+    </section>
+
+    <!-- 2. Problem -->
+    <section>
+      <h2>Two parallel token universes</h2>
+      <p>The Figma DS Mirror is a faithful copy of the live AngularJS app. The React platform's Tradify tokens are a modernized re-cut. They overlap in places, drift in others.</p>
+      <div class="two-col">
+        <div class="col-card brand">
+          <h4><code>design-tokens/</code> (Angular reality)</h4>
+          <ul class="compact">
+            <li>Mirrors <code>web-frontend-angularjs/Styles/Common/Colors.less</code></li>
+            <li>W3C token format: <code>core / semantic / component</code></li>
+            <li>Tailwind v4 export ready</li>
+            <li>What Figma layers are bound to</li>
+          </ul>
+        </div>
+        <div class="col-card warning">
+          <h4><code>ui-config/brand/tradify/</code> (current React)</h4>
+          <ul class="compact">
+            <li>Lives in <code>tradify-frontend-platform/packages/ui-config</code></li>
+            <li>Tailwind v4 <code>@theme</code> + <code>[data-brand="tradify"]</code> selectors</li>
+            <li>Modernized palette (OKLCH naturals, gray/navy scales)</li>
+            <li>What components actually render against</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. The drift table -->
+    <section>
+      <h2>Where they drift</h2>
+      <table>
+        <thead>
+          <tr><th>Axis</th><th>Figma / Angular</th><th>Current React</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Brand blue</td><td><span class="swatch"><span class="dot" style="background:#009ec7"></span>#009ec7</span></td><td><span class="swatch"><span class="dot" style="background:#009ec7"></span>tradify-blue-600</span></td><td><span class="check">match</span></td></tr>
+          <tr><td>Sidebar</td><td><span class="swatch"><span class="dot" style="background:#263238"></span>#263238 coal</span></td><td><span class="swatch"><span class="dot" style="background:#263238"></span>navy-800</span></td><td><span class="check">match</span></td></tr>
+          <tr><td>Success</td><td><span class="swatch"><span class="dot" style="background:#46be8a"></span>#46be8a lunchbox</span></td><td><span class="swatch"><span class="dot" style="background:#38b580"></span>natural-green-500</span></td><td><span class="cross">drift</span></td></tr>
+          <tr><td>Warning</td><td><span class="swatch"><span class="dot" style="background:#fd8b00"></span>#fd8b00 screwdriver</span></td><td><span class="swatch"><span class="dot" style="background:#d2892c"></span>orange-500</span></td><td><span class="cross">drift</span></td></tr>
+          <tr><td>Danger</td><td><span class="swatch"><span class="dot" style="background:#ff5b62"></span>#ff5b62 error</span></td><td><span class="swatch"><span class="dot" style="background:#ff5b62"></span>natural-red-500</span></td><td><span class="check">match</span></td></tr>
+          <tr><td>Spacing</td><td>10/15/20/<strong>30</strong> px pragmatic</td><td>4px scale 0–360 (no 30px stop)</td><td><span class="cross">missing 30</span></td></tr>
+          <tr><td>Radius card</td><td>5px</td><td><code>--radius-lg = 6px</code></td><td><span class="risk-med">→ 6px (Q2 even-px)</span></td></tr>
+          <tr><td>Type scale</td><td>10/12/<strong>13/15/22/25/38</strong>/45</td><td>Tailwind 12/14/16/18/20/24/30/36</td><td><span class="cross">missing stops</span></td></tr>
+          <tr><td>Shadow sm</td><td><code>0 1px 4px / 0.10</code></td><td><code>0 1px 2px / 0.05</code></td><td><span class="cross">weaker</span></td></tr>
+          <tr><td>Focus tint</td><td><code>0 0 0 3px #009ec740</code></td><td>ad-hoc <code>ring-3</code> literals</td><td><span class="cross">not tokenised</span></td></tr>
+          <tr><td>Status tint bg</td><td>4 named bg/fg pairs</td><td>not declared</td><td><span class="cross">absent</span></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.85rem;color:var(--color-text-muted);">15 fidelity gaps documented in <code>fidelity-gap-report.md</code> ladder back to these token gaps.</p>
+    </section>
+
+    <!-- 4. Constraints -->
+    <section>
+      <h2>Constraints that bound the fix</h2>
+      <div class="two-col">
+        <div class="col-card brand">
+          <h4>Must preserve</h4>
+          <ul class="compact">
+            <li><strong>Brand toggle</strong> — every Tradify override stays inside <code>[data-brand="tradify"]</code></li>
+            <li><strong>Tailwind v4 <code>@theme</code></strong> stays brand-agnostic</li>
+            <li><strong>Access parity</strong> — never mutate the modernized shared primitives</li>
+            <li><strong>Dark mode</strong> — every override has a <code>.dark</code> counterpart where needed</li>
+          </ul>
+        </div>
+        <div class="col-card danger">
+          <h4>Must not</h4>
+          <ul class="compact">
+            <li>Pollute global <code>@theme</code> with Tradify-specific values</li>
+            <li>Mutate <code>--color-natural-green-500</code> etc. (Access reads these)</li>
+            <li>Touch the spacing scale generation (it's regenerated by script)</li>
+            <li>Ship component refactors disguised as token PRs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>The architectural move:</strong> override at the <em>semantic</em> layer (<code>--success</code>, <code>--warning</code>, <code>--radius-card</code>) inside the brand selector, not at the <em>primitive</em> layer.</p>
+      </div>
+    </section>
+
+    <!-- 5. Plan overview -->
+    <section>
+      <h2>Seven buckets, two sprints</h2>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Bucket</th><th>LOC</th><th>Risk</th><th>Reviewer</th><th>Sprint</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>Status semantic realignment</td><td>~30</td><td><span class="risk-low">low</span></td><td>JC</td><td>1</td></tr>
+          <tr><td><strong>B</strong></td><td>Status tint-bg pairs</td><td>~50</td><td><span class="risk-low">low</span></td><td>JC</td><td>1</td></tr>
+          <tr><td><strong>E</strong></td><td>Focus ring + button shadow</td><td>~20 + cmp</td><td><span class="risk-low">low</span></td><td>JC</td><td>1</td></tr>
+          <tr><td><strong>D</strong></td><td><code>--spacing-7_5</code> stop</td><td>1</td><td><span class="risk-low">trivial</span></td><td>Nikita</td><td>1</td></tr>
+          <tr><td><strong>C</strong></td><td>Semantic radius tokens</td><td>~30 + cmp</td><td><span class="risk-med">medium</span></td><td>JC</td><td>2</td></tr>
+          <tr><td><strong>F</strong></td><td>Type-scale fill-ins</td><td>~40 + SB</td><td><span class="risk-low">low</span></td><td>Nikita</td><td>2</td></tr>
+          <tr><td><strong>G</strong></td><td>Hygiene comments</td><td>~10</td><td><span class="risk-low">trivial</span></td><td>Nikita</td><td>2</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.85rem;color:var(--color-text-muted);">Each bucket = own PR + own TRA ticket. Branch <code>feature/tra-NNNNN/tokens/&lt;bucket&gt;</code>.</p>
+    </section>
+
+    <!-- 5b. Resolutions -->
+    <section>
+      <h2>Locked resolutions · 2026-05-28</h2>
+      <p>Seven open questions surfaced by the ui-components × Figma DS audit, resolved before token work proceeds.</p>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Question</th><th>Decision</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Q1</strong></td><td>Checkbox / Radio default fill</td><td>Brand cyan (<code>--primary</code>). No Angular-grey revert.</td></tr>
+          <tr><td><strong>Q2</strong></td><td>Card radius 5px vs 6px</td><td><strong>6px</strong> (<code>--radius-card 0.375rem</code>). Even-px rule overrides Angular literal.</td></tr>
+          <tr><td><strong>Q3</strong></td><td>Pager-specific tokens</td><td>Deferred — component workstream, not a token gap.</td></tr>
+          <tr><td><strong>Q4</strong></td><td>Banner J — token or component</td><td>Token-only <code>--banner-bg #526069</code> dark-slate. <strong>Folded into B.</strong> Full-bleed deferred.</td></tr>
+          <tr><td><strong>Q5</strong></td><td>StatusBadge primitive vs variant</td><td>Add Status <strong>variant</strong> to existing Badge. Component phase — parked.</td></tr>
+          <tr><td><strong>Q6</strong></td><td>Sidebar bucket K vs epic</td><td>No Bucket K. Sidebar tokens already in place. Composition = separate epic.</td></tr>
+          <tr><td><strong>Q7</strong></td><td>Input validation glow</td><td>Brand-aliased <code>color-mix(in oklab, var(--destructive) 30%, transparent)</code>. <strong>Folded into E.</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <p><strong>Net bucket plan</strong> — A–G ship unchanged. H folds into E · J folds into B · K dropped · Q5 parked. Sequence: <strong>A / B+J / D / E+H</strong> (Sprint 1) → C / F / G (Sprint 2).</p>
+      </div>
+    </section>
+
+    <!-- 6. Bucket A -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">A</span>
+        <h2>Status semantic realignment</h2>
+        <span class="meta">SPRINT 1 · <span class="risk-low">LOW RISK</span></span>
+      </div>
+      <p>Mutate the <strong>primitive</strong> 500 stops in <code>brand/tradify/colors.css</code> to Angular-faithful hexes. Semantic tokens stay primitive-driven — <strong>no hex literals</strong> in <code>tokens.css</code>.</p>
+      <div class="two-col" style="gap:0.7rem;">
+        <div class="col-card">
+          <h4>colors.css · primitives</h4>
+          <pre><code class="language-css">@theme {
+  /* Was #38b580 → Angular lunchbox */
+  --color-natural-green-500: #46be8a;
+
+  /* Was #d2892c → Angular screwdriver */
+  --color-orange-500: #fd8b00;
+
+  /* natural-red-500 already #ff5b62 ✓ */
+}</code></pre>
+        </div>
+        <div class="col-card muted">
+          <h4>tokens.css · semantic refs</h4>
+          <pre><code class="language-css">[data-brand="tradify"] {
+  --success: var(--color-natural-green-500);
+  --success-foreground: var(--color-white);
+  --warning: var(--color-orange-500);
+  --warning-foreground: var(--color-white);
+  --destructive: var(--color-natural-red-500);
+  --destructive-foreground: var(--color-white);
+}</code></pre>
+        </div>
+      </div>
+      <p style="font-size:0.88rem;color:var(--color-text-muted);"><strong>Affects</strong> — Badge, Banner, Toast, FormField error, status pills. <strong>Zero component edits.</strong> Tradify-scoped via file path — Access loads its own colors.css.</p>
+    </section>
+
+    <!-- 7. Bucket B -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">B</span>
+        <h2>Status tint-bg pairs</h2>
+        <span class="meta">SPRINT 1 · <span class="risk-low">LOW RISK</span></span>
+      </div>
+      <p>Feedback surfaces need tinted fills with strong-color foregrounds. Mutate primitive light/tint stops to Angular hexes, then semantic pairs reference primitives only — <strong>no hex literals</strong>.</p>
+      <div class="two-col" style="gap:0.7rem;">
+        <div class="col-card">
+          <h4>colors.css · tint primitives</h4>
+          <pre><code class="language-css">@theme {
+  --color-natural-green-50: #e8fff2;
+  --color-orange-400:       #feae4d;
+  --color-natural-red-50:   #fdedee;
+  --color-tradify-blue-50:  #eef6fd;
+}</code></pre>
+        </div>
+        <div class="col-card muted">
+          <h4>tokens.css · semantic pairs</h4>
+          <pre><code class="language-css">[data-brand="tradify"] {
+  --success-bg:    var(--color-natural-green-50);
+  --success-bg-foreground:
+                    var(--color-natural-green-700);
+  --warning-bg:    var(--color-orange-400);
+  --warning-bg-foreground:
+                    var(--color-orange-700);
+  --destructive-bg: var(--color-natural-red-50);
+  --destructive-bg-foreground:
+                    var(--color-natural-red-700);
+  --info-bg:        var(--color-tradify-blue-50);
+  --info-bg-foreground:
+                    var(--color-tradify-blue-700);
+
+  /* J — dark-slate FeaturePanel surface (Angular-exact) */
+  --banner-bg:      #526069;
+}</code></pre>
+        </div>
+      </div>
+      <p style="font-size:0.88rem;color:var(--color-text-muted);">Bridge into <code>@theme</code> in <code>colors-nomenclature.css</code> so <code>bg-success-bg</code> et al. resolve as Tailwind utilities. Includes <strong>J</strong> · <code>--banner-bg #526069</code> (Q4). <strong>Unblocks</strong> Gap #6 Banner full-bleed · Gap #12 Toast.</p>
+    </section>
+
+    <!-- 8. Bucket E -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">E</span>
+        <h2>Brand-tinted focus + button shadow</h2>
+        <span class="meta">SPRINT 1 · <span class="risk-low">LOW RISK</span></span>
+      </div>
+      <p>Angular buttons cast <code>0 1px 4px / 0.10</code>. Default Tailwind shadow is half that. Focus rings on inputs/buttons compose ad-hoc <code>ring-3 ring-primary/25</code> literals — should be one token.</p>
+      <pre><code class="language-css">[data-brand="tradify"] {
+  --shadow-button:  0 1px 4px 0 rgb(0 0 0 / 0.10);
+  --shadow-card-glow: 0 0 0 1px var(--color-gray-200);
+  --shadow-focus-brand:
+    0 0 0 3px color-mix(in oklab, var(--primary) 25%, transparent);
+  --shadow-focus-danger:
+    0 0 0 3px color-mix(in oklab, var(--destructive) 30%, transparent);
+}
+
+/* No @theme bridge — a self-referential
+   --shadow-*: var(--shadow-*) cycles in the
+   shared shadow namespace. Components consume
+   bare tokens via shadow-(--token) arbitrary
+   syntax, matching --shadow-xs / --input-shadow. */</code></pre>
+      <p style="font-size:0.92rem;"><strong>Affects</strong> — Button base → <code>shadow-(--shadow-button)</code>. Input focus-visible → <code>shadow-(--shadow-focus-brand)</code>; invalid → <code>--shadow-focus-danger</code> (H · Q7). Replaces ad-hoc <code>ring-3 ring-primary/25</code> literals.</p>
+    </section>
+
+    <!-- 9. Bucket D -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">D</span>
+        <h2>The 30-pixel hole in the spacing scale</h2>
+        <span class="meta">SPRINT 1 · <span class="risk-low">TRIVIAL</span></span>
+      </div>
+      <p>Angular uses 30px frequently — card padding, section gap. Tailwind's standard scale jumps from 28 (<code>--spacing-7</code>) to 32 (<code>--spacing-8</code>). Insert one stop.</p>
+      <pre><code class="language-css">@theme {
+  /* … */
+  --spacing-7_5: 1.875rem;    /* 30px — Angular section gap */
+  /* … */
+}</code></pre>
+      <p style="font-size:0.92rem;">Brand-agnostic — Access benefits too. One-line PR, perfect onboarding task for Nikita.</p>
+    </section>
+
+    <!-- 10. Bucket C -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">C</span>
+        <h2>Semantic radius tokens</h2>
+        <span class="meta">SPRINT 2 · <span class="risk-med">MEDIUM</span></span>
+      </div>
+      <p>Cards in Angular are <code>5px</code>. <code>rounded-lg</code> in React resolves to <code>6px</code>. Don't retune the Tailwind scale — add semantic shape tokens. <strong>Rule</strong>: even px only, rem units. Angular's odd stops (5, 3) round to the nearest even.</p>
+      <div class="two-col" style="gap: 0.7rem;">
+        <div class="col-card">
+          <h4>Token contract · even rem</h4>
+          <pre><code class="language-css">[data-brand="tradify"] {
+  --radius-card:       0.375rem;  /* 6px ← Angular 5 */
+  --radius-modal:      0.25rem;   /* 4px exact      */
+  --radius-control:    0.25rem;   /* 4px ← Angular 3 */
+  --radius-control-sm: 0.125rem;  /* 2px exact      */
+  --radius-badge:      0.125rem;  /* 2px exact      */
+  --radius-pill:       9999px;
+}
+
+@theme {
+  --radius-card:       var(--radius-card);
+  --radius-modal:      var(--radius-modal);
+  --radius-control:    var(--radius-control);
+  --radius-control-sm: var(--radius-control-sm);
+  --radius-badge:      var(--radius-badge);
+  --radius-pill:       var(--radius-pill);
+}</code></pre>
+        </div>
+        <div class="col-card muted">
+          <h4>Component swaps</h4>
+          <ul class="compact">
+            <li><code>Card</code> → <code>rounded-card</code></li>
+            <li><code>Button</code> → <code>rounded-control</code></li>
+            <li><code>Badge</code> → <code>rounded-badge</code></li>
+            <li><code>Input</code> → <code>rounded-control</code></li>
+            <li><code>Select</code> → <code>rounded-control</code></li>
+          </ul>
+          <p style="margin-top:0.6em;font-size:0.85rem;color:var(--color-text-muted);">Snapshot tests catch any visual drift.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Bucket F -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">F</span>
+        <h2>Type-scale fill-ins</h2>
+        <span class="meta">SPRINT 2 · <span class="risk-low">LOW</span></span>
+      </div>
+      <p>Angular uses 13/15/22/25/38px stops Tailwind doesn't. Don't bloat the base scale — add Tradify-scoped semantic tokens. <strong>Rule</strong>: even px only, rem units. Odd stops (13/15/25) round to nearest even; already-even stops (22/38) keep their literal value as new tokens.</p>
+      <pre><code class="language-css">[data-brand="tradify"] {
+  --text-label:           0.875rem;   /* 14px ← Angular 13, aliases text-sm */
+  --text-card-body:       1rem;       /* 16px ← Angular 15, aliases text-base */
+  --text-card-title:      1.125rem;   /* 18px exact, aliases text-lg */
+  --text-page-title:      1.25rem;    /* 20px exact, aliases text-xl */
+  --text-page-emphasis:   1.375rem;   /* 22px exact, new even stop */
+  --text-dashboard:       1.5rem;     /* 24px ← Angular 25, aliases text-2xl */
+  --text-display-sm:      1.875rem;   /* 30px exact, aliases text-3xl */
+  --text-display:         2.375rem;   /* 38px exact, new even stop */
+}
+
+@theme {
+  --text-label:           var(--text-label);
+  --text-card-body:       var(--text-card-body);
+  --text-card-title:      var(--text-card-title);
+  --text-page-title:      var(--text-page-title);
+  --text-page-emphasis:   var(--text-page-emphasis);
+  --text-dashboard:       var(--text-dashboard);
+  --text-display-sm:      var(--text-display-sm);
+  --text-display:         var(--text-display);
+}</code></pre>
+      <p style="font-size:0.88rem;color:var(--color-text-muted);">Components stop reaching for arbitrary <code>text-[13px]</code> literals. Storybook DS Foundations page documents the new ladder.</p>
+    </section>
+
+    <!-- 12. Bucket G -->
+    <section>
+      <div class="bucket-strip">
+        <span class="letter">G</span>
+        <h2>Hygiene — comment the survivors</h2>
+        <span class="meta">SPRINT 2 · <span class="risk-low">TRIVIAL</span></span>
+      </div>
+      <p><code>tokens.css</code> contains literal hexes with no primitive equivalent. These are deliberate Angular-exact values. Don't churn them — document the rationale so the next reader doesn't.</p>
+      <table>
+        <thead><tr><th>Hex</th><th>Token</th><th>Origin</th></tr></thead>
+        <tbody>
+          <tr><td><span class="swatch"><span class="dot" style="background:#a3afb7"></span>#a3afb7</span></td><td><code>--btn-cancel-bg</code></td><td>Bootstrap <code>@grey-light</code> computed</td></tr>
+          <tr><td><span class="swatch"><span class="dot" style="background:#757575"></span>#757575</span></td><td><code>--muted-foreground</code></td><td>Angular Material grey-600</td></tr>
+          <tr><td><span class="swatch"><span class="dot" style="background:#555555"></span>#555555</span></td><td><code>--foreground</code></td><td>Angular body text rgb(85,85,85)</td></tr>
+          <tr><td><span class="swatch"><span class="dot" style="background:#7a8595"></span>#7a8595</span></td><td><code>--tab-text-color</code></td><td>Iggi spec · TRA-23384</td></tr>
+          <tr><td><span class="swatch"><span class="dot" style="background:#dfe4e8"></span>#dfe4e8</span></td><td><code>--panel-header-bg</code></td><td>Angular <code>.box-header</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 13. Brand-toggle architecture diagram -->
+    <section>
+      <h2>How the brand toggle stays intact</h2>
+      <div class="three-col">
+        <div class="col-card brand">
+          <h4>Layer 1 · Primitives</h4>
+          <p>Brand-scoped via <strong>file path</strong>: <code>brand/tradify/colors.css</code> (Access loads <code>brand/access/colors.css</code>).</p>
+          <p>Mutate the hex here when the primitive is close-but-not-exact to Angular reality.</p>
+          <p><code>--color-tradify-blue-600</code><br/><code>--color-natural-green-500</code><br/><code>--color-orange-500</code></p>
+        </div>
+        <div class="col-card success">
+          <h4>Layer 2 · Semantic</h4>
+          <p>Brand-scoped via <code>[data-brand="tradify"]</code> selector. Where A / B / C / E / F live.</p>
+          <p>References Layer 1 via <code>var()</code> only. <strong>No hex literals.</strong></p>
+          <p><code>--success</code><br/><code>--radius-card</code><br/><code>--text-display</code></p>
+        </div>
+        <div class="col-card warning">
+          <h4>Layer 3 · Component</h4>
+          <p>Reads Layer 2 via Tailwind utilities. Zero brand awareness in component source.</p>
+          <p><code>bg-success</code><br/><code>rounded-card</code><br/><code>text-display</code></p>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>Rule</strong> — semantic tokens never hold hex literals. If a primitive is close-but-not-exact, mutate the primitive in Layer 1. Brand-scoped by file path keeps Access safe.</p>
+      </div>
+    </section>
+
+    <!-- 14. Out of scope -->
+    <section>
+      <h2>Explicitly out of scope</h2>
+      <p>Token alignment unblocks visual parity but doesn't ship it. These stay component-level workstreams.</p>
+      <table>
+        <thead><tr><th>Gap</th><th>Why deferred</th></tr></thead>
+        <tbody>
+          <tr><td>Spinner dots vs arc</td><td>Component primitive composition — tokens already exist (<code>--animate-tradify-dot-pulse</code>)</td></tr>
+          <tr><td>Banner full-bleed</td><td>Structural redesign — Bucket B unblocks, doesn't ship</td></tr>
+          <tr><td>Modal divider</td><td>DOM change in Dialog primitive</td></tr>
+          <tr><td>Tabs solid pill (TRA-23384)</td><td>Partially shipped via <code>--tab-*</code> tokens; visual variants pending</td></tr>
+          <tr><td>Pager 45px cells</td><td>Component-level — no token gap</td></tr>
+          <tr><td>Sidebar visual gap (#2)</td><td>Sidebar composition — tokens already in place</td></tr>
+          <tr><td>FontAwesome → Lucide 83</td><td>Icon glyph parity is its own workstream</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 15. Next -->
+    <section>
+      <h2>Next</h2>
+      <div class="two-col">
+        <div class="col-card brand">
+          <h4>Sprint 1 — Bucket A · B · D · E</h4>
+          <ol class="compact">
+            <li>Spin TRA tickets — one per bucket</li>
+            <li>Branch <code>feature/tra-NNNNN/tokens/&lt;bucket&gt;</code></li>
+            <li>Bucket A → reviewer JC</li>
+            <li>Bucket B → reviewer JC</li>
+            <li>Bucket D → reviewer Nikita</li>
+            <li>Bucket E → reviewer JC</li>
+          </ol>
+        </div>
+        <div class="col-card success">
+          <h4>Sprint 2 — Bucket C · F · G</h4>
+          <ol class="compact">
+            <li>Bucket C → reviewer JC · medium risk · snapshot tests</li>
+            <li>Bucket F → reviewer Nikita · Storybook DS Foundations page</li>
+            <li>Bucket G → reviewer Nikita · comment-only PR</li>
+          </ol>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>ADR?</strong> — likely overkill. This plan + PR descriptions sufficient. Reassess if any bucket grows in scope.</p>
+        <p><strong>Plan file</strong> — <code>tradify/plans/tokens-figma-ds-alignment.md</code> · also in Obsidian via vault symlink.</p>
+      </div>
+    </section>
+
+    <!-- 16. End card -->
+    <section class="title-slide">
+      <p class="eyebrow">End of deck</p>
+      <h1>Questions?<br/><span class="accent">Tickets time.</span></h1>
+      <p class="lede">Markdown plan: <code>tradify/plans/tokens-figma-ds-alignment.md</code><br/>Figma DS Mirror: <a href="https://figma.com/design/TGYO5S1Dm5Owixf8HwFcri/?node-id=1-3">file TGYO5S1Dm5Owixf8HwFcri</a></p>
+      <p class="meta">JC KIRWAN · TRADIFY × DESIGN SYSTEM · 2026-05-27 · RESOLUTIONS 2026-05-28</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"
+        integrity="sha384-M/JtqCVlLcK9lwVnBnMXP0V577CBULkjodKsR/PITOe4MSKNbbwqCemEyluOw0+5" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"
+        integrity="sha384-NUSGSUaJDMJ4EYNyUIGbV/meNnf3WqIvGfjqD3BDJdvWEI3K/zrL38QWB52JLIMW" crossorigin="anonymous"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    backgroundTransition: 'fade',
+    plugins: [ RevealHighlight ]
+  });
+</script>
+</body>
+</html>
