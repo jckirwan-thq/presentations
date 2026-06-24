@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sharpening the Saw — Funnel Improvements · JC</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;800&family=Inter:wght@300;400;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --wood:    #1b130c;   /* dark walnut */
+    --wood-2:  #120c07;
+    --panel:   #271a10;   /* sawn timber */
+    --steel:   #cdd6df;   /* blade body */
+    --edge:    #f1f6fb;   /* honed edge */
+    --amber:   #e0a13c;   /* honing oil / brass */
+    --amber-2: #f4c878;
+    --copper:  #b5703a;
+    --green:   #7bc47f;   /* the sharp cut */
+    --rust:    #c4502e;   /* the blunt waste */
+    --ink:     #f1e7d8;
+    --muted:   #b39d82;
+  }
+
+  html, body { background: var(--wood); }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--ink); }
+
+  /* faint wood-grain wash */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      repeating-linear-gradient(92deg, rgba(0,0,0,0.16) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(88deg, rgba(181,112,58,0.05) 0 1px, transparent 1px 60px),
+      radial-gradient(circle at 30% 20%, rgba(224,161,60,0.07), transparent 60%);
+  }
+  .reveal .slides { z-index: 1; }
+
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Roboto Slab', serif;
+    letter-spacing: 0.01em;
+    color: var(--amber);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.45);
+    margin-bottom: 0.3em;
+  }
+  .reveal h1 { font-size: 2.1em; line-height: 1.05; color: var(--amber-2); }
+  .reveal h2 { font-size: 1.5em; }
+  .reveal h3 { font-size: 1.0em; color: var(--steel); text-shadow: none; }
+
+  .reveal p, .reveal li { font-weight: 300; }
+  .reveal strong { color: var(--amber-2); font-weight: 600; }
+  .reveal em { color: var(--green); font-style: normal; }
+
+  .kicker {
+    font-family: 'Roboto Slab', serif; font-weight: 600;
+    letter-spacing: 0.34em; text-transform: uppercase;
+    color: var(--copper); font-size: 0.5em;
+  }
+  .covey { font-family: 'Caveat', cursive; color: var(--amber-2); font-size: 1.15em; line-height: 1.25; }
+
+  .saw { width: 132px; margin: 0 auto 0.5em; display:block; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5)); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; text-align: left; }
+  .panel { background: var(--panel); border-left: 5px solid var(--amber); border-radius: 8px; padding: 16px 20px; text-align: left; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3); }
+  .panel.steel { border-left-color: var(--steel); }
+  .panel.rust  { border-left-color: var(--rust); }
+  .panel.green { border-left-color: var(--green); }
+
+  ul.tight li { margin: 4px 0; font-size: 0.66em; }
+  .reveal section small { color: var(--muted); font-size: 0.42em; }
+  .footer-note { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-size: 0.32em; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; }
+
+  table.cut { font-size: 0.5em; width: 100%; border-collapse: collapse; margin-top: 0.3em; }
+  table.cut th { color: var(--steel); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid var(--copper); padding: 7px 9px; text-align: left; }
+  table.cut td { padding: 6px 9px; border-bottom: 1px solid rgba(179,157,130,0.2); vertical-align: top; }
+  table.cut td.was { color: var(--rust); }
+  table.cut td.now { color: var(--green); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 0.5em; }
+  .stat { background: linear-gradient(160deg, rgba(224,161,60,0.12), rgba(123,196,127,0.05)); border: 1px solid rgba(224,161,60,0.35); border-radius: 14px; padding: 20px 10px; }
+  .stat .n { font-family: 'Roboto Slab', serif; font-weight: 800; font-size: 2.1em; color: var(--amber-2); line-height: 1; }
+  .stat .l { font-size: 0.46em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+  /* flow diagrams (hand-authored SVG) */
+  svg.flow { width: 100%; max-height: 560px; height: auto; display: block; margin: 0 auto; }
+  .diagram-cap { font-family: 'Roboto Slab', serif; letter-spacing: 0.04em; }
+  .diagram-cap.blunt { color: var(--rust); }
+  .diagram-cap.sharp { color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1 · TITLE -->
+    <section data-background-color="#120c07">
+      <svg class="saw" viewBox="0 0 220 90">
+        <!-- handle -->
+        <path d="M8 30 q-6 18 8 30 q22 16 40 4 l-6 -16 q-14 6 -24 -4 q-8 -8 -2 -18 Z" fill="#7a4a22" stroke="#3a230f" stroke-width="2"/>
+        <!-- blade -->
+        <path d="M46 28 L214 12 L214 30 L52 50 Z" fill="#cdd6df" stroke="#8a949e" stroke-width="1.5"/>
+        <!-- teeth -->
+        <path d="M52 50 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 L214 30 Z" fill="#e9eef4" stroke="#8a949e" stroke-width="1"/>
+        <!-- honed glint -->
+        <path d="M70 24 L206 11" stroke="#f1f6fb" stroke-width="2" opacity="0.8"/>
+      </svg>
+      <div class="kicker">Frontend · Agentic Workflow</div>
+      <h1>Sharpening the Saw</h1>
+      <h3 style="letter-spacing:0.1em;">A token-frugal mode for the crew — thick → thin</h3>
+      <p class="covey" style="margin-top:1em;">"I'm too busy sawing to stop and sharpen."</p>
+      <p style="margin-top:1.2em;"><strong>Jean-Claude Kirwan</strong> &nbsp;·&nbsp; Frontend Tech Lead</p>
+      <div class="footer-note">tradify-agentic-tools · crew thin/thick mode</div>
+    </section>
+
+    <!-- 2 · THE PARABLE -->
+    <section>
+      <h2>The Woodcutter's Mistake</h2>
+      <div class="two-col" style="margin-top:0.5em;">
+        <div class="panel">
+          <p class="covey" style="font-size:1em;">Two woodcutters. One saws flat-out all day. The other stops every hour to sharpen — and fells more timber by dusk.</p>
+        </div>
+        <div class="panel steel">
+          <h3>The crew only had one gear</h3>
+          <ul class="tight">
+            <li>Every job ran the <strong>full funnel</strong> — orchestrator, Work Order, 5 critics, sign-off.</li>
+            <li>Right for a PR. <em>Wasteful</em> for fast local iteration you re-review at PR time anyway.</li>
+            <li>The blade dragged: <strong>tokens up</strong>, context filling, compaction churn.</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:0.7em;" class="covey">So give the crew a second gear — a <strong>thin</strong> mode. Thick stays the default; thin trims the local ceremony, not the review.</p>
+      <div class="footer-note">Habit 7 · self-renewal</div>
+    </section>
+
+    <!-- 3 · BEFORE -->
+    <section>
+      <h2 class="diagram-cap blunt">Thick · The Full Funnel <span style="font-size:0.5em;color:var(--muted)">(default)</span></h2>
+      <svg class="flow" viewBox="0 0 1000 600" font-family="Inter, sans-serif">
+        <defs>
+          <marker id="ahB" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#b39d82"/></marker>
+        </defs>
+        <g stroke="#b39d82" stroke-width="2" fill="none" marker-end="url(#ahB)">
+          <path d="M500,60 L500,84"/>
+          <path d="M500,142 L500,169"/>
+          <path d="M500,217 L500,244"/>
+          <path d="M500,302 L500,326 L105,326 L105,344"/>
+          <path d="M500,302 L500,326 L302,326 L302,344"/>
+          <path d="M500,302 L500,344"/>
+          <path d="M500,302 L500,326 L698,326 L698,344"/>
+          <path d="M500,302 L500,326 L895,326 L895,344"/>
+          <path d="M105,394 L105,415 L500,415 L500,431"/>
+          <path d="M302,394 L302,415 L500,415"/>
+          <path d="M500,394 L500,431"/>
+          <path d="M698,394 L698,415 L500,415"/>
+          <path d="M895,394 L895,415 L500,415"/>
+          <path d="M500,479 L500,521"/>
+        </g>
+        <g text-anchor="middle">
+          <!-- request -->
+          <rect x="425" y="20" width="150" height="40" rx="20" fill="#e0a13c" stroke="#7a4a22" stroke-width="2"/>
+          <text x="500" y="45" fill="#1b130c" font-weight="600" font-size="15">Your request</text>
+          <!-- orchestrator -->
+          <rect x="385" y="84" width="230" height="58" rx="10" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+          <text x="500" y="109" fill="#f1e7d8" font-size="15">work-orchestrator-gaffa</text>
+          <text x="500" y="129" fill="#b39d82" font-size="13">triage</text>
+          <!-- work order -->
+          <rect x="385" y="169" width="230" height="48" rx="10" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+          <text x="500" y="198" fill="#f1e7d8" font-size="15">Write Work Order doc</text>
+          <!-- tech-lead -->
+          <rect x="385" y="244" width="230" height="58" rx="10" fill="#271a10" stroke="#cdd6df" stroke-width="2"/>
+          <text x="500" y="269" fill="#f1e7d8" font-size="15">Global tech-lead</text>
+          <text x="500" y="289" fill="#b39d82" font-size="13">does ALL the work</text>
+          <!-- critics -->
+          <g font-size="13" fill="#f1e7d8">
+            <rect x="30"  y="344" width="150" height="50" rx="9" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+            <text x="105" y="366">regression</text><text x="105" y="383" fill="#b39d82">critic</text>
+            <rect x="227" y="344" width="150" height="50" rx="9" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+            <text x="302" y="366">performance</text><text x="302" y="383" fill="#b39d82">critic</text>
+            <rect x="425" y="344" width="150" height="50" rx="9" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+            <text x="500" y="366">approach</text><text x="500" y="383" fill="#b39d82">critic</text>
+            <rect x="623" y="344" width="150" height="50" rx="9" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+            <text x="698" y="366">security</text><text x="698" y="383" fill="#b39d82">critic</text>
+            <rect x="820" y="344" width="150" height="50" rx="9" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+            <text x="895" y="366">docs</text><text x="895" y="383" fill="#b39d82">critic</text>
+          </g>
+          <!-- reconcile -->
+          <rect x="380" y="431" width="240" height="48" rx="10" fill="#3a2317" stroke="#c4502e" stroke-width="2"/>
+          <text x="500" y="460" fill="#f1e7d8" font-size="15">Reconcile findings</text>
+          <!-- sign-off -->
+          <rect x="425" y="521" width="150" height="40" rx="20" fill="#e0a13c" stroke="#7a4a22" stroke-width="2"/>
+          <text x="500" y="546" fill="#1b130c" font-weight="600" font-size="15">Sign-off</text>
+        </g>
+      </svg>
+      <small>~7 agent contexts per job — each critic re-reads the diff and feeds findings back into main. Tokens burn even on a one-line change.</small>
+      <div class="footer-note">Thick mode · the full funnel (default)</div>
+    </section>
+
+    <!-- 4 · AFTER -->
+    <section>
+      <h2 class="diagram-cap sharp">Thin · The Honed Edge</h2>
+      <svg class="flow" viewBox="0 0 1000 620" font-family="Inter, sans-serif">
+        <defs>
+          <marker id="ahA" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#b39d82"/></marker>
+          <marker id="ahD" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8a7a64"/></marker>
+        </defs>
+        <g stroke="#b39d82" stroke-width="2" fill="none" marker-end="url(#ahA)">
+          <path d="M500,60 L500,82"/>
+          <path d="M418,120 L270,120 L270,185"/>
+          <path d="M582,120 L730,120 L730,185"/>
+          <path d="M270,241 L270,280"/>
+          <path d="M270,336 L270,500 L423,500"/>
+          <path d="M730,241 L730,280"/>
+          <path d="M730,336 L730,375"/>
+          <path d="M730,431 L730,500 L577,500"/>
+        </g>
+        <path d="M500,520 L500,550" stroke="#8a7a64" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#ahD)"/>
+        <g text-anchor="middle">
+          <!-- request -->
+          <rect x="425" y="20" width="150" height="40" rx="20" fill="#e0a13c" stroke="#7a4a22" stroke-width="2"/>
+          <text x="500" y="45" fill="#1b130c" font-weight="600" font-size="15">Your request</text>
+          <!-- decision diamond -->
+          <polygon points="500,82 584,120 500,158 416,120" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="500" y="125" fill="#f1e7d8" font-size="14">Single repo?</text>
+          <!-- branch labels -->
+          <text x="330" y="111" fill="#7bc47f" font-size="13" font-weight="600">yes</text>
+          <text x="672" y="111" fill="#e0a13c" font-size="13" font-weight="600">cross-repo</text>
+          <!-- yes column -->
+          <rect x="155" y="185" width="230" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="270" y="209" fill="#f1e7d8" font-size="15">main reads</text>
+          <text x="270" y="228" fill="#b39d82" font-size="13">.agents/manifest.yaml</text>
+          <rect x="155" y="280" width="230" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="270" y="304" fill="#f1e7d8" font-size="15">dispatch DEEPEST</text>
+          <text x="270" y="323" fill="#b39d82" font-size="13">in-repo specialist</text>
+          <!-- cross-repo column -->
+          <rect x="610" y="185" width="240" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="730" y="209" fill="#f1e7d8" font-size="15">orchestrator:</text>
+          <text x="730" y="228" fill="#b39d82" font-size="13">repo-impact map</text>
+          <rect x="610" y="280" width="240" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="730" y="304" fill="#f1e7d8" font-size="15">engineering-manager</text>
+          <text x="730" y="323" fill="#b39d82" font-size="13">splits the work</text>
+          <rect x="610" y="375" width="240" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
+          <text x="730" y="399" fill="#f1e7d8" font-size="15">deep specialist</text>
+          <text x="730" y="418" fill="#b39d82" font-size="13">per repo</text>
+          <!-- done -->
+          <rect x="423" y="480" width="154" height="40" rx="20" fill="#e0a13c" stroke="#7a4a22" stroke-width="2"/>
+          <text x="500" y="505" fill="#1b130c" font-weight="600" font-size="15">Done</text>
+          <!-- deferred crew -->
+          <rect x="350" y="550" width="300" height="48" rx="10" fill="#2a1d12" stroke="#8a7a64" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="500" y="573" fill="#b39d82" font-size="14">critic crew + Work Order</text>
+          <text x="500" y="590" fill="#8a7a64" font-size="11.5">only at PR / comment-address time</text>
+        </g>
+      </svg>
+      <small>Single-repo = <strong>one agent call</strong>: the manifest picks the deepest specialist (context-architect / ui / platform / bundle / devx). Critics — incl. security unless <code>--thin-security on</code> — defer to the PR gate, where <strong>tra-pr-review</strong> still runs the full crew.</small>
+      <div class="footer-note">Thin mode · manifest-first · deferred, not removed</div>
+    </section>
+
+    <!-- 5 · WHAT CHANGED -->
+    <section>
+      <h2>What Got Sharpened</h2>
+      <table class="cut">
+        <thead><tr><th>Step</th><th>Thick (default)</th><th>Thin</th></tr></thead>
+        <tbody>
+          <tr><td>Routing</td><td class="was">Orchestrator → global tech-lead does all the work</td><td class="now">Manifest-first, one hop to the deepest in-repo specialist</td></tr>
+          <tr><td>Orchestrator</td><td class="was">Spawned on every job</td><td class="now">Single-repo bypasses it; cross-repo → impact map + EM split</td></tr>
+          <tr><td>Work Order</td><td class="was">Full doc drafted in context</td><td class="now">3-line scope: goal / files / acceptance</td></tr>
+          <tr><td>Critic crew</td><td class="was">5 critics every job</td><td class="now">Deferred to the PR gate (incl. security unless <code>--thin-security on</code>)</td></tr>
+          <tr><td>Switch</td><td class="was">—</td><td class="now"><code>crew-mode thin｜thick｜status</code> — marker flip, no reinstall</td></tr>
+          <tr><td>Both tools</td><td class="was">—</td><td class="now">Claude (mode-aware hooks) + Devin (shared skills read the marker)</td></tr>
+        </tbody>
+      </table>
+      <small>Shipped in <strong>tradify-agentic-tools (PR #95)</strong>: <code>--mode thin|thick</code> installer feature, per-user never-committed marker, mode-aware funnel hooks, <code>crew-mode</code> skill. <strong>Default thick</strong> — every existing install is unchanged.</small>
+      <div class="footer-note">Thick → thin · per-developer, opt-in</div>
+    </section>
+
+    <!-- 6 · THE CUT -->
+    <section>
+      <h2>The Cut</h2>
+      <div class="stat-grid">
+        <div class="stat"><div class="n">~7 → 1</div><div class="l">agent contexts · single-repo job</div></div>
+        <div class="stat"><div class="n">0</div><div class="l">critic runs locally (moved to PR)</div></div>
+        <div class="stat"><div class="n">deepest</div><div class="l">specialist, not the catch-all</div></div>
+      </div>
+      <div class="panel green" style="margin-top:0.8em;">
+        <ul class="tight">
+          <li><em>Right hands on the work</em> — context-architect / ui / platform / bundle / devx, picked by the manifest.</li>
+          <li><em>Safety net intact</em> — the full crew still runs where it counts: on the PR (<code>tra-pr-review</code>).</li>
+          <li><em>Cross-tool</em> — same behaviour on Claude (hooks) and Devin (shared skills); <strong>default thick</strong>, opt in per person.</li>
+          <li>Full funnel is one phrase away: <strong>"run the full crew review."</strong></li>
+        </ul>
+      </div>
+      <div class="footer-note">Sharper blade · same timber, less effort</div>
+    </section>
+
+    <!-- 7 · CLOSE -->
+    <section data-background-color="#120c07">
+      <svg class="saw" viewBox="0 0 220 90">
+        <path d="M8 30 q-6 18 8 30 q22 16 40 4 l-6 -16 q-14 6 -24 -4 q-8 -8 -2 -18 Z" fill="#7a4a22" stroke="#3a230f" stroke-width="2"/>
+        <path d="M46 28 L214 12 L214 30 L52 50 Z" fill="#cdd6df" stroke="#8a949e" stroke-width="1.5"/>
+        <path d="M52 50 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 l8 8 l6 -10 L214 30 Z" fill="#e9eef4" stroke="#8a949e" stroke-width="1"/>
+        <path d="M70 24 L206 11" stroke="#7bc47f" stroke-width="2.5" opacity="0.95"/>
+      </svg>
+      <h1>Keep the Blade Sharp</h1>
+      <p class="covey" style="margin-top:0.6em;">Saw fast when the edge is keen. Stop to hone when it drags.</p>
+      <p style="margin-top:1.2em;font-size:0.5em;color:var(--muted)">Crew thin/thick mode · tradify-agentic-tools PR #95</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({ hash: true, transition: 'fade', backgroundTransition: 'fade', controlsLayout: 'edges', width: 1280, height: 800, margin: 0.06 });
+</script>
+</body>
+</html>
