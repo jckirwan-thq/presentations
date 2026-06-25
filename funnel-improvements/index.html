@@ -211,10 +211,12 @@
           <path d="M418,120 L270,120 L270,185"/>
           <path d="M582,120 L730,120 L730,185"/>
           <path d="M270,241 L270,280"/>
-          <path d="M270,336 L270,500 L423,500"/>
+          <path d="M270,336 L270,400"/>
+          <path d="M270,452 L270,500 L423,500"/>
           <path d="M730,241 L730,280"/>
           <path d="M730,336 L730,375"/>
-          <path d="M730,431 L730,500 L577,500"/>
+          <path d="M730,431 L730,438"/>
+          <path d="M730,472 L730,500 L577,500"/>
         </g>
         <path d="M500,520 L500,550" stroke="#8a7a64" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#ahD)"/>
         <g text-anchor="middle">
@@ -234,6 +236,10 @@
           <rect x="155" y="280" width="230" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
           <text x="270" y="304" fill="#f1e7d8" font-size="15">dispatch DEEPEST</text>
           <text x="270" y="323" fill="#b39d82" font-size="13">in-repo specialist</text>
+          <!-- Nev advisory rides along (local, non-blocking) -->
+          <rect x="155" y="400" width="230" height="52" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="270" y="423" fill="#f1e7d8" font-size="14">approach-critic-nev</text>
+          <text x="270" y="441" fill="#b39d82" font-size="12">advisory · non-blocking</text>
           <!-- cross-repo column -->
           <rect x="610" y="185" width="240" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
           <text x="730" y="209" fill="#f1e7d8" font-size="15">orchestrator:</text>
@@ -244,16 +250,19 @@
           <rect x="610" y="375" width="240" height="56" rx="10" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2"/>
           <text x="730" y="399" fill="#f1e7d8" font-size="15">deep specialist</text>
           <text x="730" y="418" fill="#b39d82" font-size="13">per repo</text>
+          <!-- Nev rides each cross-repo hop too -->
+          <rect x="610" y="438" width="240" height="34" rx="8" fill="#1f2a1f" stroke="#7bc47f" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="730" y="460" fill="#b39d82" font-size="12.5">+ approach-critic-nev · advisory</text>
           <!-- done -->
           <rect x="423" y="480" width="154" height="40" rx="20" fill="#e0a13c" stroke="#7a4a22" stroke-width="2"/>
           <text x="500" y="505" fill="#1b130c" font-weight="600" font-size="15">Done</text>
           <!-- deferred crew -->
           <rect x="350" y="550" width="300" height="48" rx="10" fill="#2a1d12" stroke="#8a7a64" stroke-width="2" stroke-dasharray="5 4"/>
-          <text x="500" y="573" fill="#b39d82" font-size="14">critic crew + Work Order</text>
+          <text x="500" y="573" fill="#b39d82" font-size="14">breakage critics + Work Order</text>
           <text x="500" y="590" fill="#8a7a64" font-size="11.5">only at PR / comment-address time</text>
         </g>
       </svg>
-      <small>Single-repo = <strong>one agent call</strong>: the manifest picks the deepest specialist (context-architect / ui / platform / bundle / devx). Critics — incl. security unless <code>--thin-security on</code> — defer to the PR gate, where <strong>tra-pr-review</strong> still runs the full crew.</small>
+      <small>Single-repo = <strong>one specialist + Nev's advisory pass</strong>: the manifest picks the deepest specialist (context-architect / ui / platform / bundle / devx), and <strong>approach-critic-nev</strong> rides along as a non-blocking "right shape?" check — on <em>every</em> specialist hop, including each repo's specialist on the cross-repo path. The <em>breakage</em> critics — incl. security unless <code>--thin-security on</code> — defer to the PR gate, where <strong>tra-pr-review</strong> still runs the full crew.</small>
       <div class="footer-note">Thin mode · manifest-first · deferred, not removed</div>
     </section>
 
@@ -266,7 +275,7 @@
           <tr><td>Routing</td><td class="was">Orchestrator → global tech-lead does all the work</td><td class="now">Manifest-first, one hop to the deepest in-repo specialist</td></tr>
           <tr><td>Orchestrator</td><td class="was">Spawned on every job</td><td class="now">Single-repo bypasses it; cross-repo → impact map + EM split</td></tr>
           <tr><td>Work Order</td><td class="was">Full doc drafted in context</td><td class="now">3-line scope: goal / files / acceptance</td></tr>
-          <tr><td>Critic crew</td><td class="was">5 critics every job</td><td class="now">Deferred to the PR gate (incl. security unless <code>--thin-security on</code>)</td></tr>
+          <tr><td>Critic crew</td><td class="was">5 critics every job</td><td class="now">Nev rides along as a non-blocking advisory; breakage critics deferred to the PR gate (incl. security unless <code>--thin-security on</code>)</td></tr>
           <tr><td>Switch</td><td class="was">—</td><td class="now"><code>crew-mode thin｜thick｜status</code> — marker flip, no reinstall</td></tr>
           <tr><td>Both tools</td><td class="was">—</td><td class="now">Claude (mode-aware hooks) + Devin (shared skills read the marker)</td></tr>
         </tbody>
@@ -280,7 +289,7 @@
       <h2>The Cut</h2>
       <div class="stat-grid">
         <div class="stat"><div class="n">~7 → 1</div><div class="l">agent contexts · single-repo job</div></div>
-        <div class="stat"><div class="n">0</div><div class="l">critic runs locally (moved to PR)</div></div>
+        <div class="stat"><div class="n">0</div><div class="l">blocking critics local · Nev advisory only, rest → PR</div></div>
         <div class="stat"><div class="n">deepest</div><div class="l">specialist, not the catch-all</div></div>
       </div>
       <div class="panel green" style="margin-top:0.8em;">
