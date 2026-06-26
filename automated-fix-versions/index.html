@@ -3,91 +3,97 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Automated Fix Versions — Sisyphus Gets a Day Off · JC</title>
+<title>Automated Fix Versions — The Odyssey of the Boulder · JC</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=EB+Garamond:ital,wght@0,400;1,400;1,500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
 <style>
   :root {
-    --night:   #0b1622;   /* aegean night */
-    --night-2: #07101a;
-    --sea:     #1f6f8b;   /* aegean blue */
-    --sea-2:   #2a93b3;
-    --sky:     #cfe8f3;   /* pale sky */
-    --marble:  #eee6d6;   /* aged marble */
-    --gold:    #d9a441;   /* attic gold */
-    --gold-2:  #f0c873;
-    --terra:   #c4502e;   /* terracotta — the toil */
-    --olive:   #8aa05a;   /* the rest / relief */
-    --stone:   #8a8170;   /* the boulder */
-    --ink:     #ede3d2;
-    --muted:   #9bb0bd;
+    --black:    #06080a;   /* IMAX black */
+    --black-2:  #0a0e12;
+    --pitch:    #03050700;
+    --bronze:   #b0824a;   /* hammered bronze */
+    --bronze-2: #d8aa63;   /* lit gold edge */
+    --bronze-3: #8a5f2c;   /* shadowed metal */
+    --patina:   #2f6f73;   /* oxidised bronze / cold sea */
+    --patina-2: #3f9197;
+    --steel:    #8696a0;   /* cold spear-point grey */
+    --blood:    #8c2f1d;   /* sparingly — the toil */
+    --bone:     #e7ddca;   /* weathered text */
+    --ash:      #8a8576;   /* muted */
   }
 
-  html, body { background: var(--night); }
-  .reveal { font-family: 'Inter', sans-serif; color: var(--ink); }
+  html, body { background: var(--black); }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--bone); }
 
-  /* faint sun-on-water wash */
+  /* cold light from above-left, deep dark below — Nolan key-light */
   body::before {
     content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(circle at 78% 12%, rgba(240,200,115,0.10), transparent 45%),
-      radial-gradient(circle at 20% 90%, rgba(31,111,139,0.16), transparent 55%);
+      radial-gradient(circle at 26% 8%, rgba(216,170,99,0.10), transparent 42%),
+      radial-gradient(circle at 80% 96%, rgba(47,111,115,0.16), transparent 55%),
+      linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%);
   }
   .reveal .slides { z-index: 1; }
 
   .reveal h1, .reveal h2, .reveal h3 {
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.02em;
-    color: var(--gold);
-    text-shadow: 0 2px 0 rgba(0,0,0,0.5);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    color: var(--bronze-2);
     margin-bottom: 0.3em;
   }
-  .reveal h1 { font-size: 2.0em; line-height: 1.06; color: var(--gold-2); }
-  .reveal h2 { font-size: 1.45em; }
-  .reveal h3 { font-size: 1.0em; color: var(--sky); text-shadow: none; }
+  .reveal h1 { font-size: 2.5em; line-height: 0.98; font-weight: 700; letter-spacing: 0.06em;
+               color: var(--bone); text-shadow: 0 2px 0 rgba(0,0,0,0.6); }
+  .reveal h2 { font-size: 1.5em; font-weight: 500; letter-spacing: 0.08em; }
+  .reveal h3 { font-size: 0.95em; font-weight: 300; letter-spacing: 0.22em; color: var(--steel); }
 
   .reveal p, .reveal li { font-weight: 300; }
-  .reveal strong { color: var(--gold-2); font-weight: 600; }
-  .reveal em { color: var(--olive); font-style: normal; }
-  .reveal code { color: var(--sea-2); font-size: 0.85em; }
+  .reveal strong { color: var(--bronze-2); font-weight: 600; }
+  .reveal em { color: var(--patina-2); font-style: normal; }
+  .reveal code { color: var(--patina-2); font-size: 0.85em; }
 
   .kicker {
-    font-family: 'Cinzel', serif; font-weight: 700;
-    letter-spacing: 0.32em; text-transform: uppercase;
-    color: var(--sea-2); font-size: 0.5em;
+    font-family: 'Oswald', sans-serif; font-weight: 500;
+    letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--bronze); font-size: 0.46em;
   }
-  .myth { font-family: 'Caveat', cursive; color: var(--gold-2); font-size: 1.15em; line-height: 1.25; }
+  /* epigraph — worn Garamond italic, the Homeric voice */
+  .epigraph { font-family: 'EB Garamond', serif; font-style: italic; color: var(--bronze-2);
+              font-size: 1.05em; line-height: 1.3; }
 
-  .hero { width: 360px; margin: 0 auto 0.3em; display:block; filter: drop-shadow(0 8px 14px rgba(0,0,0,0.55)); }
-  .glyph { width: 150px; margin: 0 auto 0.4em; display:block; }
+  .hero { width: 320px; margin: 0 auto 0.3em; display:block; filter: drop-shadow(0 10px 22px rgba(0,0,0,0.7)); }
 
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; text-align: left; }
-  .panel { background: rgba(15,28,42,0.72); border-left: 5px solid var(--gold); border-radius: 8px; padding: 16px 20px; text-align: left; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3); }
-  .panel.sea   { border-left-color: var(--sea-2); }
-  .panel.terra { border-left-color: var(--terra); }
-  .panel.olive { border-left-color: var(--olive); }
+  .panel { background: rgba(10,14,18,0.85); border: 1px solid rgba(176,130,74,0.28);
+           border-left: 4px solid var(--bronze); border-radius: 4px; padding: 16px 20px; text-align: left; }
+  .panel.patina { border-left-color: var(--patina-2); }
+  .panel.blood  { border-left-color: var(--blood); }
+  .panel.bronze { border-left-color: var(--bronze-2); }
 
   ul.tight li { margin: 5px 0; font-size: 0.66em; }
-  .reveal section small { color: var(--muted); font-size: 0.42em; }
-  .footer-note { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-size: 0.32em; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; }
+  .reveal section small { color: var(--ash); font-size: 0.42em; }
+  .footer-note { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center;
+                 font-family: 'Oswald', sans-serif; font-size: 0.3em; color: var(--ash);
+                 letter-spacing: 0.34em; text-transform: uppercase; }
 
   table.scroll { font-size: 0.5em; width: 100%; border-collapse: collapse; margin-top: 0.3em; }
-  table.scroll th { color: var(--sky); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid var(--sea); padding: 7px 9px; text-align: left; }
-  table.scroll td { padding: 6px 9px; border-bottom: 1px solid rgba(155,176,189,0.2); vertical-align: top; }
-  table.scroll td.was { color: var(--terra); }
-  table.scroll td.now { color: var(--olive); }
+  table.scroll th { font-family: 'Oswald', sans-serif; font-weight: 500; color: var(--steel);
+                    text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 2px solid var(--bronze-3); padding: 7px 9px; text-align: left; }
+  table.scroll td { padding: 6px 9px; border-bottom: 1px solid rgba(138,150,160,0.18); vertical-align: top; }
+  table.scroll td.was { color: var(--blood); }
+  table.scroll td.now { color: var(--patina-2); }
 
   .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 0.5em; }
-  .stat { background: linear-gradient(160deg, rgba(217,164,65,0.13), rgba(138,160,90,0.06)); border: 1px solid rgba(217,164,65,0.35); border-radius: 14px; padding: 20px 10px; }
-  .stat .n { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.9em; color: var(--gold-2); line-height: 1; }
-  .stat .l { font-size: 0.46em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+  .stat { background: linear-gradient(160deg, rgba(176,130,74,0.16), rgba(47,111,115,0.06));
+          border: 1px solid rgba(176,130,74,0.4); border-radius: 4px; padding: 20px 10px; }
+  .stat .n { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 2.1em; color: var(--bronze-2); line-height: 1; }
+  .stat .l { font-family: 'Oswald', sans-serif; font-size: 0.42em; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ash); margin-top: 8px; }
 
-  svg.flow { width: 100%; max-height: 540px; height: auto; display: block; margin: 0 auto; }
-  .diagram-cap.toil { color: var(--terra); }
-  .diagram-cap.rest { color: var(--olive); }
+  svg.flow { width: 100%; max-height: 530px; height: auto; display: block; margin: 0 auto; }
+  .diagram-cap.toil { color: var(--blood); }
+  .diagram-cap.rest { color: var(--patina-2); }
 </style>
 </head>
 <body>
@@ -95,221 +101,234 @@
 <div class="reveal">
   <div class="slides">
 
-    <!-- 1 · TITLE -->
-    <section data-background-color="#07101a">
-      <!-- Sisyphus pushing the boulder uphill -->
-      <svg class="hero" viewBox="0 0 480 230">
-        <!-- hill -->
-        <path d="M0,210 L360,40 L480,210 Z" fill="#16283a" stroke="#22384c" stroke-width="2"/>
-        <path d="M0,210 L480,210" stroke="#22384c" stroke-width="3"/>
-        <!-- boulder -->
-        <circle cx="150" cy="138" r="34" fill="#8a8170" stroke="#5f594c" stroke-width="3"/>
-        <circle cx="140" cy="128" r="6" fill="#6f6857" opacity="0.7"/>
-        <circle cx="162" cy="148" r="5" fill="#6f6857" opacity="0.7"/>
-        <!-- figure straining behind boulder -->
-        <g stroke="#d9a441" stroke-width="5" stroke-linecap="round" fill="none">
-          <line x1="200" y1="120" x2="184" y2="150"/>           <!-- back -->
-          <circle cx="206" cy="110" r="9" fill="#d9a441" stroke="none"/> <!-- head -->
-          <line x1="195" y1="128" x2="174" y2="140"/>           <!-- arm to boulder -->
-          <line x1="184" y1="150" x2="196" y2="178"/>           <!-- leg 1 -->
-          <line x1="184" y1="150" x2="172" y2="180"/>           <!-- leg 2 -->
+    <!-- 1 · TITLE — the beaten-gold death mask -->
+    <section data-background-color="#040507">
+      <svg class="hero" viewBox="0 0 260 340">
+        <defs>
+          <radialGradient id="goldface" cx="42%" cy="30%" r="80%">
+            <stop offset="0%"  stop-color="#e7c378"/>
+            <stop offset="45%" stop-color="#b0824a"/>
+            <stop offset="100%" stop-color="#5f4220"/>
+          </radialGradient>
+          <filter id="hammer"><feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="2" seed="7" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+          <filter id="emboss" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="b"/>
+            <feSpecularLighting in="b" surfaceScale="2.2" specularConstant="0.9" specularExponent="14"
+              lighting-color="#fff0cf" result="s"><fePointLight x="60" y="20" z="160"/></feSpecularLighting>
+            <feComposite in="s" in2="SourceAlpha" operator="in" result="sc"/>
+            <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="sc"/></feMerge>
+          </filter>
+        </defs>
+        <g filter="url(#emboss)">
+          <g filter="url(#hammer)">
+            <!-- mask face -->
+            <path d="M130 14 C70 14 44 70 44 150 C44 250 84 326 130 326 C176 326 216 250 216 150 C216 70 190 14 130 14 Z"
+                  fill="url(#goldface)" stroke="#7a5526" stroke-width="2"/>
+            <!-- brow ridge -->
+            <path d="M70 120 Q130 104 190 120" fill="none" stroke="#6e4c22" stroke-width="3"/>
+            <!-- eyes (closed, funerary) -->
+            <path d="M78 138 Q100 128 122 138 Q100 146 78 138 Z" fill="#3a2a13"/>
+            <path d="M138 138 Q160 128 182 138 Q160 146 138 138 Z" fill="#3a2a13"/>
+            <path d="M82 137 Q100 131 118 137" stroke="#e7c378" stroke-width="1.4" fill="none"/>
+            <path d="M142 137 Q160 131 178 137" stroke="#e7c378" stroke-width="1.4" fill="none"/>
+            <!-- nose ridge -->
+            <path d="M130 124 L122 196 Q130 206 138 196 Z" fill="#9a6c34" stroke="#6e4c22" stroke-width="1.5"/>
+            <!-- mouth -->
+            <path d="M104 232 Q130 240 156 232" stroke="#6e4c22" stroke-width="3" fill="none"/>
+            <!-- beard hammer-lines -->
+            <g stroke="#6e4c22" stroke-width="1.6" opacity="0.7">
+              <path d="M96 256 Q100 286 110 312"/><path d="M118 260 Q120 292 124 318"/>
+              <path d="M142 260 Q140 292 136 318"/><path d="M164 256 Q160 286 150 312"/>
+              <path d="M130 262 L130 320"/>
+            </g>
+          </g>
         </g>
-        <!-- motion: the eternal roll-back -->
-        <path d="M120,150 q-26 8 -40 30" stroke="#c4502e" stroke-width="2.5" fill="none" stroke-dasharray="4 5" marker-end="url(#tback)"/>
-        <defs><marker id="tback" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c4502e"/></marker></defs>
       </svg>
       <div class="kicker">Frontend Platform · CI/CD</div>
       <h1>Automated Fix Versions</h1>
-      <h3 style="letter-spacing:0.08em;">Sisyphus gets a day off</h3>
-      <p class="myth" style="margin-top:0.9em;">"The boulder always rolled back. So the gods made him roll it. Forever."</p>
-      <p style="margin-top:1.1em;"><strong>Jean-Claude Kirwan</strong> &nbsp;·&nbsp; Frontend Tech Lead</p>
+      <h3 style="margin-top:0.4em;">The Odyssey of the Boulder</h3>
+      <p class="epigraph" style="margin-top:0.9em;">"Tell me, Muse, of the task that was never done —<br/>the stone that would not stay upon the hill."</p>
+      <p style="margin-top:1.0em;font-family:'Oswald';letter-spacing:0.12em;text-transform:uppercase;font-size:0.6em;"><strong>Jean-Claude Kirwan</strong> · Frontend Tech Lead</p>
       <div class="footer-note">tradify-frontend-platform · jira-fixversion-on-merge.yml</div>
     </section>
 
     <!-- 2 · THE CURSE -->
     <section>
-      <h2>The Sisyphean Task</h2>
+      <h2>The Labour Without End</h2>
       <div class="two-col" style="margin-top:0.5em;">
         <div class="panel">
-          <p class="myth" style="font-size:1em;">Condemned to roll a boulder up a hill — only to watch it roll back down, every single time. An eternity of effort that never stays done.</p>
+          <p class="epigraph" style="font-size:1.0em;">Sisyphus, condemned to heave the same stone up the same hill — and watch it thunder back down, for all eternity. Toil that never stays finished.</p>
         </div>
-        <div class="panel terra">
-          <h3>That was our Fix Versions</h3>
+        <div class="panel blood">
+          <h3 style="color:var(--bronze-2);">That was our Fix Versions</h3>
           <ul class="tight">
-            <li>Every merge → someone <em>has</em> to remember to set the <strong>Fix Version</strong> in Jira.</li>
-            <li>People forget. The boulder rolls back.</li>
-            <li>Versions drift from what actually shipped — <strong>release notes & reporting can't be trusted</strong>.</li>
-            <li><strong>Years</strong> of this. Pure toil, never finished.</li>
+            <li>Every merge → a mortal <em>must remember</em> to set the <strong>Fix Version</strong> in Jira.</li>
+            <li>Mortals forget. The stone rolls back down.</li>
+            <li>Versions drift from what truly shipped — <strong>release notes & reporting turn to myth</strong>.</li>
+            <li><strong>Years</strong> of it. The same hill, every single day.</li>
           </ul>
         </div>
       </div>
-      <p style="margin-top:0.7em;" class="myth">What if the boulder rolled <em>itself</em>?</p>
-      <div class="footer-note">The curse · manual, forgettable, eternal</div>
+      <p style="margin-top:0.7em;" class="epigraph">What if the stone could climb the hill <em>itself</em>?</p>
+      <div class="footer-note">The curse · manual · forgettable · eternal</div>
     </section>
 
     <!-- 3 · THE TOIL (before) -->
     <section>
-      <h2 class="diagram-cap toil">Before · Push the Boulder, by Hand</h2>
+      <h2 class="diagram-cap toil">Before · The Stone, Heaved by Hand</h2>
       <svg class="flow" viewBox="0 0 1000 430" font-family="Inter, sans-serif">
         <defs>
-          <marker id="ahT" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#9bb0bd"/></marker>
-          <marker id="ahFail" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#c4502e"/></marker>
+          <marker id="ahT" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8696a0"/></marker>
+          <marker id="ahFail" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8c2f1d"/></marker>
         </defs>
-        <g stroke="#9bb0bd" stroke-width="2" fill="none" marker-end="url(#ahT)">
+        <g stroke="#8696a0" stroke-width="2" fill="none" marker-end="url(#ahT)">
           <path d="M180,90 L320,90"/>
           <path d="M540,90 L680,90"/>
         </g>
-        <!-- the forget loop -->
-        <path d="M430,118 q0,90 -120,90 q-160,0 -160,-78" stroke="#c4502e" stroke-width="2.5" fill="none" stroke-dasharray="6 5" marker-end="url(#ahFail)"/>
+        <path d="M430,118 q0,90 -120,90 q-160,0 -160,-78" stroke="#8c2f1d" stroke-width="2.5" fill="none" stroke-dasharray="6 5" marker-end="url(#ahFail)"/>
         <g text-anchor="middle">
-          <rect x="30"  y="64" width="150" height="52" rx="10" fill="#16283a" stroke="#9bb0bd" stroke-width="2"/>
-          <text x="105" y="88" fill="#ede3d2" font-size="15">PR merged</text>
-          <text x="105" y="106" fill="#9bb0bd" font-size="12">into main</text>
+          <rect x="30"  y="64" width="150" height="52" rx="3" fill="#0e1318" stroke="#8696a0" stroke-width="2"/>
+          <text x="105" y="88" fill="#e7ddca" font-size="15">PR merged</text>
+          <text x="105" y="106" fill="#8696a0" font-size="12">into main</text>
 
-          <rect x="320" y="60" width="220" height="60" rx="10" fill="#2a1813" stroke="#c4502e" stroke-width="2"/>
-          <text x="430" y="84" fill="#ede3d2" font-size="15">Human remembers (?)</text>
-          <text x="430" y="103" fill="#c4502e" font-size="12.5">opens Jira · finds the version</text>
+          <rect x="320" y="60" width="220" height="60" rx="3" fill="#1a0f0c" stroke="#8c2f1d" stroke-width="2"/>
+          <text x="430" y="84" fill="#e7ddca" font-size="15">A mortal remembers (?)</text>
+          <text x="430" y="103" fill="#b05a44" font-size="12.5">opens Jira · hunts the version</text>
 
-          <rect x="680" y="60" width="230" height="60" rx="10" fill="#16283a" stroke="#9bb0bd" stroke-width="2"/>
-          <text x="795" y="84" fill="#ede3d2" font-size="15">Sets Fix Version</text>
-          <text x="795" y="103" fill="#9bb0bd" font-size="12.5">by hand · if they didn't forget</text>
+          <rect x="680" y="60" width="230" height="60" rx="3" fill="#0e1318" stroke="#8696a0" stroke-width="2"/>
+          <text x="795" y="84" fill="#e7ddca" font-size="15">Sets Fix Version</text>
+          <text x="795" y="103" fill="#8696a0" font-size="12.5">by hand · if not forgotten</text>
 
-          <text x="250" y="250" fill="#c4502e" font-size="14" font-weight="600">…forgot. Boulder rolls back.</text>
-          <text x="250" y="272" fill="#9bb0bd" font-size="12.5">version missing → drift → untrustworthy reporting</text>
+          <text x="250" y="250" fill="#b05a44" font-size="14" font-weight="600">…forgot. The stone rolls back.</text>
+          <text x="250" y="272" fill="#8696a0" font-size="12.5">version missing → drift → reporting turns to myth</text>
         </g>
       </svg>
-      <small>Every merge is a manual climb. Miss one and the whole release record is suspect — and you only find out at release time, the worst possible moment.</small>
-      <div class="footer-note">Before · manual, every single merge</div>
+      <small>Every merge is a fresh climb. Miss one and the whole release record is suspect — discovered only at release time, the cruellest hour.</small>
+      <div class="footer-note">Before · by hand · every single merge</div>
     </section>
 
     <!-- 4 · THE MACHINE (after) -->
     <section>
-      <h2 class="diagram-cap rest">After · A Machine Rolls the Boulder</h2>
+      <h2 class="diagram-cap rest">After · A Machine Bears the Stone</h2>
       <svg class="flow" viewBox="0 0 1000 470" font-family="Inter, sans-serif">
         <defs>
-          <marker id="ahM" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8aa05a"/></marker>
-          <marker id="ahSkip" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8a8170"/></marker>
+          <marker id="ahM" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#3f9197"/></marker>
+          <marker id="ahSkip" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#8a8576"/></marker>
         </defs>
-        <g stroke="#8aa05a" stroke-width="2" fill="none" marker-end="url(#ahM)">
+        <g stroke="#3f9197" stroke-width="2" fill="none" marker-end="url(#ahM)">
           <path d="M500,72 L500,104"/>
           <path d="M500,162 L500,194"/>
           <path d="M418,228 L240,228 L240,272"/>
           <path d="M582,228 L760,228 L760,272"/>
           <path d="M240,326 L240,360 L418,360"/>
         </g>
-        <!-- skip / no-op exits -->
-        <path d="M760,326 L760,392" stroke="#8a8170" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#ahSkip)"/>
+        <path d="M760,326 L760,392" stroke="#8a8576" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#ahSkip)"/>
         <g text-anchor="middle">
-          <!-- trigger -->
-          <rect x="350" y="32" width="300" height="40" rx="20" fill="#d9a441" stroke="#7a5a1e" stroke-width="2"/>
-          <text x="500" y="57" fill="#0b1622" font-weight="600" font-size="15">PR merged into main</text>
+          <rect x="350" y="32" width="300" height="40" rx="3" fill="#b0824a" stroke="#6e4c22" stroke-width="2"/>
+          <text x="500" y="57" fill="#06080a" font-weight="600" font-size="15">PR merged into main</text>
 
-          <!-- extract -->
-          <rect x="360" y="104" width="280" height="58" rx="10" fill="#0f2233" stroke="#2a93b3" stroke-width="2"/>
-          <text x="500" y="128" fill="#ede3d2" font-size="15">1 · Find ticket key</text>
-          <text x="500" y="147" fill="#9bb0bd" font-size="12.5">TRA-NNNN from PR title, else branch</text>
+          <rect x="360" y="104" width="280" height="58" rx="3" fill="#0c1a1c" stroke="#3f9197" stroke-width="2"/>
+          <text x="500" y="128" fill="#e7ddca" font-size="15">1 · Find ticket key</text>
+          <text x="500" y="147" fill="#8696a0" font-size="12.5">TRA-NNNN from PR title, else branch</text>
 
-          <!-- decision -->
-          <polygon points="500,194 612,228 500,262 388,228" fill="#142a1d" stroke="#8aa05a" stroke-width="2"/>
-          <text x="500" y="224" fill="#ede3d2" font-size="14">Key found?</text>
-          <text x="500" y="243" fill="#9bb0bd" font-size="11.5">+ open React_v* version?</text>
-          <text x="300" y="218" fill="#8aa05a" font-size="13" font-weight="600">yes</text>
-          <text x="700" y="218" fill="#8a8170" font-size="13" font-weight="600">no</text>
+          <polygon points="500,194 612,228 500,262 388,228" fill="#0c1a1c" stroke="#3f9197" stroke-width="2"/>
+          <text x="500" y="224" fill="#e7ddca" font-size="14">Key found?</text>
+          <text x="500" y="243" fill="#8696a0" font-size="11.5">+ open React_v* version?</text>
+          <text x="300" y="218" fill="#3f9197" font-size="13" font-weight="600">yes</text>
+          <text x="700" y="218" fill="#8a8576" font-size="13" font-weight="600">no</text>
 
-          <!-- resolve -->
-          <rect x="110" y="272" width="260" height="54" rx="10" fill="#0f2233" stroke="#2a93b3" stroke-width="2"/>
-          <text x="240" y="295" fill="#ede3d2" font-size="14.5">2 · Resolve version (Jira API)</text>
-          <text x="240" y="313" fill="#9bb0bd" font-size="12">the one open React_v* · never hardcoded</text>
+          <rect x="110" y="272" width="260" height="54" rx="3" fill="#0c1a1c" stroke="#3f9197" stroke-width="2"/>
+          <text x="240" y="295" fill="#e7ddca" font-size="14.5">2 · Resolve version (Jira API)</text>
+          <text x="240" y="313" fill="#8696a0" font-size="12">the one open React_v* · never hardcoded</text>
 
-          <!-- add -->
-          <rect x="418" y="334" width="300" height="52" rx="10" fill="#142a1d" stroke="#8aa05a" stroke-width="2"/>
-          <text x="568" y="357" fill="#ede3d2" font-size="14.5">3 · ADD to Fix Versions</text>
-          <text x="568" y="375" fill="#9bb0bd" font-size="12">preserves existing · idempotent</text>
+          <rect x="418" y="334" width="300" height="52" rx="3" fill="#13211a" stroke="#3f9197" stroke-width="2"/>
+          <text x="568" y="357" fill="#e7ddca" font-size="14.5">3 · ADD to Fix Versions</text>
+          <text x="568" y="375" fill="#8696a0" font-size="12">preserves existing · idempotent</text>
 
-          <!-- skip -->
-          <rect x="635" y="392" width="250" height="46" rx="10" fill="#1a1f26" stroke="#8a8170" stroke-width="2" stroke-dasharray="5 4"/>
-          <text x="760" y="414" fill="#9bb0bd" font-size="13.5">Clean skip (exit 0)</text>
-          <text x="760" y="431" fill="#8a8170" font-size="11">never blocks · never fails</text>
+          <rect x="635" y="392" width="250" height="46" rx="3" fill="#15140f" stroke="#8a8576" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="760" y="414" fill="#8696a0" font-size="13.5">Clean skip (exit 0)</text>
+          <text x="760" y="431" fill="#8a8576" font-size="11">never blocks · never fails</text>
         </g>
       </svg>
-      <small>GitHub Action <code>jira-fixversion-on-merge.yml</code>. Fires only on a genuine merge. No checkout, <code>permissions: {}</code>, secrets masked, 5-min timeout. The boulder rolls itself — every time, without being asked.</small>
+      <small>GitHub Action <code>jira-fixversion-on-merge.yml</code>. Fires only on a true merge. No checkout, <code>permissions: {}</code>, secrets masked, 5-min timeout. The stone climbs alone — every time, unbidden.</small>
       <div class="footer-note">After · the machine never forgets</div>
     </section>
 
-    <!-- 5 · HOW THE MACHINE ROLLS IT -->
+    <!-- 5 · HOW THE MACHINE CLIMBS -->
     <section>
       <h2>How the Machine Climbs</h2>
       <table class="scroll">
         <thead><tr><th>Step</th><th>By hand (the curse)</th><th>The machine</th></tr></thead>
         <tbody>
-          <tr><td>Trigger</td><td class="was">Hope someone notices the merge</td><td class="now">Fires on <code>pull_request</code> merged into <code>main</code> — only real merges</td></tr>
+          <tr><td>Trigger</td><td class="was">Hope a mortal notices the merge</td><td class="now">Fires on <code>pull_request</code> merged into <code>main</code> — true merges only</td></tr>
           <tr><td>Which ticket</td><td class="was">Read it off the PR yourself</td><td class="now"><code>TRA-NNNN</code> from PR title, else branch · word-boundary safe</td></tr>
           <tr><td>Which version</td><td class="was">Hunt the current release in Jira</td><td class="now">Resolved live from Jira: the one open <code>React_v*</code> · never hardcoded</td></tr>
           <tr><td>The update</td><td class="was">Manually set, risk overwriting</td><td class="now"><strong>ADD</strong> not replace — keeps <code>SharedApi_v*</code>/<code>Mobile_v*</code>; idempotent</td></tr>
           <tr><td>When it fails</td><td class="was">Silent drift, found at release</td><td class="now">No key / no version → clean skip; real Jira error → fails loudly in the log</td></tr>
         </tbody>
       </table>
-      <small>Team does <strong>nothing new</strong> — just keep <code>TRA-NNNN</code> in the PR title or branch (we already do) and merge. Setup is two repo secrets: <code>JIRA_USER_EMAIL</code> + <code>JIRA_API_TOKEN</code>.</small>
-      <div class="footer-note">Manifest of the climb · automated end to end</div>
+      <small>The crew does <strong>nothing new</strong> — keep <code>TRA-NNNN</code> in the PR title or branch (we already do) and merge. Setup is two repo secrets: <code>JIRA_USER_EMAIL</code> + <code>JIRA_API_TOKEN</code>.</small>
+      <div class="footer-note">The map of the climb · automated end to end</div>
     </section>
 
     <!-- 6 · THE PAYOFF -->
     <section>
-      <h2>What Sisyphus Gets Back</h2>
+      <h2>What the Hero Wins Back</h2>
       <div class="stat-grid">
         <div class="stat"><div class="n">0</div><div class="l">manual steps per merge</div></div>
         <div class="stat"><div class="n">100%</div><div class="l">merges tagged · no forgetting</div></div>
         <div class="stat"><div class="n">years</div><div class="l">of recurring toil, retired</div></div>
       </div>
-      <div class="panel olive" style="margin-top:0.8em;">
+      <div class="panel patina" style="margin-top:0.8em;">
         <ul class="tight">
-          <li><em>Trustworthy releases</em> — Fix Versions finally match what actually shipped.</li>
+          <li><em>Trustworthy releases</em> — Fix Versions finally match what truly shipped.</li>
           <li><em>Idempotent & safe</em> — re-runs never duplicate; cross-stream versions preserved.</li>
           <li><em>Locked down</em> — repo-scoped, no GitHub token scopes, secrets masked, bounded timeouts.</li>
           <li><em>Portable</em> — copy the file, swap <code>PROJECT_KEY</code> + the <code>React_v</code> prefix for any other stream.</li>
         </ul>
       </div>
-      <div class="footer-note">The boulder stays up · the curse is broken</div>
+      <div class="footer-note">The stone stays up · the curse is broken</div>
     </section>
 
-    <!-- 7 · CLOSE -->
-    <section data-background-color="#07101a">
-      <!-- Sisyphus on the beach, machine on the hill -->
+    <!-- 7 · CLOSE — homecoming: ship on a calm sea, the mask at rest -->
+    <section data-background-color="#040507">
       <svg class="hero" viewBox="0 0 480 230">
-        <!-- sun -->
-        <circle cx="402" cy="56" r="30" fill="#f0c873" opacity="0.92"/>
-        <!-- sea -->
-        <path d="M0,168 L480,168 L480,230 L0,230 Z" fill="#1f6f8b" opacity="0.55"/>
-        <path d="M0,176 q60,-8 120,0 t120,0 t120,0 t120,0" stroke="#cfe8f3" stroke-width="2" fill="none" opacity="0.5"/>
-        <!-- beach -->
-        <path d="M0,168 L480,168 L480,200 L0,205 Z" fill="#1a2a38"/>
-        <!-- palm -->
-        <line x1="70" y1="168" x2="64" y2="110" stroke="#6b5536" stroke-width="6" stroke-linecap="round"/>
-        <g stroke="#8aa05a" stroke-width="5" stroke-linecap="round" fill="none">
-          <path d="M64,110 q-30,-14 -52,-4"/>
-          <path d="M64,110 q30,-16 54,-4"/>
-          <path d="M64,110 q-16,-26 -34,-34"/>
-          <path d="M64,110 q18,-26 38,-32"/>
+        <defs>
+          <linearGradient id="seaG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3f9197" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#0c1a1c" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+        <!-- low bronze sun on the horizon -->
+        <circle cx="392" cy="92" r="26" fill="#d8aa63" opacity="0.85"/>
+        <circle cx="392" cy="92" r="44" fill="#b0824a" opacity="0.15"/>
+        <!-- calm sea -->
+        <rect x="0" y="118" width="480" height="112" fill="url(#seaG)"/>
+        <g stroke="#3f9197" stroke-width="1.6" fill="none" opacity="0.5">
+          <path d="M0,142 q40,-7 80,0 t80,0 t80,0 t80,0 t80,0"/>
+          <path d="M0,170 q40,-7 80,0 t80,0 t80,0 t80,0 t80,0"/>
+          <path d="M0,198 q40,-7 80,0 t80,0 t80,0 t80,0 t80,0"/>
         </g>
-        <!-- Sisyphus reclining -->
-        <g stroke="#d9a441" stroke-width="5" stroke-linecap="round" fill="none">
-          <circle cx="150" cy="150" r="8" fill="#d9a441" stroke="none"/>
-          <line x1="158" y1="154" x2="210" y2="166"/>   <!-- body reclined -->
-          <line x1="186" y1="160" x2="196" y2="146"/>    <!-- arm behind head -->
-          <line x1="210" y1="166" x2="236" y2="158"/>    <!-- legs out -->
-          <line x1="210" y1="166" x2="236" y2="168"/>
+        <!-- the ship, sailing home, oars shipped -->
+        <g transform="translate(150,96)">
+          <path d="M-66,44 Q0,70 66,44 L52,30 L-52,30 Z" fill="#1a120a" stroke="#8a5f2c" stroke-width="2"/>
+          <!-- mast + furled sail -->
+          <line x1="0" y1="30" x2="0" y2="-34" stroke="#6e4c22" stroke-width="3"/>
+          <path d="M0,-30 Q40,-18 36,18 L0,18 Z" fill="#b0824a" stroke="#8a5f2c" stroke-width="1.5" opacity="0.92"/>
+          <path d="M0,-30 L0,18" stroke="#6e4c22" stroke-width="1.5"/>
+          <!-- prow eye -->
+          <circle cx="-50" cy="36" r="3.4" fill="#d8aa63"/>
+          <!-- oars at rest -->
+          <g stroke="#6e4c22" stroke-width="2">
+            <line x1="-40" y1="40" x2="-58" y2="56"/><line x1="-22" y1="42" x2="-36" y2="60"/>
+            <line x1="40" y1="40" x2="58" y2="56"/><line x1="22" y1="42" x2="36" y2="60"/>
+          </g>
         </g>
-        <!-- distant hill + machine pushing boulder -->
-        <path d="M300,168 L390,96 L470,168 Z" fill="#16283a" stroke="#22384c" stroke-width="2"/>
-        <circle cx="362" cy="128" r="14" fill="#8a8170" stroke="#5f594c" stroke-width="2"/>
-        <rect x="378" y="118" width="22" height="20" rx="3" fill="#2a93b3" stroke="#1f6f8b" stroke-width="2"/>
-        <circle cx="383" cy="142" r="4" fill="#0b1622"/><circle cx="396" cy="142" r="4" fill="#0b1622"/>
-        <path d="M362,116 q4,-22 28,-2" stroke="#8aa05a" stroke-width="2.5" fill="none" stroke-dasharray="3 4" marker-end="url(#up)"/>
-        <defs><marker id="up" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8aa05a"/></marker></defs>
       </svg>
-      <h1>Let the Machine Push</h1>
-      <p class="myth" style="margin-top:0.5em;">The boulder still goes up the hill — every merge, forever. Sisyphus just isn't the one pushing it anymore.</p>
-      <p style="margin-top:1.0em;font-size:0.5em;color:var(--muted)">tradify-frontend-platform · .github/workflows/jira-fixversion-on-merge.yml</p>
+      <h1>The Crew Sails On</h1>
+      <p class="epigraph" style="margin-top:0.5em;">The stone still climbs the hill — every merge, for all time.<br/>The hands that bled to push it are free at last.</p>
+      <p style="margin-top:1.0em;font-family:'Oswald';letter-spacing:0.12em;text-transform:uppercase;font-size:0.46em;color:var(--ash)">tradify-frontend-platform · .github/workflows/jira-fixversion-on-merge.yml</p>
     </section>
 
   </div>

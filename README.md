@@ -11,7 +11,7 @@ Reusable home for talks and decks by the Tradify Frontend team. Each presentatio
 | [`claude-code-playbook/`](./claude-code-playbook/) | Welcome to the Real World — JC's Agentic Workflow | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/claude-code-playbook/ |
 | [`productivity-analysis/`](./productivity-analysis/) | Captain's Log — Productivity Analysis (YTD 2026) | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/productivity-analysis/ |
 | [`funnel-improvements/`](./funnel-improvements/) | Sharpening the Saw — Crew Funnel Thin-Mode (before & after) | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/funnel-improvements/ |
-| [`automated-fix-versions/`](./automated-fix-versions/) | Automated Fix Versions — Sisyphus Gets a Day Off | Jean-Claude Kirwan | https://jckirwan-thq.github.io/presentations/automated-fix-versions/ |
+| [`automated-fix-versions/`](./automated-fix-versions/) | Automated Fix Versions — The Odyssey of the Boulder | Jean-Claude Kirwan | https://jckirwan-thq.github.io/presentations/automated-fix-versions/ |
 
 ## Adding a new presentation
 
