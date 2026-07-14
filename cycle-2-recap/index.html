@@ -207,13 +207,13 @@
       </table>
       <div class="two-col" style="margin-top:0.25em;">
         <div class="panel green pop"><h3>Enhancements beyond 1:1</h3><ul class="tight">
-          <li>Enquiry screen redesign — <em>breadcrumb</em> + <em>sticky bottom action bar</em>.</li>
-          <li>Icons moved inside the list tab · refreshed to <code>lucide-react</code>.</li>
-          <li><strong>DataTable hardened</strong> — retires grid-parity risk, reusable downstream.</li>
+          <li>Redesign polish — updated iconography (<code>lucide-react</code>), graceful truncation of overflow text, <em>breadcrumb</em> + <em>sticky bottom action bar</em>, + more.</li>
+          <li><strong>DataTable hardened</strong> — closes the grid-parity risk (Angular's ui-grid behaviours React lacked out of the box: column sizing, overflow, sort/empty states) and is now a reusable table for every downstream React surface.</li>
         </ul></div>
         <div class="panel gold pop"><h3>Verified live</h3><ul class="tight">
-          <li>Create → <code>POST</code> returns 201; detail read-back persists every field.</li>
-          <li>Rolled out flag-gated → internal → 50 → <strong>270 customers live</strong>.</li>
+          <li>Flag-gated rollout to <strong>internal users</strong>.</li>
+          <li>Expanded to <strong>50 customers</strong>.</li>
+          <li>Now live for <strong>270 customers</strong>.</li>
         </ul></div>
       </div>
       <div class="footer-note">Enquiries · read + write, at parity</div>
@@ -230,7 +230,7 @@
           <li>Regressions caught pre-merge, not in end-of-cycle QA.</li>
         </ul></div>
         <div class="panel green pop"><h3>In-house visual-parity gate</h3><ul class="tight">
-          <li>Built, not bought — frontend-owned <code>tradify-visual-parity</code> (no Applitools).</li>
+          <li>Built, not bought — frontend-owned <code>tradify-visual-parity</code>.</li>
           <li>Angular-vs-React capture · pixelmatch diff · masked dynamic zones · ~0.1% threshold.</li>
           <li><em>Accepted-discrepancy rules</em> encoded so the gate flags <strong>real</strong> divergence only.</li>
         </ul></div>
@@ -246,7 +246,7 @@
       <div class="two-col" style="margin-top:0.4em;">
         <div class="panel pop"><h3>A loop, not a hand-off</h3><ul class="tight">
           <li><strong>Numbered Design Review phases</strong> ran through the cycle (Phase 8 = PDF download) — screens reviewed as they landed.</li>
-          <li>Figma → code + visual-QA tightened against the <strong>EVO design system</strong>.</li>
+          <li>Visual QA tightened against the <strong>EVO design system</strong>.</li>
           <li>Storybook brand-token fix — keeps Storybook a faithful reference.</li>
         </ul></div>
         <div class="panel gold pop"><h3>Disagreements → written rules</h3><ul class="tight">
@@ -283,7 +283,7 @@
       <h2>SonarQube debt — paid down at scale</h2>
       <div class="two-col" style="margin-top:0.4em;">
         <div class="panel cyan pop"><h3>Parallel fan-out (TRA-24106)</h3><ul class="tight">
-          <li><strong>~9 worktree agents in parallel</strong> → <strong>8 package PRs</strong> off one umbrella branch (platform, customer-matching, devtools, icons, frontend-context, ui-config, enquiries, ui-components).</li>
+          <li><strong>8 package PRs</strong> off one umbrella branch (platform, customer-matching, devtools, icons, frontend-context, ui-config, enquiries, ui-components).</li>
           <li><em>Hundreds of issues cleared</em>; the umbrella carried the Playwright e2e gate to <code>main</code>.</li>
           <li>All package test suites green.</li>
         </ul></div>
@@ -347,7 +347,7 @@
     <section data-background-color="transparent">
       <div class="kicker">Team · two first cycles</div>
       <h2>Straight into the deep end</h2>
-      <p style="font-size:0.55em;margin:0 0 0.35em;color:var(--muted);">Two engineers ran their <em>first Tradify cycle</em> this window — real, shipped scope, not carve-outs.</p>
+      <p style="font-size:0.55em;margin:0 0 0.35em;color:var(--muted);">Efficient tooling and onboarding allowed two engineers to run their <em>first Tradify cycle</em> this window — real, shipped scope, not carve-outs.</p>
       <div class="two-col">
         <div class="panel cyan pop">
           <h3>Jason Kang · backend / shared-api <span style="color:var(--ember);font-size:.8em;">· 1st cycle</span></h3>
@@ -384,7 +384,7 @@
           </ul>
         </div>
         <div class="panel cyan pop">
-          <h3>Andrew · launch</h3>
+          <h3>Andrew · Acting PM</h3>
           <ul class="tight">
             <li>Identified &amp; owned the <strong>launch plan</strong> — feature-flag nav + staged rollout.</li>
             <li>Flags internal → 50 → <strong>270 customers</strong>, safely.</li>
