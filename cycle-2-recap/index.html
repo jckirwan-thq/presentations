@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>React Migration · Cycle 2 Recap — Shipped &amp; Lit</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --night:   #0a0710;   /* powder-dark sky */
+    --night-2: #140a1a;
+    --ember:   #ff6b1a;   /* fire orange */
+    --ember-2: #ff9d3c;
+    --gold:    #ffcb6b;   /* spark gold */
+    --red:     #ff3b47;   /* burst red */
+    --magenta: #ff5db1;   /* burst pink */
+    --cyan:    #6fe3ff;   /* brand spark */
+    --green:   #7ee0a6;   /* shipped */
+    --ink:     #f6ecff;   /* warm white */
+    --muted:   #b79fce;
+  }
+
+  html, body { background: var(--night); overflow: hidden; }
+  .reveal { font-family: 'Inter', sans-serif; color: var(--ink); }
+
+  /* ---- parallax sky layers (translate on mouse move) ---- */
+  .sky { position: fixed; inset: -8%; z-index: 0; pointer-events: none; will-change: transform; }
+  #sky-far  { background:
+      radial-gradient(circle at 18% 22%, rgba(255,157,60,0.10), transparent 42%),
+      radial-gradient(circle at 82% 30%, rgba(111,227,255,0.08), transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(255,107,26,0.14), transparent 55%),
+      linear-gradient(180deg, #0a0710 0%, #140a1a 60%, #1c0d10 100%); }
+  #sky-stars { background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 140px 80px, rgba(255,220,180,0.6), transparent),
+      radial-gradient(1px 1px at 260px 40px, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 380px 120px, rgba(180,220,255,0.6), transparent),
+      radial-gradient(1px 1px at 520px 60px, rgba(255,255,255,0.55), transparent);
+      background-repeat: repeat; background-size: 600px 300px; opacity: 0.5;
+      animation: twinkle 6s ease-in-out infinite alternate; }
+  @keyframes twinkle { from { opacity: 0.32; } to { opacity: 0.6; } }
+
+  /* fireworks canvas sits above sky, below slides */
+  #fw { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+  /* flickering flame band along the bottom */
+  .flame { position: fixed; left: 0; right: 0; bottom: 0; height: 120px; z-index: 1; pointer-events: none;
+    background: linear-gradient(0deg, rgba(255,107,26,0.35), rgba(255,59,71,0.12) 45%, transparent);
+    filter: blur(6px); animation: flick 2.4s ease-in-out infinite alternate; mix-blend-mode: screen; }
+  @keyframes flick { 0%{opacity:.55; transform:translateY(4px) scaleY(1)} 50%{opacity:.8} 100%{opacity:.5; transform:translateY(-2px) scaleY(1.08)} }
+
+  .reveal .slides { z-index: 2; }
+  /* reserve a band at the bottom of every slide so the footer never overlaps content */
+  .reveal .slides > section { padding-bottom: 48px; box-sizing: border-box; }
+
+  /* ---- typography ---- */
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.01em; margin-bottom: 0.3em; }
+  .reveal h1 {
+    font-size: 2.2em; line-height: 1.04;
+    background: linear-gradient(92deg, var(--gold), var(--ember-2), var(--red), var(--magenta), var(--gold));
+    background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 22px rgba(255,107,26,0.45));
+    animation: shimmer 7s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: 300% 0; } }
+  .reveal h2 { font-size: 1.3em; color: var(--gold); text-shadow: 0 0 18px rgba(255,203,107,0.35); }
+  .reveal h3 { font-size: 0.98em; color: var(--ember-2); }
+
+  .reveal p, .reveal li { font-weight: 300; }
+  .reveal strong { color: var(--gold); font-weight: 600; }
+  .reveal em { color: var(--ember-2); font-style: normal; }
+  .reveal code { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+
+  .kicker { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.34em; text-transform: uppercase; color: var(--ember); font-size: 0.5em; }
+  .annot  { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.9em; }
+
+  /* title entrance */
+  .reveal section.present .rise { animation: rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+  .two-col  { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; }
+  .three-col{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; text-align: left; }
+  .panel {
+    background: rgba(20,10,26,0.66); border: 1px solid rgba(255,157,60,0.28);
+    border-left: 4px solid var(--ember); border-radius: 10px; padding: 10px 15px; text-align: left;
+    backdrop-filter: blur(2px); box-shadow: 0 0 24px rgba(255,107,26,0.10);
+  }
+  .panel.gold  { border-left-color: var(--gold); }
+  .panel.green { border-left-color: var(--green); box-shadow: 0 0 24px rgba(126,224,166,0.10); }
+  .panel.red   { border-left-color: var(--red); }
+  .panel.cyan  { border-left-color: var(--cyan); }
+  .panel h3 { margin-top: 0; }
+
+  ul.tight { margin: 0.3em 0; padding-left: 1.1em; }
+  ul.tight li { margin: 2.5px 0; font-size: 0.6em; line-height: 1.25; }
+  .reveal .panel h3 { margin-bottom: 0.25em; }
+  .reveal section small { color: var(--muted); font-size: 0.42em; }
+  .footer-note { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; padding: 4px 0 8px; text-align: center; font-size: 0.32em; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; background: linear-gradient(0deg, rgba(10,7,16,0.96) 72%, transparent); }
+
+  table.reg { font-size: 0.5em; width: 100%; border-collapse: collapse; margin-top: 0.3em; }
+  table.reg th { color: var(--ember-2); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid var(--ember); padding: 5px 9px; text-align: left; }
+  table.reg td { padding: 4px 9px; border-bottom: 1px solid rgba(183,159,206,0.18); vertical-align: top; }
+  table.reg td.who { color: var(--gold); font-family: 'JetBrains Mono', monospace; }
+  table.reg td.done { color: var(--green); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 0.6em; }
+  .stat { position: relative; background: linear-gradient(160deg, rgba(255,107,26,0.16), rgba(255,59,71,0.05)); border: 1px solid rgba(255,157,60,0.4); border-radius: 16px; padding: 14px 6px; overflow: hidden; }
+  .stat::after { content:""; position:absolute; inset:0; background: radial-gradient(circle at 50% 0%, rgba(255,203,107,0.25), transparent 60%); }
+  .stat .n { position: relative; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.95em; color: var(--gold); line-height: 1; text-shadow: 0 0 16px rgba(255,203,107,0.5); }
+  .stat .l { position: relative; font-size: 0.42em; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+  /* auto entrance — content ignites in on slide load (no clicking); staggered via --d */
+  .reveal .pop { opacity: 0; }
+  .reveal section.present .pop { animation: pop-in .55s var(--spring) both; animation-delay: var(--d, 0ms); }
+  @keyframes pop-in { from { opacity: 0; transform: translateY(14px) scale(.985); } to { opacity: 1; transform: none; } }
+
+  svg.spark { width: 100%; max-height: 200px; height: auto; display: block; margin: 0.2em auto; }
+
+  /* ---- 2026 kinetic typography: per-letter heading reveal ---- */
+  :root { --spring: linear(0,.006,.025 2.8%,.101 6.1%,.539 18.9%,.721 25.3%,.849 31.5%,.937 38.1%,.968 41.8%,.991 45.7%,1.006 50.1%,1.015 55%,1.017 63.9%,1.006 79%,1); }
+  .reveal h2 .ktw { display: inline-block; white-space: nowrap; }  /* words never break mid-letter */
+  .reveal h2 .kt { display: inline-block; will-change: transform, opacity; }
+  .reveal section.present h2 .kt {
+    animation: kt-in .62s var(--spring) both;
+    animation-delay: calc(var(--i) * 26ms);
+  }
+  @keyframes kt-in { from { opacity: 0; transform: translateY(.55em) rotateX(-55deg); } to { opacity: 1; transform: none; } }
+
+  /* variable-font weight breathing on panel headings when hovered */
+  .reveal .panel h3 { transition: font-variation-settings .35s ease, letter-spacing .35s ease; font-variation-settings: 'wght' 500; }
+  .reveal .panel:hover h3 { font-variation-settings: 'wght' 700; letter-spacing: .02em; }
+
+  /* scroll-driven-style progress rail, styled as a burning fuse */
+  .reveal .progress { height: 5px; color: var(--ember); background: rgba(255,255,255,0.05); }
+  .reveal .progress span { background: linear-gradient(90deg, var(--gold), var(--ember), var(--red)); box-shadow: 0 0 12px var(--ember), 0 0 22px var(--red); }
+
+  /* ---- 2026 craft: honour reduced-motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .sky, #fw, .flame { display: none !important; }
+    .reveal h1 { animation: none !important; background-position: 0 0; }
+    .reveal section.present h2 .kt, .reveal section.present .rise, .reveal section.present .pop { animation: none !important; }
+    .reveal .pop { opacity: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- parallax sky + fire layers -->
+<div class="sky" id="sky-far"></div>
+<div class="sky" id="sky-stars"></div>
+<canvas id="fw"></canvas>
+<div class="flame"></div>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1 · TITLE -->
+    <section data-background-color="transparent">
+      <div class="kicker rise">React Migration 2026 · Epic TRA-23478</div>
+      <h1 class="rise scramble">Cycle 2 — Shipped &amp; Lit</h1>
+      <h3 class="rise" style="letter-spacing:0.08em;">The Enquiries surface, carried to React — and set off with the lights on</h3>
+      <p class="annot rise" style="margin-top:1em;">// 28 May → 13 Jul 2026 · live behind a flag · 270 customers in</p>
+      <p class="rise" style="margin-top:0.8em;font-size:0.62em;color:var(--muted)">Team · JC · Nikita · Veronika · Andrew · Iggi · Jason</p>
+      <div class="footer-note">Tradify Frontend · click / → to advance</div>
+    </section>
+
+    <!-- 2 · AT A GLANCE -->
+    <section data-background-color="transparent">
+      <div class="kicker">Launch readout</div>
+      <h2>Cycle 2 at a glance</h2>
+      <div class="stat-grid">
+        <div class="stat pop"><div class="n">10</div><div class="l">React releases</div></div>
+        <div class="stat pop"><div class="n">106</div><div class="l">issues shipped</div></div>
+        <div class="stat pop"><div class="n">270</div><div class="l">customers live</div></div>
+        <div class="stat pop"><div class="n">SU8–13</div><div class="l">full surface</div></div>
+      </div>
+      <div class="panel pop" style="margin-top:0.8em;">
+        <ul class="tight" style="columns:2;">
+          <li><em>Parity</em> — Enquiries is a complete, write-capable React surface.</li>
+          <li><em>Guarded</em> — Playwright on every branch + an in-house visual-parity gate.</li>
+          <li><em>Designed</em> — a running design-review loop, not a hand-off.</li>
+          <li><em>Contracted</em> — first heavy consumer of shared-api v2.</li>
+        </ul>
+      </div>
+      <p style="margin-top:0.5em;" class="annot pop">+ extras: SonarQube debt paid down · DevX tooling shipped</p>
+      <div class="footer-note">Four fuses lit + the extras</div>
+    </section>
+
+    <!-- 3 · PARITY -->
+    <section data-background-color="transparent">
+      <div class="kicker">Fuse 1 · feature parity</div>
+      <h2>Full parity with Angular — plus enhancements</h2>
+      <table class="reg">
+        <thead><tr><th>SU</th><th>Delivered</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="pop"><td>SU8</td><td>Customer Matching modal (match-or-create)</td><td class="done">Done</td></tr>
+          <tr class="pop"><td>SU9</td><td>Receive Enquiry with attachment (display)</td><td class="done">Done</td></tr>
+          <tr class="pop"><td>SU10</td><td>Enquiry PDF download (print via v1 API)</td><td class="done">Done</td></tr>
+          <tr class="pop"><td>SU11</td><td>Copy-to actions → prefill Quote / Job / Invoice</td><td class="done">Done</td></tr>
+          <tr class="pop"><td>SU12</td><td>Schedule Appointment · cache-miss self-heal prefill</td><td class="done">Done</td></tr>
+          <tr class="pop"><td>SU13</td><td>String-management / i18n strategy for the platform</td><td class="done">Done</td></tr>
+        </tbody>
+      </table>
+      <div class="two-col" style="margin-top:0.25em;">
+        <div class="panel green pop"><h3>Enhancements beyond 1:1</h3><ul class="tight">
+          <li>Enquiry screen redesign — <em>breadcrumb</em> + <em>sticky bottom action bar</em>.</li>
+          <li>Icons moved inside the list tab · refreshed to <code>lucide-react</code>.</li>
+          <li><strong>DataTable hardened</strong> — retires grid-parity risk, reusable downstream.</li>
+        </ul></div>
+        <div class="panel gold pop"><h3>Verified live</h3><ul class="tight">
+          <li>Create → <code>POST</code> returns 201; detail read-back persists every field.</li>
+          <li>Rolled out flag-gated → internal → 50 → <strong>270 customers live</strong>.</li>
+        </ul></div>
+      </div>
+      <div class="footer-note">Enquiries · read + write, at parity</div>
+    </section>
+
+    <!-- 4 · REGRESSION GUARDS -->
+    <section data-background-color="transparent">
+      <div class="kicker">Fuse 2 · regression guards</div>
+      <h2>Playwright in ephemeral, per-branch environments</h2>
+      <div class="two-col" style="margin-top:0.4em;">
+        <div class="panel cyan pop"><h3>Prove it before it lands</h3><ul class="tight">
+          <li><strong>Playwright <code>@react</code> specs</strong> run against <em>per-branch / per-PR</em> environments — a feature branch is verified in a disposable env <em>before</em> it reaches <code>main</code>.</li>
+          <li>Umbrella-branch model keeps the <strong>full e2e run gating merge to main</strong>.</li>
+          <li>Regressions caught pre-merge, not in end-of-cycle QA.</li>
+        </ul></div>
+        <div class="panel green pop"><h3>In-house visual-parity gate</h3><ul class="tight">
+          <li>Built, not bought — frontend-owned <code>tradify-visual-parity</code> (no Applitools).</li>
+          <li>Angular-vs-React capture · pixelmatch diff · masked dynamic zones · ~0.1% threshold.</li>
+          <li><em>Accepted-discrepancy rules</em> encoded so the gate flags <strong>real</strong> divergence only.</li>
+        </ul></div>
+      </div>
+      <p style="margin-top:0.6em;" class="annot pop">// confidence moved from "manual QA at the end" → "automated guards on the branch, every time"</p>
+      <div class="footer-note">Ephemeral envs · e2e + pixel gate</div>
+    </section>
+
+    <!-- 5 · DESIGN LOOP -->
+    <section data-background-color="transparent">
+      <div class="kicker">Fuse 3 · design loop</div>
+      <h2>Productive feedback loops with design</h2>
+      <div class="two-col" style="margin-top:0.4em;">
+        <div class="panel pop"><h3>A loop, not a hand-off</h3><ul class="tight">
+          <li><strong>Numbered Design Review phases</strong> ran through the cycle (Phase 8 = PDF download) — screens reviewed as they landed.</li>
+          <li>Figma → code + visual-QA tightened against the <strong>EVO design system</strong>.</li>
+          <li>Storybook brand-token fix — keeps Storybook a faithful reference.</li>
+        </ul></div>
+        <div class="panel gold pop"><h3>Disagreements → written rules</h3><ul class="tight">
+          <li>Intentional Angular↔React differences (lucide icons, positions, redesign chrome) are <strong>negotiated with design and codified</strong>.</li>
+          <li>That agreement makes the visual-parity gate <em>usable instead of noisy</em>.</li>
+          <li>Feedback arrives early &amp; continuously; nothing re-litigated per screen.</li>
+        </ul></div>
+      </div>
+      <div class="footer-note">Design review · early, continuous, encoded</div>
+    </section>
+
+    <!-- 6 · SHARED-API -->
+    <section data-background-color="transparent">
+      <div class="kicker">Fuse 4 · shared-api</div>
+      <h2>Shared-API usage &amp; contracts</h2>
+      <div class="two-col" style="margin-top:0.4em;">
+        <div class="panel green pop"><h3>From a couple of reads → the write backbone</h3><ul class="tight">
+          <li><strong>Enquiries dual-write</strong> against <code>POST /v2/api/v1/enquiries</code> — flat fields + nested <code>enquiry {}</code> + <code>options {}</code>, verified live.</li>
+          <li><strong>Contract cleanup</strong> — sunset the legacy flat fallback; client sends the nested object only.</li>
+          <li>Permissions via <strong>ADR-0009</strong> (<code>CanRead* / CanWrite*</code>), enforced per-endpoint.</li>
+        </ul></div>
+        <div class="panel gold pop"><h3>The review loop worked</h3><ul class="tight">
+          <li>Addresses param mismatch (<code>sessionId</code> vs v2 <code>addressSessionToken</code>) <strong>caught in review before either side merged</strong>.</li>
+          <li>Settled shape: <strong>generated hooks</strong> · <code>fetchWithReauth</code> auto-CSRF · versioned <code>/v2</code> URLs.</li>
+          <li>That shape lifts straight into Cycle 3 (Customers).</li>
+        </ul></div>
+      </div>
+      <div class="footer-note">shared-api v2 · nested payloads · versioned</div>
+    </section>
+
+    <!-- 7 · EXTRAS: SONARQUBE -->
+    <section data-background-color="transparent">
+      <div class="kicker">Extra · not on the brief, shipped anyway</div>
+      <h2>SonarQube debt — paid down at scale</h2>
+      <div class="two-col" style="margin-top:0.4em;">
+        <div class="panel cyan pop"><h3>Parallel fan-out (TRA-24106)</h3><ul class="tight">
+          <li><strong>~9 worktree agents in parallel</strong> → <strong>8 package PRs</strong> off one umbrella branch (platform, customer-matching, devtools, icons, frontend-context, ui-config, enquiries, ui-components).</li>
+          <li><em>Hundreds of issues cleared</em>; the umbrella carried the Playwright e2e gate to <code>main</code>.</li>
+          <li>All package test suites green.</li>
+        </ul></div>
+        <div class="panel gold pop"><h3>Security + the honest tail</h3><ul class="tight">
+          <li><strong>18 security hotspots reviewed SAFE</strong> (server-side) → condition satisfied.</li>
+          <li>59 Tailwind-v4 <code>@</code>-rule warnings (<code>css:S4662</code>) suppressed centrally.</li>
+          <li>Remaining tail is a <em>decision</em>, not code: ~15 genuine a11y/public-API items flagged <strong>Won't-Fix/Accept</strong>; coverage (70.6% → 80%) deferred.</li>
+        </ul></div>
+      </div>
+      <div class="footer-note">Quality gate · scaled remediation, honest remainder</div>
+    </section>
+
+    <!-- 8 · EXTRAS: DEVX -->
+    <section data-background-color="transparent">
+      <div class="kicker">Extra · sharpening the saw</div>
+      <h2>Developer experience — tooling that compounds</h2>
+      <div class="three-col" style="margin-top:0.5em;">
+        <div class="panel green pop"><h3>Pre-push agent review</h3><ul class="tight">
+          <li>Opt-in pre-push hook runs the Claude crew review <em>before</em> code leaves the machine (TRA-23186).</li>
+          <li>Catches breakage a step earlier than the PR gate.</li>
+        </ul></div>
+        <div class="panel cyan pop"><h3>Crew thin-mode</h3><ul class="tight">
+          <li>Token-frugal funnel — one hop to the deepest in-repo specialist.</li>
+          <li>Full crew still runs at PR time; <em>default unchanged</em>.</li>
+        </ul></div>
+        <div class="panel gold pop"><h3>Automation</h3><ul class="tight">
+          <li>Automated fix-versions job — the Sisyphus task, off our plates.</li>
+          <li>Feature-flag nav + rollout plumbing for a safe launch.</li>
+        </ul></div>
+      </div>
+      <p style="margin-top:0.7em;" class="annot pop">// every extra makes the next cycle cheaper to build and safer to ship</p>
+      <div class="footer-note">DevX · pre-push review · thin-mode · fix-versions</div>
+    </section>
+
+    <!-- 9 · AGENTIC TOOLING -->
+    <section data-background-color="transparent">
+      <div class="kicker">Extra · the force multiplier</div>
+      <h2>Agentic tooling — built by us, used by everyone</h2>
+      <p style="font-size:0.55em;margin:0 0 0.3em;color:var(--muted);">The React team seeded &amp; now drives <code>tradify-agentic-tools</code> — the crew every repo runs on.</p>
+      <div class="two-col">
+        <div class="panel cyan pop"><h3>Org-wide crew primitives</h3><ul class="tight">
+          <li><strong>Funnel v2</strong> — sub-agent ask-back + fast-lane <small>(#76)</small></li>
+          <li><strong>Thin/thick mode</strong> + token-diet critics <small>(#95, #88)</small></li>
+          <li><strong>PR-review</strong> manifest routing + reply-guard <small>(#80, #77)</small></li>
+          <li>Hook framework — session-lifecycle, watchdog, scope-aware paths <small>(#22, #62, #69)</small></li>
+          <li>Prompt-injection + <strong>guard-egress</strong> guardrails <small>(#85)</small></li>
+          <li>Worktree standard · cross-platform installers</li>
+        </ul></div>
+        <div class="panel green pop"><h3>Frontend-flavoured, shared</h3><ul class="tight">
+          <li><code>start-ticket</code> — Jira SU branch + draft-PR flow <small>(#25)</small></li>
+          <li><code>tra-test-e2e</code> — headless Playwright verify <small>(#68)</small></li>
+          <li>5 vendored <strong>Rspack</strong> build skills <small>(#70)</small></li>
+          <li>radix-ui · html5-react component skills</li>
+          <li>+ Nikita's <strong>OWASP security playbook</strong> — in review <small>(see next)</small></li>
+        </ul></div>
+      </div>
+      <p style="margin-top:0.6em;" class="annot pop">// founder-seeded (18 skills), now a top-3 committer — every team's crew got faster off our work</p>
+      <div class="footer-note">tradify-agentic-tools · one team's tools, everyone's speed</div>
+    </section>
+
+    <!-- 10 · FIRST CYCLES -->
+    <section data-background-color="transparent">
+      <div class="kicker">Team · two first cycles</div>
+      <h2>Straight into the deep end</h2>
+      <p style="font-size:0.55em;margin:0 0 0.35em;color:var(--muted);">Two engineers ran their <em>first Tradify cycle</em> this window — real, shipped scope, not carve-outs.</p>
+      <div class="two-col">
+        <div class="panel cyan pop">
+          <h3>Jason Kang · backend / shared-api <span style="color:var(--ember);font-size:.8em;">· 1st cycle</span></h3>
+          <p style="margin:.1em 0 .25em;font-family:'Space Grotesk';font-weight:700;font-size:1.1em;color:var(--gold);text-shadow:0 0 16px rgba(255,203,107,.5);">15 units of work</p>
+          <ul class="tight">
+            <li><code>GET /customers</code> + <strong>Create Customer</strong> · cross-field search.</li>
+            <li><strong>Data-envelope</strong> <code>{ data, options }</code> + bulk <code>{ ids: [] }</code> migration.</li>
+            <li>OpenAPI 3.1 schema sync · DTO nullability alignment.</li>
+          </ul>
+        </div>
+        <div class="panel gold pop">
+          <h3>Nikita Mogilevskii · frontend <span style="color:var(--ember);font-size:.8em;">· 1st cycle</span></h3>
+          <p style="margin:.1em 0 .25em;font-family:'Space Grotesk';font-weight:700;font-size:1.1em;color:var(--gold);text-shadow:0 0 16px rgba(255,203,107,.5);">~50 issues closed</p>
+          <ul class="tight">
+            <li><strong>SU10 PDF</strong> · bulk actions + modals · <strong>Onboarding MFE</strong>.</li>
+            <li>Design-review polish sweep — spacing, tokens, lucide, skeletons.</li>
+            <li>Shared tooling — DevX console/TUI + <em>OWASP playbook</em> (in review).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-note">Jason &amp; Nikita · first cycle · full members from day one</div>
+    </section>
+
+    <!-- 11 · VETERANS -->
+    <section data-background-color="transparent">
+      <div class="kicker">Team · the seasoned hands</div>
+      <h2>Veterans who carried the cycle</h2>
+      <div class="three-col">
+        <div class="panel green pop">
+          <h3>Veronika · frontend + QA</h3>
+          <ul class="tight">
+            <li>Drove <strong>web-ui-automation</strong> — the advocate for Playwright regression coverage on React.</li>
+            <li>Helped turn "guards on every branch" from idea into practice.</li>
+          </ul>
+        </div>
+        <div class="panel cyan pop">
+          <h3>Andrew · launch</h3>
+          <ul class="tight">
+            <li>Identified &amp; owned the <strong>launch plan</strong> — feature-flag nav + staged rollout.</li>
+            <li>Flags internal → 50 → <strong>270 customers</strong>, safely.</li>
+            <li>Why the rollout was controlled, not flip-the-switch.</li>
+          </ul>
+        </div>
+        <div class="panel gold pop">
+          <h3>Iggi · design quality</h3>
+          <ul class="tight">
+            <li><strong>Identified, reviewed &amp; re-reviewed</strong> every design-polish item.</li>
+            <li>Held the bar on spacing, tokens &amp; states across the whole sweep.</li>
+            <li>Kept Angular↔React parity honest, screen by screen.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-note">Veronika · Andrew · Iggi · the seasoned hands</div>
+    </section>
+
+    <!-- 12 · CARRY-FORWARD -->
+    <section data-background-color="transparent">
+      <div class="kicker">Onward</div>
+      <h2>What we carry into Cycle 3 (Customers)</h2>
+      <div class="two-col" style="margin-top:0.4em;">
+        <div class="panel green pop"><h3>Banked</h3><ul class="tight">
+          <li>Hardened <strong>DataTable</strong>; customer-matching form + address-autocomplete + generated hooks.</li>
+          <li><strong>i18n strategy</strong> and the shared-api consumption pattern.</li>
+          <li>Visual-parity harness as the standing gate for each domain flip.</li>
+        </ul></div>
+        <div class="panel red pop"><h3>Open tails</h3><ul class="tight">
+          <li>Pendo analytics plan (Iggi) · force-client-upgrade safeguard for breaking deploys.</li>
+          <li>Finish the nested-only Create Enquiry payload sunset.</li>
+          <li>SonarQube coverage climb (70.6% → 80%) + the Won't-Fix decisions.</li>
+        </ul></div>
+      </div>
+      <div class="footer-note">Cycle 2 · closed · Cycle 3 · Customers</div>
+    </section>
+
+    <!-- 10 · CLOSE -->
+    <section data-background-color="transparent">
+      <h1 class="rise scramble">Four fuses. All lit.</h1>
+      <p class="annot rise" style="margin-top:0.6em;">Parity built · guards up · design in the loop · contracts in bedrock.</p>
+      <p class="rise" style="margin-top:1.4em;font-size:1.3em;color:var(--gold);">🎆 &nbsp; Cycle 2 · shipped &nbsp; 🎆</p>
+      <p style="margin-top:1em;font-size:0.5em;color:var(--muted)">React Migration · Cycle 2 · Epic TRA-23478 &nbsp;·&nbsp; <span class="annot" style="font-size:1em;">press F for finale</span></p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true, transition: 'slide', backgroundTransition: 'fade', progress: true,
+    controlsLayout: 'edges', width: 1280, height: 800, margin: 0.06
+  });
+
+  var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- kinetic typography: split every h2 into per-letter spans ---------- */
+  document.querySelectorAll('.reveal h2').forEach(function (el) {
+    var txt = el.textContent; el.setAttribute('aria-label', txt); el.textContent = '';
+    txt.split('').forEach(function (ch, i) {
+      var s = document.createElement('span');
+      s.className = 'kt'; s.style.setProperty('--i', i);
+      s.textContent = ch === ' ' ? ' ' : ch;
+      el.appendChild(s);
+    });
+  });
+
+  /* ---------- rebuild h2 kinetics as UNBREAKABLE words (fix mid-word wrap) ---------- */
+  document.querySelectorAll('.reveal h2').forEach(function (el) {
+    var txt = el.getAttribute('aria-label') || el.textContent;
+    el.textContent = ''; var i = 0;
+    txt.split(/(\s+)/).forEach(function (word) {
+      if (word === '') return;
+      if (/^\s+$/.test(word)) { el.appendChild(document.createTextNode(' ')); return; }
+      var w = document.createElement('span'); w.className = 'ktw';
+      word.split('').forEach(function (ch) {
+        var s = document.createElement('span'); s.className = 'kt'; s.style.setProperty('--i', i++); s.textContent = ch; w.appendChild(s);
+      });
+      el.appendChild(w);
+    });
+  });
+
+  /* ---------- stagger the auto-entrance of each slide's content ---------- */
+  document.querySelectorAll('.reveal .slides > section').forEach(function (sec) {
+    sec.querySelectorAll('.pop').forEach(function (el, i) { el.style.setProperty('--d', (i * 70) + 'ms'); });
+  });
+
+  /* ---------- text-scramble / decode on titles ---------- */
+  var GLYPHS = '!<>-_\\/[]{}—=+*^?#01ｱｲｳｴｵ▚▞░▒';
+  function scramble(el) {
+    if (REDUCE) return;
+    var text = el.dataset.text || (el.dataset.text = el.textContent);
+    var len = text.length, q = [], frame = 0;
+    for (var i = 0; i < len; i++) {
+      var start = Math.floor(Math.random() * 18), end = start + Math.floor(Math.random() * 18) + 8;
+      q.push({ ch: text[i], start: start, end: end, r: '' });
+    }
+    cancelAnimationFrame(el._raf);
+    (function run() {
+      var out = '', done = 0;
+      for (var i = 0; i < q.length; i++) {
+        var it = q[i];
+        if (frame >= it.end) { done++; out += it.ch; }
+        else if (frame >= it.start) {
+          if (!it.r || Math.random() < 0.28) it.r = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          out += '<span style="opacity:.7">' + it.r + '</span>';
+        } else { out += ' '; }
+      }
+      el.innerHTML = out;
+      if (done < q.length) { frame++; el._raf = requestAnimationFrame(run); }
+      else { el.textContent = text; }
+    })();
+  }
+  function scrambleSlide(idx) {
+    var sec = Reveal.getSlides()[idx];
+    if (sec) sec.querySelectorAll('.scramble').forEach(scramble);
+  }
+
+  /* ---------- parallax sky (mouse + slide) ---------- */
+  var far = document.getElementById('sky-far');
+  var stars = document.getElementById('sky-stars');
+  var px = 0, py = 0, tx = 0, ty = 0;
+  window.addEventListener('mousemove', function (e) {
+    tx = (e.clientX / window.innerWidth  - 0.5);
+    ty = (e.clientY / window.innerHeight - 0.5);
+  });
+  (function parallaxLoop() {
+    if (REDUCE) return;
+    px += (tx - px) * 0.06; py += (ty - py) * 0.06;
+    far.style.transform   = 'translate(' + (px * 22) + 'px,' + (py * 22) + 'px)';
+    stars.style.transform = 'translate(' + (px * 48) + 'px,' + (py * 48) + 'px)';
+    requestAnimationFrame(parallaxLoop);
+  })();
+
+  /* ---------- fireworks engine ---------- */
+  var cv = document.getElementById('fw'), ctx = cv.getContext('2d');
+  var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    W = cv.width  = innerWidth  * DPR;
+    H = cv.height = innerHeight * DPR;
+    cv.style.width = innerWidth + 'px'; cv.style.height = innerHeight + 'px';
+  }
+  resize(); addEventListener('resize', resize);
+
+  var PALETTE = ['#ff6b1a','#ff9d3c','#ffcb6b','#ff3b47','#ff5db1','#6fe3ff','#7ee0a6','#ffffff'];
+  var rockets = [], sparks = [], embers = [], running = false;
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function launch(x) {
+    x = (x == null ? rand(0.15, 0.85) * W : x);
+    rockets.push({ x: x, y: H, vy: rand(-15, -21) * DPR, vx: rand(-1.4, 1.4) * DPR,
+      targetY: rand(0.12, 0.42) * H, color: PALETTE[(Math.random() * PALETTE.length) | 0] });
+  }
+  function burst(x, y, color) {
+    var n = 46 + (Math.random() * 40 | 0), spd = rand(2.6, 6.2) * DPR;
+    for (var i = 0; i < n; i++) {
+      var a = (Math.PI * 2 * i) / n + rand(-0.06, 0.06), s = spd * rand(0.35, 1);
+      var c = Math.random() < 0.22 ? PALETTE[(Math.random() * PALETTE.length) | 0] : color;
+      sparks.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s,
+        life: 1, decay: rand(0.008, 0.02), color: c, r: rand(1.4, 2.8) * DPR });
+    }
+  }
+  function spawnEmber() {
+    embers.push({ x: rand(0, W), y: H + 10, vy: rand(-0.6, -1.6) * DPR, vx: rand(-0.3, 0.3) * DPR,
+      life: 1, decay: rand(0.003, 0.008), r: rand(0.8, 2) * DPR, color: Math.random() < 0.5 ? '#ff9d3c' : '#ffcb6b' });
+  }
+
+  var last = 0;
+  function frame(t) {
+    // trail fade
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(10,7,16,0.22)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    // no ambient auto-launch — fireworks fire per slide, then settle & stop
+    var g = 0.16 * DPR;
+    for (var i = rockets.length - 1; i >= 0; i--) {
+      var r = rockets[i]; r.x += r.vx; r.y += r.vy; r.vy += g;
+      ctx.beginPath(); ctx.arc(r.x, r.y, 2.4 * DPR, 0, 7); ctx.fillStyle = r.color; ctx.fill();
+      ctx.beginPath(); ctx.arc(r.x, r.y, 6 * DPR, 0, 7); ctx.fillStyle = r.color + '33'; ctx.fill();
+      if (r.vy >= 0 || r.y <= r.targetY) { burst(r.x, r.y, r.color); rockets.splice(i, 1); }
+    }
+    for (var j = sparks.length - 1; j >= 0; j--) {
+      var s = sparks[j]; s.x += s.vx; s.y += s.vy; s.vy += g * 0.6; s.vx *= 0.985; s.vy *= 0.985; s.life -= s.decay;
+      if (s.life <= 0) { sparks.splice(j, 1); continue; }
+      ctx.globalAlpha = Math.max(s.life, 0);
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fillStyle = s.color; ctx.fill();
+    }
+    for (var k = embers.length - 1; k >= 0; k--) {
+      var e = embers[k]; e.x += e.vx; e.y += e.vy; e.vx += rand(-0.05, 0.05) * DPR; e.life -= e.decay;
+      if (e.life <= 0 || e.y < -20) { embers.splice(k, 1); continue; }
+      ctx.globalAlpha = Math.max(e.life, 0) * 0.9;
+      ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 7); ctx.fillStyle = e.color; ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    // idle when nothing left to draw — the loop STOPS once a slide's fireworks settle
+    if (rockets.length + sparks.length + embers.length > 0) { requestAnimationFrame(frame); }
+    else { running = false; ctx.clearRect(0, 0, W, H); }
+  }
+  function startEngine() { if (!running && !REDUCE) { running = true; requestAnimationFrame(frame); } }
+
+  // fireworks fire when a slide loads, then settle & stop · F = finale · click = spark
+  function volley(count) { if (REDUCE) return; for (var i = 0; i < count; i++) setTimeout(function () { launch(); startEngine(); }, i * 140); }
+  Reveal.on('slidechanged', function (ev) { scrambleSlide(ev.indexh); volley(5); });
+  Reveal.on('ready', function () { scrambleSlide(0); volley(6); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'f' || e.key === 'F') volley(14); });
+  if (!REDUCE) addEventListener('click', function (e) { launch(e.clientX * DPR); startEngine(); });
+</script>
+</body>
+</html>

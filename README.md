@@ -8,6 +8,8 @@ Reusable home for talks and decks by the Tradify Frontend team. Each presentatio
 
 | Slug | Title | Author | Live URL |
 |---|---|---|---|
+| [`cycle-2-recap/`](./cycle-2-recap/) | React Migration · Cycle 2 Recap — Shipped & Lit | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/cycle-2-recap/ |
+| [`agentic-workflow/`](./agentic-workflow/) | Inside an Agentic Workflow — How I Ship with Claude Code | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/agentic-workflow/ |
 | [`claude-code-playbook/`](./claude-code-playbook/) | Welcome to the Real World — JC's Agentic Workflow | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/claude-code-playbook/ |
 | [`productivity-analysis/`](./productivity-analysis/) | Captain's Log — Productivity Analysis (YTD 2026) | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/productivity-analysis/ |
 | [`funnel-improvements/`](./funnel-improvements/) | Sharpening the Saw — Crew Funnel Thin-Mode (before & after) | Jean-Claude Kirwan | https://tradifyhq.github.io/presentations/funnel-improvements/ |
